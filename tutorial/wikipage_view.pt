@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>WikiPage: View</title>
+</head>
+<body>
+<a href="${request.route_url('wiki_view')}">
+    Up
+</a> |
+
+
+<h1>${sanpham.id_sp}</h1>
+<p>${structure: sanpham.tensanpham}</p>
+</body>
+</html>
