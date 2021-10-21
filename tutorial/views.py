@@ -11,11 +11,13 @@ from pyramid.security import (
 
 from pyramid.view import (
     view_config,
-    view_defaults
+    view_defaults,
+    forbidden_view_config
 )
 
 from .security import (
-    USERS
+    USERS,
+    GROUPS
     # check_password,
     # hash_password
 )
@@ -48,8 +50,8 @@ class WikiViews:
     def home(self):
         return {'name': 'Quản lý cửa hàng nội thất'}
 
-    @view_config(route_name='sanpham', renderer='sanpham.pt')
-    def wiki_view(self):
+    @view_config(route_name='sanpham', renderer='sanpham.pt', permission='edit')
+    def showsanpham(self):
         sanphams = DBSession.query(SanPham)
 
         # for sanpham in sanphams:
@@ -68,14 +70,14 @@ class WikiViews:
 
 
     
-
     @view_config(route_name='login', renderer='login.pt')
+    @forbidden_view_config(renderer='login.pt')
     def login(self):
         request = self.request
         login_url = request.route_url('login')
         referrer = request.url
         if referrer == login_url:
-            referrer = '/howdy'  # never use login form itself as came_from
+            referrer = '/'  # never use login form itself as came_from
         came_from = request.params.get('came_from', referrer)
         message = ''
         login = ''
@@ -87,15 +89,18 @@ class WikiViews:
             for nhanvien in nhanviens:
                 tnv = nhanvien.__dict__
                 nvs.append(tnv)
-            obj = {}
+            grp = {}
+            urs = {}
             for x in nvs:
-                obj[x['username']] = x['password']
-            USERS.update(obj)
-            return USERS
+                urs[x['username']] = x['password']
+                grp[x['username']] = ['group:editors']
+            USERS.update(urs)
+            GROUPS.update(grp)
+            return USERS,GROUPS
         
         changeToDict()
 
-        # print(USERS)
+        # print(USERS[userid])
 
         if 'form.submitted' in request.params:
             login = request.params['login']
@@ -123,6 +128,25 @@ class WikiViews:
         url = request.route_url('home')
         return HTTPFound(location=url,
                          headers=headers)
+
+    @view_config(route_name='register', renderer='register.pt')
+    def register(self):
+        request = self.request
+        if 'form.save' in request.params:
+            name = request.params['name']
+            username = request.params['username']
+            password = request.params['password']
+
+            DBSession.add(NhanVien(tennhanvien=name, username=username, password=password))
+            
+            headers = forget(request)
+            url = request.route_url('login')
+            return HTTPFound(location=url,
+                         headers=headers)
+        return {
+            'status': 'Đăng ký thành công!'
+        }
+
 
     # @view_config(route_name='wikipage_add',
     #              renderer='wikipage_addedit.pt')

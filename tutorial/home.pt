@@ -16,7 +16,10 @@
             href="${request.application_url}/login">Log In</a>
     <a tal:condition="view.logged_in is not None"
             href="${request.application_url}/logout">Logout</a>
+    <a tal:condition="view.logged_in is None"
+            href="${request.route_url('register')}">Register</a>
     </div>
+
 
     <h1 class="text-center">${name}</h1>
     <p class="text-center">Count: ${view.counter}</p>

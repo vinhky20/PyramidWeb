@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>REGISTER</title>
+</head>
+<body>
+<h1>Register</h1>
+<h2 class="text-center"><a href="${request.route_url('home')}">Trở về trang chủ</a></h2>
+<form method="POST"
+      action="${request.route_url('register')}">
+
+    <label for="name">Họ và Tên</label>
+    <input type="text" name="name"/><br/>
+
+    <label for="username">Username</label>
+    <input type="text" name="username"/><br/>
+
+    <label for="password">Password</label>
+    <input type="password" name="password"/><br/>
+
+    <input type="submit" name="form.save" value="Save"/>
+</form>
+
+</body>
+</html>

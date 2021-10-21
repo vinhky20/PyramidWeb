@@ -7,6 +7,12 @@
 </head>
 
 <body>
+    <div>
+        <a tal:condition="view.logged_in is None"
+            href="${request.application_url}/login">Log In</a>
+        <a tal:condition="view.logged_in is not None"
+            href="${request.application_url}/logout">Logout</a>
+    </div>
     <h2 class="text-center"><a href="${request.route_url('home')}">Trở về trang chủ</a></h2>
     <div class="container">
         

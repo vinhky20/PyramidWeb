@@ -1,5 +1,10 @@
 import bcrypt
 from pyramid.authentication import AuthTktCookieHelper
+from pyramid.authorization import (
+    ACLHelper,
+    Authenticated,
+    Everyone,
+)
 
 
 # def hash_password(pw):
@@ -14,6 +19,9 @@ from pyramid.authentication import AuthTktCookieHelper
 
 USERS = {}
 
+GROUPS = {}
+
+# userid: ['group:editors']
 # # USERS = {}
 # sanphams = DBSession.query(SanPham)
 # for sanpham in sanphams:
@@ -31,7 +39,7 @@ USERS = {}
 class SecurityPolicy:
     def __init__(self, secret):
         self.authtkt = AuthTktCookieHelper(secret=secret)
-
+        self.acl = ACLHelper()
 
     def identity(self, request):
         identity = self.authtkt.identify(request)
@@ -48,3 +56,15 @@ class SecurityPolicy:
 
     def forget(self, request, **kw):
         return self.authtkt.forget(request, **kw)
+
+    def permits(self, request, context, permission):
+        principals = self.effective_principals(request)
+        return self.acl.permits(context, principals, permission)
+
+    def effective_principals(self, request):
+        principals = [Everyone]
+        userid = self.authenticated_userid(request)
+        if userid is not None:
+            principals += [Authenticated, 'u:' + userid]
+            principals += GROUPS.get(userid, [])
+        return principals
