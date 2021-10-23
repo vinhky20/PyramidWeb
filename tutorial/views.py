@@ -1,5 +1,5 @@
 import colander
-
+import transaction
 from pyramid.httpexceptions import (
     HTTPFound,
 )
@@ -22,7 +22,7 @@ from .security import (
     # hash_password
 )
 
-from .models import DBSession, SanPham, NhanVien
+from .models import DBSession, SanPham, NhanVien, DanhMuc
 
 
 # class WikiPage(colander.MappingSchema):
@@ -53,7 +53,6 @@ class WikiViews:
     @view_config(route_name='sanpham', renderer='sanpham.pt', permission='edit')
     def showsanpham(self):
         sanphams = DBSession.query(SanPham)
-
         # for sanpham in sanphams:
         #     print(sanpham.__dict__)
         return dict(sanphams=sanphams)
@@ -146,6 +145,74 @@ class WikiViews:
         return {
             'status': 'Đăng ký thành công!'
         }
+
+    @view_config(route_name='addsanpham', renderer='addsanpham.pt', permission='edit')
+    def addsanpham(self):
+        request = self.request
+        if 'form.add' in request.params:
+            tensanpham = request.params['tensp']
+            dvt = request.params['dvt']
+            danhmuc = request.params['danhmuc']
+
+            dm = DBSession.query(DanhMuc).filter_by(tendanhmuc=danhmuc).one()
+            id_dm = dm.id_dm
+
+            DBSession.add(SanPham(tensanpham=tensanpham, donvitinh=dvt, id_dm=id_dm))
+            
+            headers = forget(request)
+            url = request.route_url('sanpham')
+            return HTTPFound(location=url,
+                         headers=headers)
+        return {
+            'status': 'Thêm sản phẩm thành công!'
+        }
+
+    @view_config(route_name='deletesp', renderer='sanpham.pt', permission='edit')
+    def deletesp(self):
+        request = self.request
+        if 'form.delete' in request.params:
+            id_sp = request.params['id_sp']
+            # User.query.filter_by(id=123).delete()
+
+            DBSession.query(SanPham).filter_by(id_sp=id_sp).delete()
+
+            
+            headers = forget(request)
+            url = request.route_url('sanpham')
+            return HTTPFound(location=url,
+                         headers=headers)
+        return {
+            'status': 'Thêm sản phẩm thành công!'
+        }
+
+    @view_config(route_name='updatesp', renderer='updatesp.pt', permission='edit')
+    def updatesp(self):
+        request = self.request
+        id_sp = int(self.request.matchdict['id_sp'])
+        sanpham = DBSession.query(SanPham).filter_by(id_sp=id_sp).one()
+
+
+        if 'form.update' in request.params:
+            tensanpham = request.params['tensp']
+            dvt = request.params['dvt']
+            danhmuc = request.params['danhmuc']
+
+            dm = DBSession.query(DanhMuc).filter_by(tendanhmuc=danhmuc).one()
+            id_dm = dm.id_dm
+            sanpham.tensanpham = tensanpham
+            sanpham.donvitinh = dvt
+            sanpham.id_dm = id_dm
+            transaction.commit();
+
+            # DBSession.update(SanPham(tensanpham=tensanpham, donvitinh=dvt, id_dm=id_dm))
+            
+            headers = forget(request)
+            url = request.route_url('sanpham')
+            return HTTPFound(location=url,
+                         headers=headers)
+
+        return dict(sanpham=sanpham)
+        
 
 
     # @view_config(route_name='wikipage_add',

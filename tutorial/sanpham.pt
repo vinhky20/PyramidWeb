@@ -7,68 +7,45 @@
 </head>
 
 <body>
-    <div>
+<!--     <div>
         <a tal:condition="view.logged_in is None"
             href="${request.application_url}/login">Log In</a>
         <a tal:condition="view.logged_in is not None"
             href="${request.application_url}/logout">Logout</a>
-    </div>
+    </div> -->
     <h2 class="text-center"><a href="${request.route_url('home')}">Trở về trang chủ</a></h2>
     <div class="container">
         
         <section id="inner" class="inner-section section">
             <h2 class="text-center">Danh sách sản phẩm</h2>
             <div class="inner-wrapper row">
+                <a href="${request.route_url('addsanpham')}" class="btn btn-primary" style="margin-bottom: 30px;">
+                    <i class="fa fa-plus"></i>+ Thêm sản phẩm</a>
                 <table id="books" style="width:100%" class="table table-bordered table-responsive table-striped">
                     <tr>
-                        <th>Id Sản Phẩm</th>
                         <th>Tên Sản Phẩm</th>
                         <th>Đơn Vị Tính</th>
+                        <th>Danh Mục</th>
                         <th>Action</th>
                     </tr>
                     <tr  tal:repeat="sanpham sanphams">
-                        <td>${sanpham.id_sp}</td>
                         <td>${sanpham.tensanpham}</td>
                         <td>${sanpham.donvitinh}</td>
+                        <td>${sanpham.id_dm}</td>
                         <td>
-<!--                             <form class='update' action='edit-book.php' method='GET' style='display: inline;'> -->
-<!--                                 <input type='hidden' name='id' value=$book->id> -->
-                                <button type='submit' class='btn btn-xs btn-warning'>
-                                        <i alt='update' class='fa fa-trash'>Update</i>
-                                    </button>
-<!--                             </form> -->
-<!--                             <form class='delete' action='del-book.php' method='GET' style='display: inline;'> -->
-<!--                                 <input type='hidden' name='id' value=$book->id> -->
-                                <button type='submit' class='btn btn-xs btn-danger' name='delete-book'>
+                            <a href="${request.route_url('updatesp', id_sp=sanpham.id_sp)}" class="btn btn-xs btn-warning">
+                                        <i alt="Edit" class="fa fa-pencil"> Edit</i></a>
+                            <form class='delete' method="POST" action="${request.route_url('deletesp')}" style='display: inline;'>
+                                <input type='hidden' name='id_sp' value=${sanpham.id_sp}>
+                                <button type='submit' class='btn btn-xs btn-danger' name='form.delete'>
                                         <i alt='Delete' class='fa fa-trash'>Delete</i>
-                                    </button>
-<!--                             </form> -->
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 </table>
             </div>
         </section>
-        <div class="inner-wrapper row">
-    	    <div class="col-md-12">
-            <form method="POST" class="col-md-6 col-md-offset-3">
-                <div class="form-group">
-                    <label for="name">ID Sản phẩm</label>
-                    <input name="name" type="text" class="form-control" maxlen="255" name="title" />
-                </div>
-                <div class="form-group">
-                    <label>Tên Sản Phẩm</label>
-                    <input class="form-control" maxlen="255" type="number" name="pages_count" />
-                </div>
-                <div class="form-group">
-                    <label>Đơn Vị Tính</label>
-                    <input class="form-control" maxlen="255" type="number" name="price" />
-                </div>
-                <div class="form-group">
-                	<button type="submit" style="width: 100%" class="btn btn-primary" name="submit">Thêm Sản Phẩm</button>
-                </div>
-            </form>
-        	</div>
-    	</div>
     </div>
 
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
