@@ -2,25 +2,40 @@
 <html lang="en">
 
 <head>
-    <title>Quản lý sản phẩm</title>
+    <title>Sản phẩm Sofa</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 </head>
 
 <body>
-<!--     <div>
+    <!--     <div>
         <a tal:condition="view.logged_in is None"
             href="${request.application_url}/login">Log In</a>
         <a tal:condition="view.logged_in is not None"
             href="${request.application_url}/logout">Logout</a>
     </div> -->
-    <h2 class="text-center"><a href="${request.route_url('home')}">Trở về trang chủ</a></h2>
+    <h2 class="text-center"><a href="${request.route_url('sanpham')}">Tất cả sản phẩm</a></h2>
     <div class="container">
-        
+
         <section id="inner" class="inner-section section">
-            <h2 class="text-center">Danh sách sản phẩm</h2>
+            <h2 class="text-center">Sản phẩm Sofa</h2>
             <div class="inner-wrapper row">
-                <a href="${request.route_url('addsanpham')}" class="btn btn-primary" style="margin-bottom: 30px;">
-                    <i class="fa fa-plus"></i>+ Thêm sản phẩm</a>
+                <div class="d-flex justify-content-center">
+                    <a href="${request.route_url('ban')}" class="btn btn-success" style="margin-bottom: 24px;" >
+                        <i class="fa fa-plus"></i>Bàn
+                    </a>
+                    <a href="" class="btn btn-success"  style="margin-bottom: 24px;">
+                        <i class="fa fa-plus"></i>Ghế
+                    </a>
+                    <a href="" class="btn btn-success"  style="margin-bottom: 24px;">
+                        <i class="fa fa-plus"></i>Đèn
+                    </a>
+                    <a href="" class="btn btn-success"  style="margin-bottom: 24px;">
+                        <i class="fa fa-plus"></i>Giường
+                    </a>
+                    <a href="" class="btn btn-success"  style="margin-bottom: 24px;">
+                        <i class="fa fa-plus"></i>Gương
+                    </a>
+                </div>
                 <table id="books" style="width:100%" class="table table-bordered table-responsive table-striped">
                     <tr>
                         <th>Tên Sản Phẩm</th>
@@ -28,13 +43,13 @@
                         <th>Danh Mục</th>
                         <th>Action</th>
                     </tr>
-                    <tr  tal:repeat="sanpham sanphams">
+                    <tr tal:repeat="sanpham sanphams">
                         <td>${sanpham.tensanpham}</td>
                         <td>${sanpham.donvitinh}</td>
                         <td>${sanpham.id_dm}</td>
                         <td>
                             <a href="${request.route_url('updatesp', id_sp=sanpham.id_sp)}" class="btn btn-xs btn-warning">
-                                        <i alt="Edit" class="fa fa-pencil"> Edit</i></a>
+                                <i alt="Edit" class="fa fa-pencil"> Edit</i></a>
                             <form class='delete' method="POST" action="${request.route_url('deletesp')}" style='display: inline;'>
                                 <input type='hidden' name='id_sp' value=${sanpham.id_sp}>
                                 <button type='submit' class='btn btn-xs btn-danger' name='form.delete'>
@@ -43,7 +58,16 @@
                             </form>
                         </td>
                     </tr>
+                    <tr style="border: none;">
+                        <td colspan="4" class="text-center">
+                            <a href="${request.route_url('addsanpham')}" class="btn btn-primary">
+                                <i class="fa fa-plus"></i>+ Thêm sản phẩm
+                            </a>
+                        </td>
+                    </tr>
+
                 </table>
+
             </div>
         </section>
     </div>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Sản phẩm bàn</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+</head>
+
+<body>
+    <!--     <div>
+        <a tal:condition="view.logged_in is None"
+            href="${request.application_url}/login">Log In</a>
+        <a tal:condition="view.logged_in is not None"
+            href="${request.application_url}/logout">Logout</a>
+    </div> -->
+    <h2 class="text-center"><a href="${request.route_url('sanpham')}">Tất cả sản phẩm</a></h2>
+    <div class="container">
+
+        <section id="inner" class="inner-section section">
+            <h2 class="text-center">Sản phẩm bàn</h2>
+            <div class="inner-wrapper row">
+                <div class="d-flex justify-content-center">
+                    <a href="${request.route_url('ban')}" class="btn btn-success" style="margin-bottom: 24px;" >
+                        <i class="fa fa-plus"></i>Bàn
+                    </a>
+                    <a href="${request.route_url('sofa')}" class="btn btn-success"  style="margin-bottom: 24px;">
+                        <i class="fa fa-plus"></i>Sofa
+                    </a>
+                    <a href="" class="btn btn-success"  style="margin-bottom: 24px;">
+                        <i class="fa fa-plus"></i>Đèn
+                    </a>
+                    <a href="" class="btn btn-success"  style="margin-bottom: 24px;">
+                        <i class="fa fa-plus"></i>Giường
+                    </a>
+                    <a href="" class="btn btn-success"  style="margin-bottom: 24px;">
+                        <i class="fa fa-plus"></i>Gương
+                    </a>
+                </div>
+                <table id="books" style="width:100%" class="table table-bordered table-responsive table-striped">
+                    <tr>
+                        <th>Tên Sản Phẩm</th>
+                        <th>Đơn Vị Tính</th>
+                        <th>Danh Mục</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr tal:repeat="sanpham sanphams">
+                        <td>${sanpham.tensanpham}</td>
+                        <td>${sanpham.donvitinh}</td>
+                        <td>${sanpham.id_dm}</td>
+                        <td>
+                            <a href="${request.route_url('updatesp', id_sp=sanpham.id_sp)}" class="btn btn-xs btn-warning">
+                                <i alt="Edit" class="fa fa-pencil"> Edit</i></a>
+                            <form class='delete' method="POST" action="${request.route_url('deletesp')}" style='display: inline;'>
+                                <input type='hidden' name='id_sp' value=${sanpham.id_sp}>
+                                <button type='submit' class='btn btn-xs btn-danger' name='form.delete'>
+                                        <i alt='Delete' class='fa fa-trash'>Delete</i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr style="border: none;">
+                        <td colspan="4" class="text-center">
+                            <a href="${request.route_url('addsanpham')}" class="btn btn-primary">
+                                <i class="fa fa-plus"></i>+ Thêm sản phẩm
+                            </a>
+                        </td>
+                    </tr>
+
+                </table>
+
+            </div>
+        </section>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -31,44 +31,16 @@ from .models import DBSession, SanPham, NhanVien, DanhMuc
 #         colander.String(),
 #         widget=deform.widget.RichTextWidget()
 #     )
-
 @view_defaults(renderer='home.pt')
-class WikiViews:
+class Home:
     def __init__(self, request):
         self.request = request
         self.logged_in = request.authenticated_userid
-    # @property
-    # def wiki_form(self):
-    #     schema = WikiPage()
-    #     return deform.Form(schema, buttons=('submit',))
-
-    # @property
-    # def reqts(self):
-    #     return self.wiki_form.get_widget_resources()
 
     @view_config(route_name='home')
     def home(self):
         return {'name': 'Quản lý cửa hàng nội thất'}
 
-    @view_config(route_name='sanpham', renderer='sanpham.pt', permission='edit')
-    def showsanpham(self):
-        sanphams = DBSession.query(SanPham)
-        # for sanpham in sanphams:
-        #     print(sanpham.__dict__)
-        return dict(sanphams=sanphams)
-
-    @property
-    def counter(self):
-        session = self.request.session
-        if 'counter' in session:
-            session['counter'] += 1
-        else:
-            session['counter'] = 1
-
-        return session['counter']
-
-
-    
     @view_config(route_name='login', renderer='login.pt')
     @forbidden_view_config(renderer='login.pt')
     def login(self):
@@ -146,7 +118,135 @@ class WikiViews:
             'status': 'Đăng ký thành công!'
         }
 
-    @view_config(route_name='addsanpham', renderer='addsanpham.pt', permission='edit')
+# @view_defaults(renderer='home.pt')
+class ManageProduct:
+    def __init__(self, request):
+        self.request = request
+        self.logged_in = request.authenticated_userid
+    # @property
+    # def wiki_form(self):
+    #     schema = WikiPage()
+    #     return deform.Form(schema, buttons=('submit',))
+
+    # @property
+    # def reqts(self):
+    #     return self.wiki_form.get_widget_resources()
+
+    # @view_config(route_name='home')
+    # def home(self):
+    #     return {'name': 'Quản lý cửa hàng nội thất'}
+
+    @view_config(route_name='sanpham', renderer='sp/sanpham.pt', permission='edit')
+    def showsanpham(self):
+        sanphams = DBSession.query(SanPham)
+        # for sanpham in sanphams:
+        #     print(sanpham.__dict__)
+        return dict(sanphams=sanphams)
+
+    @view_config(route_name='ban', renderer='sp/ban.pt')
+    def showban(self):
+        sanphams = DBSession.query(SanPham).filter_by(id_dm=2)
+        # for sanpham in sanphams:
+        #     print(sanpham.__dict__)
+        return dict(sanphams=sanphams)
+
+    @view_config(route_name='sofa', renderer='sp/sofa.pt')
+    def showsofa(self):
+        sanphams = DBSession.query(SanPham).filter_by(id_dm=1)
+        # for sanpham in sanphams:
+        #     print(sanpham.__dict__)
+        return dict(sanphams=sanphams)
+
+    # @property
+    # def counter(self):
+    #     session = self.request.session
+    #     if 'counter' in session:
+    #         session['counter'] += 1
+    #     else:
+    #         session['counter'] = 1
+
+    #     return session['counter']
+
+
+    
+    # @view_config(route_name='login', renderer='login.pt')
+    # @forbidden_view_config(renderer='login.pt')
+    # def login(self):
+    #     request = self.request
+    #     login_url = request.route_url('login')
+    #     referrer = request.url
+    #     if referrer == login_url:
+    #         referrer = '/'  # never use login form itself as came_from
+    #     came_from = request.params.get('came_from', referrer)
+    #     message = ''
+    #     login = ''
+    #     password = ''
+
+    #     def changeToDict():
+    #         nhanviens = DBSession.query(NhanVien).all()
+    #         nvs = []
+    #         for nhanvien in nhanviens:
+    #             tnv = nhanvien.__dict__
+    #             nvs.append(tnv)
+    #         grp = {}
+    #         urs = {}
+    #         for x in nvs:
+    #             urs[x['username']] = x['password']
+    #             grp[x['username']] = ['group:editors']
+    #         USERS.update(urs)
+    #         GROUPS.update(grp)
+    #         return USERS,GROUPS
+        
+    #     changeToDict()
+
+    #     # print(USERS[userid])
+
+    #     if 'form.submitted' in request.params:
+    #         login = request.params['login']
+    #         password = request.params['password']
+    #         hashed_pw = USERS.get(login)
+    #         if hashed_pw:
+    #             headers = remember(request, login)
+    #             return HTTPFound(location=came_from,
+    #                              headers=headers)
+    #         message = 'Failed login'
+
+    #     return dict(
+    #         name='Login',
+    #         message=message,
+    #         url=request.application_url + '/login',
+    #         came_from=came_from,
+    #         login=login,
+    #         password=password,
+    #     )
+
+    # @view_config(route_name='logout')
+    # def logout(self):
+    #     request = self.request
+    #     headers = forget(request)
+    #     url = request.route_url('home')
+    #     return HTTPFound(location=url,
+    #                      headers=headers)
+
+    # @view_config(route_name='register', renderer='register.pt')
+    # def register(self):
+    #     request = self.request
+    #     if 'form.save' in request.params:
+    #         name = request.params['name']
+    #         username = request.params['username']
+    #         password = request.params['password']
+
+    #         DBSession.add(NhanVien(tennhanvien=name, username=username, password=password))
+            
+    #         headers = forget(request)
+    #         url = request.route_url('login')
+    #         return HTTPFound(location=url,
+    #                      headers=headers)
+    #     return {
+    #         'status': 'Đăng ký thành công!'
+    #     }
+
+    @view_config(route_name='addsanpham', renderer='sp/addsanpham.pt')
     def addsanpham(self):
         request = self.request
         if 'form.add' in request.params:
@@ -167,7 +267,7 @@ class WikiViews:
             'status': 'Thêm sản phẩm thành công!'
         }
 
-    @view_config(route_name='deletesp', renderer='sanpham.pt', permission='edit')
+    @view_config(route_name='deletesp', renderer='sp/sanpham.pt')
     def deletesp(self):
         request = self.request
         if 'form.delete' in request.params:
@@ -185,7 +285,7 @@ class WikiViews:
             'status': 'Thêm sản phẩm thành công!'
         }
 
-    @view_config(route_name='updatesp', renderer='updatesp.pt', permission='edit')
+    @view_config(route_name='updatesp', renderer='sp/updatesp.pt')
     def updatesp(self):
         request = self.request
         id_sp = int(self.request.matchdict['id_sp'])

@@ -22,7 +22,6 @@
 
 
     <h1 class="text-center">${name}</h1>
-    <p class="text-center">Count: ${view.counter}</p>
     <div class="list-group">
         <a href="${request.route_url('sanpham')}" class="list-group-item list-group-item-success text-center" width="50%">QUẢN LÝ SẢN PHẨM</a>
         <a href="#" class="list-group-item list-group-item-info text-center">QUẢN LÝ TÀI KHOẢN NHÂN VIÊN</a>

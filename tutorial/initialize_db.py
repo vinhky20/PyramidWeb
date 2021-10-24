@@ -45,16 +45,7 @@ def main(argv=sys.argv):
 
         modelNV = NhanVien(id_nv=1, tennhanvien='Vinh Ky', username='vinhkyne', password='vinhkyne')
 
-        modelHDBH = HoaDonBanHang(id_hdbh=1, ngaytao=2021-10-10, tenhdbh='Ban le', id_nv=1)
-        modelCTHDBH = ChiTietHDBH(soluong=5, giasp=15000000, id_sp=1, id_hdbh=1)
-
-        modelHDNH = HoaDonNhapHang(id_hdnh=1, ngaytao=2021-10-10, tenhdnh='Nhap ghe sofa', id_nv=1)
-        modelCTHDNH = ChiTietHDNH(soluong=10, giasp=15000000, id_sp=1, id_hdnh=1)
 
         DBSession.add(modelDM)
         DBSession.add(modelSP)
         DBSession.add(modelNV)
-        DBSession.add(modelHDBH)
-        DBSession.add(modelCTHDBH)
-        DBSession.add(modelHDNH)
-        DBSession.add(modelCTHDNH)

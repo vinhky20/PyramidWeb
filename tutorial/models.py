@@ -23,16 +23,6 @@ DBSession = scoped_session(sessionmaker())
 register(DBSession)
 Base = declarative_base()
 
-
-# class Page(Base):
-#     __tablename__ = 'wikipages'
-#     uid = Column(Integer, primary_key=True)
-#     title = Column(Text, unique=True)
-#     body = Column(Text)
-
-
-
-
 class DanhMuc(Base):
     __tablename__ = 'danhmuc'
     id_dm = Column(Integer, primary_key=True)
