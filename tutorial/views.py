@@ -2,12 +2,15 @@ import colander
 import transaction
 from pyramid.httpexceptions import (
     HTTPFound,
+    HTTPForbidden,
 )
 
 from pyramid.security import (
     remember,
     forget,
 )
+
+from .security import SecurityPolicy
 
 from pyramid.view import (
     view_config,
@@ -39,12 +42,14 @@ class Home:
 
     @view_config(route_name='home')
     def home(self):
-        return {'name': 'Quản lý cửa hàng nội thất'}
+        return {'name': 'CỬA HÀNG NỘI THẤT TÂM ĐỨC'}
+
 
     @view_config(route_name='login', renderer='login.pt')
     @forbidden_view_config(renderer='login.pt')
     def login(self):
         request = self.request
+
         login_url = request.route_url('login')
         referrer = request.url
         if referrer == login_url:
@@ -53,6 +58,8 @@ class Home:
         message = ''
         login = ''
         password = ''
+
+
 
         def changeToDict():
             nhanviens = DBSession.query(NhanVien).all()
@@ -82,6 +89,7 @@ class Home:
                 return HTTPFound(location=came_from,
                                  headers=headers)
             message = 'Failed login'
+
 
         return dict(
             name='Login',
@@ -117,6 +125,69 @@ class Home:
         return {
             'status': 'Đăng ký thành công!'
         }
+
+    @view_config(route_name='manageAcc', renderer="manageAcc.pt", permission='edit')
+    def manageAcc(self):
+        request = self.request
+        un = request.authenticated_userid
+        print(un)
+        nhanvien = DBSession.query(NhanVien).filter_by(username=un).one()
+
+        if 'form.update' in request.params:
+            fullname = request.params['fullname']
+            username = request.params['username']
+            password = request.params['password']
+
+            nhanvien.tennhanvien = fullname
+            nhanvien.username = username
+            nhanvien.password = password
+            transaction.commit();
+
+            # DBSession.update(nhanvien(tennhanvien=tennhanvien, donvitinh=dvt, id_dm=id_dm))
+            
+            headers = forget(request)
+            url = request.route_url('home')
+            return HTTPFound(location=url,
+                         headers=headers)
+
+        if 'form.delete' in request.params:
+            DBSession.query(NhanVien).filter_by(username=un).delete()
+
+            headers = forget(request)
+            url = request.route_url('home')
+            return HTTPFound(location=url,
+                         headers=headers)
+
+        return dict(nhanvien=nhanvien)
+
+    # @view_config(route_name='updateacc', renderer='changeAcc.pt', permission='edit')
+    # def updateacc(self):
+    #     request = self.request
+    #     un = request.authenticated_userid
+    #     print(un)
+
+    #     nhanvien = DBSession.query(NhanVien).filter_by(username=un).one()
+
+
+    #     if 'form.update' in request.params:
+    #         fullname = request.params['fullname']
+    #         username = request.params['username']
+    #         password = request.params['password']
+
+    #         id_dm = dm.id_dm
+    #         sanpham.tensanpham = tensanpham
+    #         sanpham.donvitinh = dvt
+    #         sanpham.id_dm = id_dm
+    #         transaction.commit();
+
+    #         # DBSession.update(SanPham(tensanpham=tensanpham, donvitinh=dvt, id_dm=id_dm))
+            
+    #         headers = forget(request)
+    #         url = request.route_url('sanpham')
+    #         return HTTPFound(location=url,
+    #                      headers=headers)
+
+    #     return dict(nhanvien=nhanvien)
 
 # @view_defaults(renderer='home.pt')
 class ManageProduct:
@@ -166,85 +237,6 @@ class ManageProduct:
     #         session['counter'] = 1
 
     #     return session['counter']
-
-
-    
-    # @view_config(route_name='login', renderer='login.pt')
-    # @forbidden_view_config(renderer='login.pt')
-    # def login(self):
-    #     request = self.request
-    #     login_url = request.route_url('login')
-    #     referrer = request.url
-    #     if referrer == login_url:
-    #         referrer = '/'  # never use login form itself as came_from
-    #     came_from = request.params.get('came_from', referrer)
-    #     message = ''
-    #     login = ''
-    #     password = ''
-
-    #     def changeToDict():
-    #         nhanviens = DBSession.query(NhanVien).all()
-    #         nvs = []
-    #         for nhanvien in nhanviens:
-    #             tnv = nhanvien.__dict__
-    #             nvs.append(tnv)
-    #         grp = {}
-    #         urs = {}
-    #         for x in nvs:
-    #             urs[x['username']] = x['password']
-    #             grp[x['username']] = ['group:editors']
-    #         USERS.update(urs)
-    #         GROUPS.update(grp)
-    #         return USERS,GROUPS
-        
-    #     changeToDict()
-
-    #     # print(USERS[userid])
-
-    #     if 'form.submitted' in request.params:
-    #         login = request.params['login']
-    #         password = request.params['password']
-    #         hashed_pw = USERS.get(login)
-    #         if hashed_pw:
-    #             headers = remember(request, login)
-    #             return HTTPFound(location=came_from,
-    #                              headers=headers)
-    #         message = 'Failed login'
-
-    #     return dict(
-    #         name='Login',
-    #         message=message,
-    #         url=request.application_url + '/login',
-    #         came_from=came_from,
-    #         login=login,
-    #         password=password,
-    #     )
-
-    # @view_config(route_name='logout')
-    # def logout(self):
-    #     request = self.request
-    #     headers = forget(request)
-    #     url = request.route_url('home')
-    #     return HTTPFound(location=url,
-    #                      headers=headers)
-
-    # @view_config(route_name='register', renderer='register.pt')
-    # def register(self):
-    #     request = self.request
-    #     if 'form.save' in request.params:
-    #         name = request.params['name']
-    #         username = request.params['username']
-    #         password = request.params['password']
-
-    #         DBSession.add(NhanVien(tennhanvien=name, username=username, password=password))
-            
-    #         headers = forget(request)
-    #         url = request.route_url('login')
-    #         return HTTPFound(location=url,
-    #                      headers=headers)
-    #     return {
-    #         'status': 'Đăng ký thành công!'
-    #     }
 
     @view_config(route_name='addsanpham', renderer='sp/addsanpham.pt')
     def addsanpham(self):
