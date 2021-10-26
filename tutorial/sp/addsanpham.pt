@@ -18,6 +18,11 @@
                         <p class="wow fadeIn" data-wow-duration="2s">Thêm sản phẩm</p>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3 text-center">
+                        <a class="wow fadeIn" href="/sanpham">Home</a>
+                    </div>
+                </div>
 
                 <div class="inner-wrapper row">
                     <div class="col-md-12">
@@ -35,8 +40,8 @@
                                 <select name="danhmuc" class="custom-select form-control">
                                     <option selected>Chọn danh mục của sản phẩm</option>
                                     <option value="sofa">Sofa</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                    <option value="bàn">Bàn</option>
+
                                 </select>
                                 <!-- <input class="form-control" maxlen="255" type="text" name="danhmuc" /> -->
                             </div>

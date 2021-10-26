@@ -42,7 +42,9 @@ class Home:
 
     @view_config(route_name='home')
     def home(self):
-        return {'name': 'CỬA HÀNG NỘI THẤT TÂM ĐỨC'}
+                
+        return {'name': 'CỬA HÀNG NỘI THẤT'}
+            
 
 
     @view_config(route_name='login', renderer='login.pt')
@@ -130,7 +132,7 @@ class Home:
     def manageAcc(self):
         request = self.request
         un = request.authenticated_userid
-        print(un)
+        # print(un)
         nhanvien = DBSession.query(NhanVien).filter_by(username=un).one()
 
         if 'form.update' in request.params:
@@ -209,7 +211,10 @@ class ManageProduct:
 
     @view_config(route_name='sanpham', renderer='sp/sanpham.pt', permission='edit')
     def showsanpham(self):
+        request = self.request
         sanphams = DBSession.query(SanPham)
+        for sanpham in sanphams:
+            print(sanpham.danhmuc.tendanhmuc)
         # for sanpham in sanphams:
         #     print(sanpham.__dict__)
         return dict(sanphams=sanphams)

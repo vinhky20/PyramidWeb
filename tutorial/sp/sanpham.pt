@@ -40,7 +40,7 @@
                     <tr tal:repeat="sanpham sanphams">
                         <td>${sanpham.tensanpham}</td>
                         <td>${sanpham.donvitinh}</td>
-                        <td>${sanpham.id_dm}</td>
+                        <td>${sanpham.danhmuc.tendanhmuc}</td>
                         <td>
                             <a href="${request.route_url('updatesp', id_sp=sanpham.id_sp)}" class="btn btn-xs btn-warning">
                                 <i alt="Edit" class="fa fa-pencil"> Edit</i></a>

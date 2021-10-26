@@ -78,10 +78,3 @@ class ChiTietHDNH(Base):
     hoadonnhaphang = relationship(HoaDonNhapHang)
 
         
-
-# class Root:
-#     __acl__ = [(Allow, Everyone, 'view'),
-#                (Allow, 'group:editors', 'edit')]
-
-#     def __init__(self, request):
-#         pass
