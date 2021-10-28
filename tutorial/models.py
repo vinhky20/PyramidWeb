@@ -46,13 +46,14 @@ class NhanVien(Base):
 class HoaDonBanHang(Base):
     __tablename__ = 'hoadonbanhang'
     id_hdbh = Column(Integer, primary_key=True)
-    ngaytao = Column(Date, nullable=False)
+    
     tenhdbh = Column(String(250), nullable=False)
     id_nv = Column(Integer, ForeignKey('nhanvien.id_nv'))
     nhanvien = relationship(NhanVien)
 
 class ChiTietHDBH(Base):
     __tablename__ = 'chitiethdbh'
+    ngaytao = Column(Date, nullable=False)
     soluong = Column(Integer, nullable=False)
     giasp = Column(Integer, nullable=False)
     id_sp = Column(Integer, ForeignKey('sanpham.id_sp'), primary_key=True)
@@ -63,13 +64,13 @@ class ChiTietHDBH(Base):
 class HoaDonNhapHang(Base):
     __tablename__ = 'hoadonnhaphang'
     id_hdnh = Column(Integer, primary_key=True)
-    ngaytao = Column(Date, nullable=False)
     tenhdnh = Column(String(250), nullable=False)
     id_nv = Column(Integer, ForeignKey('nhanvien.id_nv'))
     nhanvien = relationship(NhanVien)
 
 class ChiTietHDNH(Base):
     __tablename__ = 'chitiethdnh'
+    ngaytao = Column(Date, nullable=False)
     soluong = Column(Integer, nullable=False)
     giasp = Column(Integer, nullable=False)
     id_sp = Column(Integer, ForeignKey('sanpham.id_sp'), primary_key=True)

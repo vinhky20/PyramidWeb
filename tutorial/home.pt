@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quick Tutoria: ${name}</title>
+    <title>${name}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 
 </head>
@@ -33,7 +33,7 @@
             <a href="${request.route_url('sanpham')}" class="list-group-item list-group-item-success text-center" style="line-height: 64px; font-size: 24px">QUẢN LÝ SẢN PHẨM</a>
             <a href="${request.route_url('manageAcc')}"  class="list-group-item list-group-item-info text-center" style="line-height: 64px; font-size: 24px">QUẢN LÝ TÀI KHOẢN</a>
             <a href="#" class="list-group-item list-group-item-warning text-center" style="line-height: 64px; font-size: 24px">TẠO HOÁ ĐƠN NHẬP/XUẤT</a>
-            <a href="#" class="list-group-item list-group-item-danger text-center" style="line-height: 64px; font-size: 24px">TẠO BÁO BIỂU</a>
+            <a href="${request.route_url('createreport')}" class="list-group-item list-group-item-danger text-center" style="line-height: 64px; font-size: 24px">TẠO BÁO BIỂU</a>
         </div>
     </div>
 

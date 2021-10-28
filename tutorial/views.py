@@ -21,19 +21,11 @@ from pyramid.view import (
 from .security import (
     USERS,
     GROUPS
-    # check_password,
-    # hash_password
 )
 
-from .models import DBSession, SanPham, NhanVien, DanhMuc
+from .models import DBSession, SanPham, NhanVien, DanhMuc, ChiTietHDBH, ChiTietHDNH
 
 
-# class WikiPage(colander.MappingSchema):
-#     title = colander.SchemaNode(colander.String())
-#     body = colander.SchemaNode(
-#         colander.String(),
-#         widget=deform.widget.RichTextWidget()
-#     )
 @view_defaults(renderer='home.pt')
 class Home:
     def __init__(self, request):
@@ -45,7 +37,6 @@ class Home:
                 
         return {'name': 'CỬA HÀNG NỘI THẤT'}
             
-
 
     @view_config(route_name='login', renderer='login.pt')
     @forbidden_view_config(renderer='login.pt')
@@ -61,8 +52,6 @@ class Home:
         login = ''
         password = ''
 
-
-
         def changeToDict():
             nhanviens = DBSession.query(NhanVien).all()
             nvs = []
@@ -76,6 +65,7 @@ class Home:
                 grp[x['username']] = ['group:editors']
             USERS.update(urs)
             GROUPS.update(grp)
+
             return USERS,GROUPS
         
         changeToDict()
@@ -144,8 +134,6 @@ class Home:
             nhanvien.username = username
             nhanvien.password = password
             transaction.commit();
-
-            # DBSession.update(nhanvien(tennhanvien=tennhanvien, donvitinh=dvt, id_dm=id_dm))
             
             headers = forget(request)
             url = request.route_url('home')
@@ -162,61 +150,17 @@ class Home:
 
         return dict(nhanvien=nhanvien)
 
-    # @view_config(route_name='updateacc', renderer='changeAcc.pt', permission='edit')
-    # def updateacc(self):
-    #     request = self.request
-    #     un = request.authenticated_userid
-    #     print(un)
-
-    #     nhanvien = DBSession.query(NhanVien).filter_by(username=un).one()
-
-
-    #     if 'form.update' in request.params:
-    #         fullname = request.params['fullname']
-    #         username = request.params['username']
-    #         password = request.params['password']
-
-    #         id_dm = dm.id_dm
-    #         sanpham.tensanpham = tensanpham
-    #         sanpham.donvitinh = dvt
-    #         sanpham.id_dm = id_dm
-    #         transaction.commit();
-
-    #         # DBSession.update(SanPham(tensanpham=tensanpham, donvitinh=dvt, id_dm=id_dm))
-            
-    #         headers = forget(request)
-    #         url = request.route_url('sanpham')
-    #         return HTTPFound(location=url,
-    #                      headers=headers)
-
-    #     return dict(nhanvien=nhanvien)
-
-# @view_defaults(renderer='home.pt')
 class ManageProduct:
     def __init__(self, request):
         self.request = request
         self.logged_in = request.authenticated_userid
-    # @property
-    # def wiki_form(self):
-    #     schema = WikiPage()
-    #     return deform.Form(schema, buttons=('submit',))
-
-    # @property
-    # def reqts(self):
-    #     return self.wiki_form.get_widget_resources()
-
-    # @view_config(route_name='home')
-    # def home(self):
-    #     return {'name': 'Quản lý cửa hàng nội thất'}
 
     @view_config(route_name='sanpham', renderer='sp/sanpham.pt', permission='edit')
     def showsanpham(self):
         request = self.request
         sanphams = DBSession.query(SanPham)
         for sanpham in sanphams:
-            print(sanpham.danhmuc.tendanhmuc)
-        # for sanpham in sanphams:
-        #     print(sanpham.__dict__)
+            print(type(sanpham))
         return dict(sanphams=sanphams)
 
     @view_config(route_name='ban', renderer='sp/ban.pt')
@@ -269,10 +213,8 @@ class ManageProduct:
         request = self.request
         if 'form.delete' in request.params:
             id_sp = request.params['id_sp']
-            # User.query.filter_by(id=123).delete()
 
             DBSession.query(SanPham).filter_by(id_sp=id_sp).delete()
-
             
             headers = forget(request)
             url = request.route_url('sanpham')
@@ -300,8 +242,6 @@ class ManageProduct:
             sanpham.donvitinh = dvt
             sanpham.id_dm = id_dm
             transaction.commit();
-
-            # DBSession.update(SanPham(tensanpham=tensanpham, donvitinh=dvt, id_dm=id_dm))
             
             headers = forget(request)
             url = request.route_url('sanpham')
@@ -310,66 +250,38 @@ class ManageProduct:
 
         return dict(sanpham=sanpham)
         
+    @view_config(route_name='createreport', renderer='dh/createreport.pt', permission='edit')
+    def createreport(self):
+        request = self.request
+
+        return {
+            'status': 'Tạo báo biểu'
+        }
+
+    @view_config(route_name='create', renderer='dh/create.pt')
+    def createreport(self):
+        request = self.request
+
+        if 'form.export' in request.params:
+            start = request.params['from']
+            end = request.params['to']
+
+            sps = DBSession.query(ChiTietHDBH).filter(ChiTietHDBH.ngaytao.between(start, end))
+
+                
+            return dict(sps=sps, start=start, end=end)
+
+        if 'form.import' in request.params:
+            start = request.params['from']
+            end = request.params['to']
+
+            sps = DBSession.query(ChiTietHDNH).filter(ChiTietHDNH.ngaytao.between(start, end))
+
+                
+            return dict(sps=sps, start=start, end=end)
+
+        return {
+            'status': 'Tạo báo biểu'
+        }
 
 
-    # @view_config(route_name='wikipage_add',
-    #              renderer='wikipage_addedit.pt')
-    # def wikipage_add(self):
-    #     form = self.wiki_form.render()
-
-    #     if 'submit' in self.request.params:
-    #         controls = self.request.POST.items()
-    #         try:
-    #             appstruct = self.wiki_form.validate(controls)
-    #         except deform.ValidationFailure as e:
-    #             # Form is NOT valid
-    #             return dict(form=e.render())
-
-    #         # Add a new page to the database
-    #         new_title = appstruct['title']
-    #         new_body = appstruct['body']
-    #         DBSession.add(Page(title=new_title, body=new_body))
-
-    #         # Get the new ID and redirect
-    #         page = DBSession.query(Page).filter_by(title=new_title).one()
-    #         new_uid = page.uid
-
-    #         url = self.request.route_url('wikipage_view', uid=new_uid)
-    #         return HTTPFound(url)
-
-    #     return dict(form=form)
-
-
-    # @view_config(route_name='wikipage_view', renderer='wikipage_view.pt')
-    # def wikipage_view(self):
-    #     id_sp = int(self.request.matchdict['id_sp'])
-    #     sanpham = DBSession.query(SanPham).filter_by(id_sp=id_sp).one()
-    #     return dict(sanpham=sanpham)
-
-
-    # @view_config(route_name='wikipage_edit',
-    #              renderer='wikipage_addedit.pt')
-    # def wikipage_edit(self):
-    #     uid = int(self.request.matchdict['uid'])
-    #     page = DBSession.query(Page).filter_by(uid=uid).one()
-
-    #     wiki_form = self.wiki_form
-
-    #     if 'submit' in self.request.params:
-    #         controls = self.request.POST.items()
-    #         try:
-    #             appstruct = wiki_form.validate(controls)
-    #         except deform.ValidationFailure as e:
-    #             return dict(page=page, form=e.render())
-
-    #         # Change the content and redirect to the view
-    #         page.title = appstruct['title']
-    #         page.body = appstruct['body']
-    #         url = self.request.route_url('wikipage_view', uid=uid)
-    #         return HTTPFound(url)
-
-    #     form = self.wiki_form.render(dict(
-    #         uid=page.uid, title=page.title, body=page.body)
-    #     )
-
-    #     return dict(page=page, form=form)

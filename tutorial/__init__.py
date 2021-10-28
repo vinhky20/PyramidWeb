@@ -39,6 +39,10 @@ def main(global_config, **settings):
     config.add_route('deletesp', '/deletesp')
     config.add_route('updatesp', '/updatesp/{id_sp}')
     # config.add_route('login', '/login')
+
+    config.add_route('createreport', '/createreport')
+    config.add_route('create', '/create')
+
     # config.add_route('register', '/register')
     # config.add_route('logout', '/logout')
 
