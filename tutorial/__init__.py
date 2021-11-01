@@ -42,6 +42,13 @@ def main(global_config, **settings):
 
     config.add_route('createreport', '/createreport')
     config.add_route('create', '/create')
+    config.add_route('create-bill', '/bill')
+    config.add_route('create-hdbh', '/hdbh/{id_hdbh}')
+    config.add_route('create-hdnh', '/hdnh/{id_hdnh}')
+
+    config.add_route('addProductToBill', '/addproducttobill')
+
+
 
     # config.add_route('register', '/register')
     # config.add_route('logout', '/logout')

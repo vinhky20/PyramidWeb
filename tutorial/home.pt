@@ -6,40 +6,72 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${name}</title>
+    <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
 </head>
 <style type="text/css">
-    body {
-
-    }
+    body {}
 </style>
+
 <body>
+    <!-- Button trigger modal -->
+
 
 
 
 
     <div class="container" style="margin-top: 5%; ">
         <h1 class="text-center" style="color: green">${name}</h1>
-        <a tal:condition="view.logged_in is None" class="btn btn-info navbar-btn"
-            href="${request.application_url}/login">Log In</a>
+        <a tal:condition="view.logged_in is None" class="btn btn-info navbar-btn" href="${request.application_url}/login">Log In</a>
 
-        <a tal:condition="view.logged_in is not None" class="btn btn-info navbar-btn"
-            href="${request.application_url}/logout">Logout</a>
+        <a tal:condition="view.logged_in is not None" class="btn btn-info navbar-btn" href="${request.application_url}/logout">Logout</a>
 
-        <a tal:condition="view.logged_in is None" class="btn btn-info navbar-btn"
-            href="${request.route_url('register')}">Register</a>
+        <a tal:condition="view.logged_in is None" class="btn btn-info navbar-btn" href="${request.route_url('register')}">Register</a>
         <div class="list-group">
             <a href="${request.route_url('sanpham')}" class="list-group-item list-group-item-success text-center" style="line-height: 64px; font-size: 24px">QUẢN LÝ SẢN PHẨM</a>
-            <a href="${request.route_url('manageAcc')}"  class="list-group-item list-group-item-info text-center" style="line-height: 64px; font-size: 24px">QUẢN LÝ TÀI KHOẢN</a>
-            <a href="#" class="list-group-item list-group-item-warning text-center" style="line-height: 64px; font-size: 24px">TẠO HOÁ ĐƠN NHẬP/XUẤT</a>
+            <a href="${request.route_url('manageAcc')}" class="list-group-item list-group-item-info text-center" style="line-height: 64px; font-size: 24px">QUẢN LÝ TÀI KHOẢN</a>
+            <a href="${request.route_url('create-bill')}" class="list-group-item list-group-item-warning text-center" style="line-height: 64px; font-size: 24px">TẠO HOÁ ĐƠN NHẬP/XUẤT</a>
             <a href="${request.route_url('createreport')}" class="list-group-item list-group-item-danger text-center" style="line-height: 64px; font-size: 24px">TẠO BÁO BIỂU</a>
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+    <!-- Modal -->
+<!--     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form method="post" action="">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Nhập tên hoá đơn</h4>
+                    </div>
+                    <div class="modal-body form-group">
+                        <label for="tenhdbh">Tên hoá đơn</label>
+                        <input class="form-control" maxlen="255" type="text" name="tenhdbh" value="" />
+                    </div>
+                    <div class="modal-footer form-group">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" name="form.createbill">Tạo hoá đơn</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        $('#myModal').on('shown.bs.modal', function(e) {
+            e.preventDefault();
+            $('#myInput').focus()
+        })
+    </script> -->
+
+    <script src=" https://code.jquery.com/jquery-1.12.4.min.js " integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ " crossorigin="anonymous "></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js " integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd " crossorigin="anonymous "></script>
 </body>
 
 </html>

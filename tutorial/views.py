@@ -1,9 +1,16 @@
 import colander
+import datetime
 import transaction
 from pyramid.httpexceptions import (
     HTTPFound,
     HTTPForbidden,
 )
+
+from pyramid.view import (
+    view_config,
+    view_defaults
+)
+
 
 from pyramid.security import (
     remember,
@@ -23,7 +30,7 @@ from .security import (
     GROUPS
 )
 
-from .models import DBSession, SanPham, NhanVien, DanhMuc, ChiTietHDBH, ChiTietHDNH
+from .models import DBSession, SanPham, NhanVien, DanhMuc, ChiTietHDBH, ChiTietHDNH, HoaDonBanHang, HoaDonNhapHang
 
 
 @view_defaults(renderer='home.pt')
@@ -35,7 +42,17 @@ class Home:
     @view_config(route_name='home')
     def home(self):
                 
-        return {'name': 'CỬA HÀNG NỘI THẤT'}
+        return {'name': 'Nội Thất Sweet Home'}
+
+    # @property
+    # def counter(self):
+    #     session = self.request.session
+    #     if 'counter' in session:
+    #         session['counter'] += 1
+    #     else:
+    #         session['counter'] = 1
+
+    #     return session['counter']
             
 
     @view_config(route_name='login', renderer='login.pt')
@@ -177,15 +194,7 @@ class ManageProduct:
         #     print(sanpham.__dict__)
         return dict(sanphams=sanphams)
 
-    # @property
-    # def counter(self):
-    #     session = self.request.session
-    #     if 'counter' in session:
-    #         session['counter'] += 1
-    #     else:
-    #         session['counter'] = 1
 
-    #     return session['counter']
 
     @view_config(route_name='addsanpham', renderer='sp/addsanpham.pt')
     def addsanpham(self):
@@ -259,29 +268,154 @@ class ManageProduct:
         }
 
     @view_config(route_name='create', renderer='dh/create.pt')
-    def createreport(self):
+    def create(self):
         request = self.request
 
         if 'form.export' in request.params:
+            tenbaobieu = {
+                'ten': 'được bán'
+            }
             start = request.params['from']
             end = request.params['to']
 
             sps = DBSession.query(ChiTietHDBH).filter(ChiTietHDBH.ngaytao.between(start, end))
 
                 
-            return dict(sps=sps, start=start, end=end)
+            return dict(sps=sps, start=start, end=end, tenbaobieu=tenbaobieu)
 
         if 'form.import' in request.params:
+            tenbaobieu = {
+                'ten': 'được nhập'
+            }
             start = request.params['from']
             end = request.params['to']
 
             sps = DBSession.query(ChiTietHDNH).filter(ChiTietHDNH.ngaytao.between(start, end))
 
                 
-            return dict(sps=sps, start=start, end=end)
+            return dict(sps=sps, start=start, end=end, tenbaobieu=tenbaobieu)
 
         return {
             'status': 'Tạo báo biểu'
         }
+    
+    @view_config(route_name='create-bill', renderer='dh/bill.pt', permission='edit')
+    def createBill(self):
+        request = self.request
+
+        tennv = request.authenticated_userid
+
+        nv = DBSession.query(NhanVien).filter_by(username=tennv).one()
+
+        
+        print(nv.id_nv)
+
+        if 'form.hdbh' in request.params:
+            tenhdbh = request.params['tenhd']
+            DBSession.add(HoaDonBanHang(tenhdbh=tenhdbh, id_nv=nv.id_nv))
+
+            hdbh = DBSession.query(HoaDonBanHang).filter_by(tenhdbh=tenhdbh).one()
+            id_hdbh = hdbh.id_hdbh
+
+            DBSession.add(ChiTietHDBH(id_hdbh=id_hdbh, ngaytao=datetime.date.today(), id_sp=1))
+
+            headers = forget(request)
+            url = request.route_url('create-hdbh', id_hdbh=hdbh.id_hdbh)
+            return HTTPFound(location=url,
+                         headers=headers)
+
+        if 'form.hdnh' in request.params:
+            tenhdnh = request.params['tenhd']
+            DBSession.add(HoaDonNhapHang(tenhdnh=tenhdnh, id_nv=nv.id_nv))
+
+            hdnh = DBSession.query(HoaDonNhapHang).filter_by(tenhdnh=tenhdnh).one()
+            id_hdnh = hdnh.id_hdnh
+            print(id_hdnh)
+
+            DBSession.add(ChiTietHDNH(id_hdnh=id_hdnh, ngaytao=datetime.date.today(), id_sp=1))
+
+            headers = forget(request)
+            url = request.route_url('create-hdnh', id_hdnh=hdnh.id_hdnh)
+            return HTTPFound(location=url,
+                         headers=headers)
+
+        return {
+            'name': 'Vinh Ky'
+        }
 
 
+    @view_config(route_name='create-hdbh', renderer='dh/hdbh.pt')
+    def createHDBH(self):
+        request = self.request
+        id_hdbh = int(self.request.matchdict['id_hdbh'])
+
+        idhdbh = {
+            'id_hdbh': id_hdbh
+        }
+
+        cts = DBSession.query(ChiTietHDBH).filter_by(id_hdbh=id_hdbh)
+
+        if 'form.addToBill' in request.params:
+            id_sp = request.params['masp']
+            soluong = request.params['soluong']
+            giasp = request.params['giasp']
+
+            DBSession.add(ChiTietHDBH(id_hdbh=id_hdbh, id_sp=id_sp, ngaytao=datetime.date.today(), soluong=soluong, giasp=giasp))
+
+        if 'form.submit' in request.params:
+            transaction.commit()
+            headers = forget(request)
+            url = request.route_url('create-bill')
+            return HTTPFound(location=url,
+                         headers=headers)
+
+        return dict(cts=cts, idhdbh=idhdbh)
+
+    @view_config(route_name='create-hdnh', renderer='dh/hdnh.pt')
+    def createHDNH(self):
+        request = self.request
+        id_hdnh = int(self.request.matchdict['id_hdnh'])
+
+        idhdnh = {
+            'id_hdnh': id_hdnh
+        }
+
+        cts = DBSession.query(ChiTietHDNH).filter_by(id_hdnh=id_hdnh)
+
+        if 'form.addToBill' in request.params:
+            id_sp = request.params['masp']
+            soluong = request.params['soluong']
+            giasp = request.params['giasp']
+
+            DBSession.add(ChiTietHDNH(id_hdnh=id_hdnh, id_sp=id_sp, ngaytao=datetime.date.today(), soluong=soluong, giasp=giasp))
+
+        if 'form.submit' in request.params:
+            transaction.commit()
+            headers = forget(request)
+            url = request.route_url('create-bill')
+            return HTTPFound(location=url,
+                         headers=headers)
+
+        return dict(cts=cts, idhdnh=idhdnh)
+
+    # @view_config(route_name='addProductToBill', renderer='dh/hdbh.pt')
+    # def addProductToBill(self):
+    #     request = self.request
+    #     id_hdbh = int(self.request.matchdict['id_hdbh'])
+
+    #     if 'form.addToBill' in request.params:
+    #         id_sp = request.params['masp']
+    #         soluong = request.params['soluong']
+    #         giasp = request.params['giasp']
+
+    #         DBSession.add(ChiTietHDBH(id_hdbh=id_hdbh, id_sp=id_sp, ngaytao=datetime.date.today(), soluong=soluong, giasp=giasp))
+
+    #         headers = forget(request)
+    #         url = request.route_url('create-hdbh')
+    #         return HTTPFound(location=url,
+    #                      headers=headers)
+
+        
+    #     return {
+    #         'status': 'Đã thêm sp vào hoá đơn'
+    #     }

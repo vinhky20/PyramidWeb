@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js">
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="d-flex justify-content-center row">
+            <div class="col-md-8">
+                <div class="p-3 bg-white rounded">
+                    <form action="" method="post">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h1 class="text-uppercase">Invoice</h1>
+<!--                                 <div class="billed"><span class="font-weight-bold text-uppercase">Người tạo:</span><span class="ml-1">Jasper Kendrick</span></div>
+                                <div class="billed mt-2"><span class="font-weight-bold text-uppercase">Ngày tạo:</span>
+                                    <span class="ml-1">
+                                        <div class="form-group">
+                                            <input type="date" class="form-control" name="date">
+                                        </div>
+                                    </span>
+                                </div>
+                                <div class="billed"><span class="font-weight-bold text-uppercase">Mã hoá đơn:</span>
+                                    <span class="ml-1">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="idbill">
+                                        </div>
+                                    </span>
+                                </div> -->
+                            </div>
+                            <div class="col-md-6 text-right mt-3 mb-5">
+                                <h4 class="text-danger mb-0">Nội Thất Sweet Home</h4>
+                            </div>
+                            <form class="form-inline" method="POST" action="${request.route_url('create-hdnh', id_hdnh=idhdnh.id_hdnh)}">
+                                <div class="form-group mx-sm-3 mb-2">
+                                    <input type="text" class="form-control" name="masp" placeholder="Mã sản phẩm">
+                                </div>
+                                <div class="form-group mx-sm-3 mb-2">
+                                    <input type="text" class="form-control" name="soluong" placeholder="Số lượng">
+                                </div>
+                                <div class="form-group mx-sm-3 mb-3">
+                                    <input type="text" class="form-control" name="giasp" placeholder="Giá sản phẩm">
+                                </div>
+
+                                <button type="submit" name="form.addToBill" class=" mx-sm-3 mb-2 form-control btn btn-primary mb-2">Thêm vào hoá đơn</button>
+                            </form>
+                        </div>
+
+                        <div class="mt-3">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Sản Phẩm</th>
+                                            <th>Số Lượng</th>
+                                            <th>Giá tiền</th>
+                                            <!-- <th>Total</th> -->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr tal:repeat="ct cts" >
+                                            <td tal:condition="ct.id_sp != 1">${ct.sanpham.tensanpham}</td>
+                                            <td tal:condition="ct.id_sp != 1">
+                                                <div class="input-group">
+                                                    <span class="input-group-text btn btn-danger" onclick="this.parentNode.querySelector('input[type=number]').stepDown()"> -     </span>
+                                                    <input type="number" value="${ct.soluong}" class="form-control text-center" min="1" max="100">
+                                                    <span class="input-group-text btn btn-success" onclick="this.parentNode.querySelector('input[type=number]').stepUp()"> +    </span>
+                                                </div>
+                                            </td>
+                                            <td tal:condition="ct.id_sp != 1">${ct.giasp} VNĐ/CÁI</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="text-right mb-3">
+                        <form method="POST" action="${request.route_url('create-hdnh', id_hdnh=idhdnh.id_hdnh)}">
+                            <input class="btn btn-danger btn-sm mr-5" name="form.submit" type="submit" placeholder="Xác nhận hoá đơn">
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</body>
+
+</html>

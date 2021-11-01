@@ -11,7 +11,7 @@
     <div class="container">
 
         <section id="inner" class="inner-section section">
-            <h4 class="text-center">Tất cả sản phẩm từ ${start} đến ${end}</h4>
+            <h4 class="text-center">Tất cả sản phẩm ${tenbaobieu.ten} từ ${start} đến ${end}</h4>
             <div class="inner-wrapper row">
                 <table id="books" style="width:100%" class="table table-bordered table-responsive table-striped">
                     <tr>
@@ -19,8 +19,8 @@
                         <th>Số lượng</th>
                     </tr>
                     <tr tal:repeat="sp sps">
-                        <td>${sp.sanpham.tensanpham}</td>
-                        <td>${sp.soluong}</td>
+                        <td tal:condition="sp.id_sp != 0">${sp.sanpham.tensanpham}</td>
+                        <td tal:condition="sp.id_sp != 0">${sp.soluong}</td>
                     </tr>
 
                 </table>
