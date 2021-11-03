@@ -19,8 +19,8 @@
                         <th>Số lượng</th>
                     </tr>
                     <tr tal:repeat="sp sps">
-                        <td tal:condition="sp.id_sp != 0">${sp.sanpham.tensanpham}</td>
-                        <td tal:condition="sp.id_sp != 0">${sp.soluong}</td>
+                        <td>${sp.sanpham.tensanpham}</td>
+                        <td>${sp.soluong}</td>
                     </tr>
 
                 </table>

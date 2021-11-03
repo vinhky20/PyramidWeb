@@ -65,15 +65,15 @@
                                     </thead>
                                     <tbody>
                                         <tr tal:repeat="ct cts" >
-                                            <td tal:condition="ct.id_sp != 1">${ct.sanpham.tensanpham}</td>
-                                            <td tal:condition="ct.id_sp != 1">
+                                            <td tal:condition="ct.id_sp != 'test'">${ct.sanpham.tensanpham}</td>
+                                            <td tal:condition="ct.id_sp != 'test'">
                                                 <div class="input-group">
                                                     <span class="input-group-text btn btn-danger" onclick="this.parentNode.querySelector('input[type=number]').stepDown()"> -     </span>
                                                     <input type="number" value="${ct.soluong}" class="form-control text-center" min="1" max="100">
                                                     <span class="input-group-text btn btn-success" onclick="this.parentNode.querySelector('input[type=number]').stepUp()"> +    </span>
                                                 </div>
                                             </td>
-                                            <td tal:condition="ct.id_sp != 1">${ct.giasp} VNĐ/CÁI</td>
+                                            <td tal:condition="ct.id_sp != 'test'">${ct.giasp} VNĐ/CÁI</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -82,7 +82,13 @@
                     </form>
                     <div class="text-right mb-3">
                         <form method="POST" action="${request.route_url('create-hdnh', id_hdnh=idhdnh.id_hdnh)}">
-                            <input class="btn btn-danger btn-sm mr-5" name="form.submit" type="submit" placeholder="Xác nhận hoá đơn">
+                            <button type="submit" class="btn btn-danger btn-sm mr-5" name="form.submit">
+                                Xác nhận hoá đơn
+                            </button>
+                            <button type="submit" class="btn btn-danger btn-sm mr-5" name="form.delete">
+                                Xoá hoá đơn
+                            </button>
+
                         </form>
                     </div>
 

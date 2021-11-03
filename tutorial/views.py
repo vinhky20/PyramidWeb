@@ -200,6 +200,7 @@ class ManageProduct:
     def addsanpham(self):
         request = self.request
         if 'form.add' in request.params:
+            id_sp = request.params['masp']
             tensanpham = request.params['tensp']
             dvt = request.params['dvt']
             danhmuc = request.params['danhmuc']
@@ -207,12 +208,8 @@ class ManageProduct:
             dm = DBSession.query(DanhMuc).filter_by(tendanhmuc=danhmuc).one()
             id_dm = dm.id_dm
 
-            DBSession.add(SanPham(tensanpham=tensanpham, donvitinh=dvt, id_dm=id_dm))
+            DBSession.add(SanPham(id_sp=id_sp, tensanpham=tensanpham, donvitinh=dvt, id_dm=id_dm))
             
-            headers = forget(request)
-            url = request.route_url('sanpham')
-            return HTTPFound(location=url,
-                         headers=headers)
         return {
             'status': 'Thêm sản phẩm thành công!'
         }
@@ -230,13 +227,13 @@ class ManageProduct:
             return HTTPFound(location=url,
                          headers=headers)
         return {
-            'status': 'Thêm sản phẩm thành công!'
+            'status': 'Xoá sản phẩm thành công!'
         }
 
     @view_config(route_name='updatesp', renderer='sp/updatesp.pt')
     def updatesp(self):
         request = self.request
-        id_sp = int(self.request.matchdict['id_sp'])
+        id_sp = str(self.request.matchdict['id_sp'])
         sanpham = DBSession.query(SanPham).filter_by(id_sp=id_sp).one()
 
 
@@ -246,16 +243,15 @@ class ManageProduct:
             danhmuc = request.params['danhmuc']
 
             dm = DBSession.query(DanhMuc).filter_by(tendanhmuc=danhmuc).one()
-            id_dm = dm.id_dm
             sanpham.tensanpham = tensanpham
             sanpham.donvitinh = dvt
-            sanpham.id_dm = id_dm
-            transaction.commit();
+            sanpham.id_dm = dm.id_dm
+            # transaction.commit();
             
-            headers = forget(request)
-            url = request.route_url('sanpham')
-            return HTTPFound(location=url,
-                         headers=headers)
+            # headers = forget(request)
+            # url = request.route_url('sanpham')
+            # return HTTPFound(location=url,
+            #              headers=headers)
 
         return dict(sanpham=sanpham)
         
@@ -317,7 +313,7 @@ class ManageProduct:
             hdbh = DBSession.query(HoaDonBanHang).filter_by(tenhdbh=tenhdbh).one()
             id_hdbh = hdbh.id_hdbh
 
-            DBSession.add(ChiTietHDBH(id_hdbh=id_hdbh, ngaytao=datetime.date.today(), id_sp=1))
+            DBSession.add(ChiTietHDBH(id_hdbh=id_hdbh, ngaytao=datetime.date.today(), id_sp='test'))
 
             headers = forget(request)
             url = request.route_url('create-hdbh', id_hdbh=hdbh.id_hdbh)
@@ -332,7 +328,7 @@ class ManageProduct:
             id_hdnh = hdnh.id_hdnh
             print(id_hdnh)
 
-            DBSession.add(ChiTietHDNH(id_hdnh=id_hdnh, ngaytao=datetime.date.today(), id_sp=1))
+            DBSession.add(ChiTietHDNH(id_hdnh=id_hdnh, ngaytao=datetime.date.today(), id_sp='test'))
 
             headers = forget(request)
             url = request.route_url('create-hdnh', id_hdnh=hdnh.id_hdnh)
@@ -363,7 +359,17 @@ class ManageProduct:
             DBSession.add(ChiTietHDBH(id_hdbh=id_hdbh, id_sp=id_sp, ngaytao=datetime.date.today(), soluong=soluong, giasp=giasp))
 
         if 'form.submit' in request.params:
+            DBSession.query(ChiTietHDBH).filter_by(id_sp='test', id_hdbh=id_hdbh).delete()
             transaction.commit()
+            headers = forget(request)
+            url = request.route_url('create-bill')
+            return HTTPFound(location=url,
+                         headers=headers)
+
+        if 'form.delete' in request.params:
+            DBSession.query(ChiTietHDBH).filter_by(id_hdbh=id_hdbh).delete()
+            DBSession.query(HoaDonBanHang).filter_by(id_hdbh=id_hdbh).delete()
+            
             headers = forget(request)
             url = request.route_url('create-bill')
             return HTTPFound(location=url,
@@ -391,6 +397,16 @@ class ManageProduct:
 
         if 'form.submit' in request.params:
             transaction.commit()
+            DBSession.query(ChiTietHDNH).filter_by(id_sp='test', id_hdnh=id_hdnh).delete()
+            headers = forget(request)
+            url = request.route_url('create-bill')
+            return HTTPFound(location=url,
+                         headers=headers)
+
+        if 'form.delete' in request.params:
+            DBSession.query(ChiTietHDNH).filter_by(id_hdnh=id_hdnh).delete()
+            DBSession.query(HoaDonNhapHang).filter_by(id_hdnh=id_hdnh).delete()
+
             headers = forget(request)
             url = request.route_url('create-bill')
             return HTTPFound(location=url,

@@ -30,7 +30,7 @@ class DanhMuc(Base):
 
 class SanPham(Base):
     __tablename__ = 'sanpham'
-    id_sp = Column(Integer, primary_key=True)
+    id_sp = Column(String(10), primary_key=True)
     tensanpham = Column(String(250), nullable=False)
     donvitinh = Column(String(250), nullable=False)
     id_dm = Column(Integer, ForeignKey('danhmuc.id_dm'))
@@ -55,7 +55,7 @@ class ChiTietHDBH(Base):
     ngaytao = Column(Date)
     soluong = Column(Integer)
     giasp = Column(Integer)
-    id_sp = Column(Integer, ForeignKey('sanpham.id_sp'), primary_key=True)
+    id_sp = Column(String(10), ForeignKey('sanpham.id_sp'), primary_key=True)
     id_hdbh = Column(Integer, ForeignKey('hoadonbanhang.id_hdbh'), primary_key=True)
     sanpham = relationship(SanPham)
     hoadonbanhang = relationship(HoaDonBanHang)
@@ -72,7 +72,7 @@ class ChiTietHDNH(Base):
     ngaytao = Column(Date)
     soluong = Column(Integer)
     giasp = Column(Integer)
-    id_sp = Column(Integer, ForeignKey('sanpham.id_sp'), primary_key=True)
+    id_sp = Column(String(10), ForeignKey('sanpham.id_sp'), primary_key=True)
     id_hdnh = Column(Integer, ForeignKey('hoadonnhaphang.id_hdnh'), primary_key=True)
     sanpham = relationship(SanPham)
     hoadonnhaphang = relationship(HoaDonNhapHang)

@@ -44,10 +44,10 @@
                         <th>Action</th>
                     </tr>
                     <tr tal:repeat="sanpham sanphams">
-                        <td>${sanpham.tensanpham}</td>
-                        <td>${sanpham.donvitinh}</td>
-                        <td>${sanpham.danhmuc.tendanhmuc}</td>
-                        <td>
+                        <td tal:condition="sanpham.id_sp != 'test'">${sanpham.tensanpham}</td>
+                        <td tal:condition="sanpham.id_sp != 'test'">${sanpham.donvitinh}</td>
+                        <td tal:condition="sanpham.id_sp != 'test'">${sanpham.danhmuc.tendanhmuc}</td>
+                        <td tal:condition="sanpham.id_sp != 'test'">
                             <a href="${request.route_url('updatesp', id_sp=sanpham.id_sp)}" class="btn btn-xs btn-warning">
                                 <i alt="Edit" class="fa fa-pencil"> Edit</i></a>
                             <form class='delete' method="POST" action="${request.route_url('deletesp')}" style='display: inline;'>

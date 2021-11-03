@@ -41,7 +41,7 @@ def main(argv=sys.argv):
     with transaction.manager:
         modelDM = DanhMuc(id_dm=1, tendanhmuc='sofa')
 
-        modelSP = SanPham(id_sp=1, tensanpham='Sofa siu cap vip pro', donvitinh='VND', id_dm=1)
+        modelSP = SanPham(id_sp='test', tensanpham='test', donvitinh='test', id_dm=1)
 
         modelNV = NhanVien(id_nv=1, tennhanvien='Vinh Ky', username='vinhkyne', password='vinhkyne')
 
