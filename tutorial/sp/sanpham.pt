@@ -44,7 +44,7 @@
                         <td tal:condition="sanpham.id_sp != 'test'">
                             <a href="${request.route_url('updatesp', id_sp=sanpham.id_sp)}" class="btn btn-xs btn-warning">
                                 <i alt="Edit" class="fa fa-pencil"> Edit</i></a>
-                            <form class='delete' method="POST" action="${request.route_url('deletesp')}" style='display: inline;'>
+                            <form class='delete' method="POST" action="${request.route_url('sanpham')}" style='display: inline;'>
                                 <input type='hidden' name='id_sp' value=${sanpham.id_sp}>
                                 <button type='submit' class='btn btn-xs btn-danger' name='form.delete'>
                                         <i alt='Delete' class='fa fa-trash'>Delete</i>

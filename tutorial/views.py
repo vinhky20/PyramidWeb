@@ -176,8 +176,12 @@ class ManageProduct:
     def showsanpham(self):
         request = self.request
         sanphams = DBSession.query(SanPham)
-        for sanpham in sanphams:
-            print(type(sanpham))
+
+        if 'form.delete' in request.params:
+            id_sp = request.params['id_sp']
+
+            DBSession.query(SanPham).filter_by(id_sp=id_sp).delete()
+            
         return dict(sanphams=sanphams)
 
     @view_config(route_name='ban', renderer='sp/ban.pt')
@@ -214,21 +218,21 @@ class ManageProduct:
             'status': 'Thêm sản phẩm thành công!'
         }
 
-    @view_config(route_name='deletesp', renderer='sp/sanpham.pt')
-    def deletesp(self):
-        request = self.request
-        if 'form.delete' in request.params:
-            id_sp = request.params['id_sp']
+    # @view_config(route_name='deletesp', renderer='sp/sanpham.pt')
+    # def deletesp(self):
+    #     request = self.request
+    #     if 'form.delete' in request.params:
+    #         id_sp = request.params['id_sp']
 
-            DBSession.query(SanPham).filter_by(id_sp=id_sp).delete()
+    #         DBSession.query(SanPham).filter_by(id_sp=id_sp).delete()
             
-            headers = forget(request)
-            url = request.route_url('sanpham')
-            return HTTPFound(location=url,
-                         headers=headers)
-        return {
-            'status': 'Xoá sản phẩm thành công!'
-        }
+    #         headers = forget(request)
+    #         url = request.route_url('sanpham')
+    #         return HTTPFound(location=url,
+    #                      headers=headers)
+    #     return {
+    #         'status': 'Xoá sản phẩm thành công!'
+    #     }
 
     @view_config(route_name='updatesp', renderer='sp/updatesp.pt')
     def updatesp(self):
@@ -389,10 +393,10 @@ class ManageProduct:
             id_sp = request.params['id_sp']
             DBSession.query(ChiTietHDBH).filter_by(id_sp=id_sp, id_hdbh=id_hdbh).delete()
             
-            headers = forget(request)
-            url = request.route_url('create-hdbh', id_hdbh=id_hdbh)
-            return HTTPFound(location=url,
-                         headers=headers)
+            # headers = forget(request)
+            # url = request.route_url('create-hdbh', id_hdbh=id_hdbh)
+            # return HTTPFound(location=url,
+            #              headers=headers)
 
         return dict(cts=cts, idhdbh=idhdbh, ngaytaohd=ngaytaohd)
 
@@ -438,10 +442,10 @@ class ManageProduct:
             id_sp = request.params['id_sp']
             DBSession.query(ChiTietHDNH).filter_by(id_sp=id_sp, id_hdnh=id_hdnh).delete()
             
-            headers = forget(request)
-            url = request.route_url('create-hdnh', id_hdnh=id_hdnh)
-            return HTTPFound(location=url,
-                         headers=headers)
+            # headers = forget(request)
+            # url = request.route_url('create-hdnh', id_hdnh=id_hdnh)
+            # return HTTPFound(location=url,
+            #              headers=headers)
 
         return dict(cts=cts, idhdnh=idhdnh, ngaytaohd=ngaytaohd)
 

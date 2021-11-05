@@ -36,7 +36,7 @@ def main(global_config, **settings):
     config.add_route('ban', 'ban')
     config.add_route('sofa', 'sofa')
     config.add_route('addsanpham', '/addsanpham')
-    config.add_route('deletesp', '/deletesp')
+    # config.add_route('deletesp', '/deletesp')
     config.add_route('updatesp', '/updatesp/{id_sp}')
     # config.add_route('login', '/login')
 
