@@ -263,8 +263,8 @@ class ManageProduct:
             'status': 'Tạo báo biểu'
         }
 
-    @view_config(route_name='create', renderer='dh/create.pt')
-    def create(self):
+    @view_config(route_name='createBBHDBH', renderer='dh/createBBHDBH.pt')
+    def createBBHDBH(self):
         request = self.request
 
         if 'form.export' in request.params:
@@ -274,10 +274,17 @@ class ManageProduct:
             start = request.params['from']
             end = request.params['to']
 
-            sps = DBSession.query(ChiTietHDBH).filter(ChiTietHDBH.ngaytao.between(start, end))
-
+            sps = DBSession.query(ChiTietHDBH, HoaDonBanHang).join(HoaDonBanHang, HoaDonBanHang.id_hdbh==ChiTietHDBH.id_hdbh).filter(HoaDonBanHang.ngaytao.between(start, end))
                 
             return dict(sps=sps, start=start, end=end, tenbaobieu=tenbaobieu)
+
+        return {
+            'status': 'Tạo báo biểu bán hàng'
+        }
+
+    @view_config(route_name='createBBHDNH', renderer='dh/createBBHDNH.pt')
+    def createBBHDNH(self):
+        request = self.request
 
         if 'form.import' in request.params:
             tenbaobieu = {
@@ -286,13 +293,12 @@ class ManageProduct:
             start = request.params['from']
             end = request.params['to']
 
-            sps = DBSession.query(ChiTietHDNH).filter(ChiTietHDNH.ngaytao.between(start, end))
-
+            sps = DBSession.query(ChiTietHDNH, HoaDonNhapHang).join(HoaDonNhapHang, HoaDonNhapHang.id_hdnh==ChiTietHDNH.id_hdnh).filter(HoaDonNhapHang.ngaytao.between(start, end))
                 
             return dict(sps=sps, start=start, end=end, tenbaobieu=tenbaobieu)
 
         return {
-            'status': 'Tạo báo biểu'
+            'status': 'Tạo báo biểu nhập'
         }
     
     @view_config(route_name='create-bill', renderer='dh/bill.pt', permission='edit')
@@ -304,16 +310,16 @@ class ManageProduct:
         nv = DBSession.query(NhanVien).filter_by(username=tennv).one()
 
         
-        print(nv.id_nv)
+        # print(tennv)
 
         if 'form.hdbh' in request.params:
             tenhdbh = request.params['tenhd']
-            DBSession.add(HoaDonBanHang(tenhdbh=tenhdbh, id_nv=nv.id_nv))
+            DBSession.add(HoaDonBanHang(ngaytao=datetime.date.today(), tenhdbh=tenhdbh, id_nv=nv.id_nv))
 
             hdbh = DBSession.query(HoaDonBanHang).filter_by(tenhdbh=tenhdbh).one()
             id_hdbh = hdbh.id_hdbh
 
-            DBSession.add(ChiTietHDBH(id_hdbh=id_hdbh, ngaytao=datetime.date.today(), id_sp='test'))
+            DBSession.add(ChiTietHDBH(id_hdbh=id_hdbh, id_sp='test'))
 
             headers = forget(request)
             url = request.route_url('create-hdbh', id_hdbh=hdbh.id_hdbh)
@@ -322,13 +328,12 @@ class ManageProduct:
 
         if 'form.hdnh' in request.params:
             tenhdnh = request.params['tenhd']
-            DBSession.add(HoaDonNhapHang(tenhdnh=tenhdnh, id_nv=nv.id_nv))
+            DBSession.add(HoaDonNhapHang(ngaytao=datetime.date.today(), tenhdnh=tenhdnh, id_nv=nv.id_nv))
 
             hdnh = DBSession.query(HoaDonNhapHang).filter_by(tenhdnh=tenhdnh).one()
             id_hdnh = hdnh.id_hdnh
-            print(id_hdnh)
 
-            DBSession.add(ChiTietHDNH(id_hdnh=id_hdnh, ngaytao=datetime.date.today(), id_sp='test'))
+            DBSession.add(ChiTietHDNH(id_hdnh=id_hdnh, id_sp='test'))
 
             headers = forget(request)
             url = request.route_url('create-hdnh', id_hdnh=hdnh.id_hdnh)
@@ -349,6 +354,11 @@ class ManageProduct:
             'id_hdbh': id_hdbh
         }
 
+        # tennv = request.authenticated_userid
+        # print(tennv)
+
+        ngaytaohd = datetime.date.today()
+
         cts = DBSession.query(ChiTietHDBH).filter_by(id_hdbh=id_hdbh)
 
         if 'form.addToBill' in request.params:
@@ -356,7 +366,7 @@ class ManageProduct:
             soluong = request.params['soluong']
             giasp = request.params['giasp']
 
-            DBSession.add(ChiTietHDBH(id_hdbh=id_hdbh, id_sp=id_sp, ngaytao=datetime.date.today(), soluong=soluong, giasp=giasp))
+            DBSession.add(ChiTietHDBH(id_hdbh=id_hdbh, id_sp=id_sp, soluong=soluong, giasp=giasp))
 
         if 'form.submit' in request.params:
             DBSession.query(ChiTietHDBH).filter_by(id_sp='test', id_hdbh=id_hdbh).delete()
@@ -375,7 +385,17 @@ class ManageProduct:
             return HTTPFound(location=url,
                          headers=headers)
 
-        return dict(cts=cts, idhdbh=idhdbh)
+        if 'form.deleteSP' in request.params:
+            id_sp = request.params['id_sp']
+            DBSession.query(ChiTietHDBH).filter_by(id_sp=id_sp, id_hdbh=id_hdbh).delete()
+            
+            headers = forget(request)
+            url = request.route_url('create-hdbh', id_hdbh=id_hdbh)
+            return HTTPFound(location=url,
+                         headers=headers)
+
+        return dict(cts=cts, idhdbh=idhdbh, ngaytaohd=ngaytaohd)
+
 
     @view_config(route_name='create-hdnh', renderer='dh/hdnh.pt')
     def createHDNH(self):
@@ -386,6 +406,8 @@ class ManageProduct:
             'id_hdnh': id_hdnh
         }
 
+        ngaytaohd = datetime.date.today()
+
         cts = DBSession.query(ChiTietHDNH).filter_by(id_hdnh=id_hdnh)
 
         if 'form.addToBill' in request.params:
@@ -393,7 +415,7 @@ class ManageProduct:
             soluong = request.params['soluong']
             giasp = request.params['giasp']
 
-            DBSession.add(ChiTietHDNH(id_hdnh=id_hdnh, id_sp=id_sp, ngaytao=datetime.date.today(), soluong=soluong, giasp=giasp))
+            DBSession.add(ChiTietHDNH(id_hdnh=id_hdnh, id_sp=id_sp, soluong=soluong, giasp=giasp))
 
         if 'form.submit' in request.params:
             transaction.commit()
@@ -412,26 +434,14 @@ class ManageProduct:
             return HTTPFound(location=url,
                          headers=headers)
 
-        return dict(cts=cts, idhdnh=idhdnh)
+        if 'form.deleteSP' in request.params:
+            id_sp = request.params['id_sp']
+            DBSession.query(ChiTietHDNH).filter_by(id_sp=id_sp, id_hdnh=id_hdnh).delete()
+            
+            headers = forget(request)
+            url = request.route_url('create-hdnh', id_hdnh=id_hdnh)
+            return HTTPFound(location=url,
+                         headers=headers)
 
-    # @view_config(route_name='addProductToBill', renderer='dh/hdbh.pt')
-    # def addProductToBill(self):
-    #     request = self.request
-    #     id_hdbh = int(self.request.matchdict['id_hdbh'])
+        return dict(cts=cts, idhdnh=idhdnh, ngaytaohd=ngaytaohd)
 
-    #     if 'form.addToBill' in request.params:
-    #         id_sp = request.params['masp']
-    #         soluong = request.params['soluong']
-    #         giasp = request.params['giasp']
-
-    #         DBSession.add(ChiTietHDBH(id_hdbh=id_hdbh, id_sp=id_sp, ngaytao=datetime.date.today(), soluong=soluong, giasp=giasp))
-
-    #         headers = forget(request)
-    #         url = request.route_url('create-hdbh')
-    #         return HTTPFound(location=url,
-    #                      headers=headers)
-
-        
-    #     return {
-    #         'status': 'Đã thêm sp vào hoá đơn'
-    #     }

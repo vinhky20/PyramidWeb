@@ -20,7 +20,7 @@
                 </div>
                 <div class="inner-wrapper row">
                     <div class="col-md-12">
-                        <form method="POST" action="${request.route_url('create')}" class="col-md-6 col-md-offset-3">
+                        <form method="POST" action="${request.route_url('createBBHDBH')}" class="col-md-6 col-md-offset-3">
                             <div class="form-group">
                                 <label for="from">Từ</label>
                                 <input class="form-control" type="date" name="from"/>
@@ -33,6 +33,20 @@
                                 <button type="submit" style="width: 100%" class="btn btn-primary" name="form.export">Tạo báo biểu bán hàng</button>
                                 
                             </div>
+                        </form>
+                        <form method="POST" action="${request.route_url('createBBHDNH')}" class="col-md-6 col-md-offset-3">
+                            <div class="form-group">
+                                <label for="from">Từ</label>
+                                <input class="form-control" type="date" name="from"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="to">Đến</label>
+                                <input class="form-control" type="date" name="to"/>
+                            </div> 
+<!--                             <div class="form-group">
+                                <button type="submit" style="width: 100%" class="btn btn-primary" name="form.export">Tạo báo biểu bán hàng</button>
+                                
+                            </div> -->
                             <div class="form-group">
                                 <button type="submit" style="width: 100%" class="btn btn-primary" name="form.import">Tạo báo biểu nhập hàng</button>
                             </div>

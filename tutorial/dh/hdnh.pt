@@ -18,15 +18,13 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <h1 class="text-uppercase">Invoice</h1>
-<!--                                 <div class="billed"><span class="font-weight-bold text-uppercase">Người tạo:</span><span class="ml-1">Jasper Kendrick</span></div>
+<!--                                 <div class="billed"><span class="font-weight-bold text-uppercase">Người tạo:</span><span class="ml-1">Jasper Kendrick</span></div> -->
                                 <div class="billed mt-2"><span class="font-weight-bold text-uppercase">Ngày tạo:</span>
                                     <span class="ml-1">
-                                        <div class="form-group">
-                                            <input type="date" class="form-control" name="date">
-                                        </div>
+                                        ${ngaytaohd}
                                     </span>
                                 </div>
-                                <div class="billed"><span class="font-weight-bold text-uppercase">Mã hoá đơn:</span>
+<!--                                 <div class="billed"><span class="font-weight-bold text-uppercase">Mã hoá đơn:</span>
                                     <span class="ml-1">
                                         <div class="form-group">
                                             <input type="text" class="form-control" name="idbill">
@@ -74,6 +72,14 @@
                                                 </div>
                                             </td>
                                             <td tal:condition="ct.id_sp != 'test'">${ct.giasp} VNĐ/CÁI</td>
+                                            <td tal:condition="ct.id_sp != 'test'">
+                                                <form method="POST" action="${request.route_url('create-hdnh', id_hdnh=idhdnh.id_hdnh)}">
+                                                    <input type='hidden' name='id_sp' value=${ct.id_sp}>
+                                                    <button type="submit" class="btn btn-warning btn-sm" name="form.deleteSP">
+                                                    Xoá sản phẩm
+                                                    </button> 
+                                                </form>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -82,7 +88,7 @@
                     </form>
                     <div class="text-right mb-3">
                         <form method="POST" action="${request.route_url('create-hdnh', id_hdnh=idhdnh.id_hdnh)}">
-                            <button type="submit" class="btn btn-danger btn-sm mr-5" name="form.submit">
+                            <button type="submit" class="btn btn-success btn-sm" name="form.submit">
                                 Xác nhận hoá đơn
                             </button>
                             <button type="submit" class="btn btn-danger btn-sm mr-5" name="form.delete">

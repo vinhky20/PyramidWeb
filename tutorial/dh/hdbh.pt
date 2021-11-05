@@ -18,15 +18,17 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <h1 class="text-uppercase">Invoice</h1>
-<!--                                 <div class="billed"><span class="font-weight-bold text-uppercase">Người tạo:</span><span class="ml-1">Jasper Kendrick</span></div>
+<!--                                 <div class="billed"><span class="font-weight-bold text-uppercase">Người tạo:</span>
+                                    <span class="ml-1">
+                                        ${tennv}
+                                    </span>
+                                </div> -->
                                 <div class="billed mt-2"><span class="font-weight-bold text-uppercase">Ngày tạo:</span>
                                     <span class="ml-1">
-                                        <div class="form-group">
-                                            <input type="date" class="form-control" name="date">
-                                        </div>
+                                        ${ngaytaohd}
                                     </span>
                                 </div>
-                                <div class="billed"><span class="font-weight-bold text-uppercase">Mã hoá đơn:</span>
+<!--                                 <div class="billed"><span class="font-weight-bold text-uppercase">Mã hoá đơn:</span>
                                     <span class="ml-1">
                                         <div class="form-group">
                                             <input type="text" class="form-control" name="idbill">
@@ -60,7 +62,7 @@
                                             <th>Sản Phẩm</th>
                                             <th>Số Lượng</th>
                                             <th>Giá tiền</th>
-                                            <!-- <th>Total</th> -->
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -74,6 +76,14 @@
                                                 </div>
                                             </td>
                                             <td tal:condition="ct.id_sp != 'test'">${ct.giasp} VNĐ/CÁI</td>
+                                            <td tal:condition="ct.id_sp != 'test'">
+                                                <form method="POST" action="${request.route_url('create-hdbh', id_hdbh=idhdbh.id_hdbh)}">
+                                                    <input type='hidden' name='id_sp' value=${ct.id_sp}>
+                                                    <button type="submit" class="btn btn-warning btn-sm" name="form.deleteSP">
+                                                    Xoá sản phẩm
+                                                    </button> 
+                                                </form>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>

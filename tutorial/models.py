@@ -45,6 +45,7 @@ class NhanVien(Base):
 
 class HoaDonBanHang(Base):
     __tablename__ = 'hoadonbanhang'
+    ngaytao = Column(Date)
     id_hdbh = Column(Integer, primary_key=True)
     tenhdbh = Column(String(250), nullable=False)
     id_nv = Column(Integer, ForeignKey('nhanvien.id_nv'))
@@ -52,7 +53,6 @@ class HoaDonBanHang(Base):
 
 class ChiTietHDBH(Base):
     __tablename__ = 'chitiethdbh'
-    ngaytao = Column(Date)
     soluong = Column(Integer)
     giasp = Column(Integer)
     id_sp = Column(String(10), ForeignKey('sanpham.id_sp'), primary_key=True)
@@ -62,6 +62,7 @@ class ChiTietHDBH(Base):
 
 class HoaDonNhapHang(Base):
     __tablename__ = 'hoadonnhaphang'
+    ngaytao = Column(Date)
     id_hdnh = Column(Integer, primary_key=True)
     tenhdnh = Column(String(250), nullable=False)
     id_nv = Column(Integer, ForeignKey('nhanvien.id_nv'))
@@ -69,7 +70,6 @@ class HoaDonNhapHang(Base):
 
 class ChiTietHDNH(Base):
     __tablename__ = 'chitiethdnh'
-    ngaytao = Column(Date)
     soluong = Column(Integer)
     giasp = Column(Integer)
     id_sp = Column(String(10), ForeignKey('sanpham.id_sp'), primary_key=True)

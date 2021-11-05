@@ -41,7 +41,8 @@ def main(global_config, **settings):
     # config.add_route('login', '/login')
 
     config.add_route('createreport', '/createreport')
-    config.add_route('create', '/create')
+    config.add_route('createBBHDBH', '/createBBHDBH')
+    config.add_route('createBBHDNH', '/createBBHDNH')
     config.add_route('create-bill', '/bill')
     config.add_route('create-hdbh', '/hdbh/{id_hdbh}')
     config.add_route('create-hdnh', '/hdnh/{id_hdnh}')
