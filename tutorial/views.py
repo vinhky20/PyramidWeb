@@ -310,7 +310,7 @@ class ManageProduct:
         nv = DBSession.query(NhanVien).filter_by(username=tennv).one()
 
         
-        # print(tennv)
+        print(tennv)
 
         if 'form.hdbh' in request.params:
             tenhdbh = request.params['tenhd']
@@ -445,3 +445,24 @@ class ManageProduct:
 
         return dict(cts=cts, idhdnh=idhdnh, ngaytaohd=ngaytaohd)
 
+    # @view_config(route_name='addProductToBill', renderer='dh/hdbh.pt')
+    # def addProductToBill(self):
+    #     request = self.request
+    #     id_hdbh = int(self.request.matchdict['id_hdbh'])
+
+    #     if 'form.addToBill' in request.params:
+    #         id_sp = request.params['masp']
+    #         soluong = request.params['soluong']
+    #         giasp = request.params['giasp']
+
+    #         DBSession.add(ChiTietHDBH(id_hdbh=id_hdbh, id_sp=id_sp, ngaytao=datetime.date.today(), soluong=soluong, giasp=giasp))
+
+    #         headers = forget(request)
+    #         url = request.route_url('create-hdbh')
+    #         return HTTPFound(location=url,
+    #                      headers=headers)
+
+        
+    #     return {
+    #         'status': 'Đã thêm sp vào hoá đơn'
+    #     }
