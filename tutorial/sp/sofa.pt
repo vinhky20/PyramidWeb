@@ -2,17 +2,11 @@
 <html lang="en">
 
 <head>
-    <title>Sản phẩm Sofa</title>
+    <title>Quản lý sản phẩm</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 </head>
 
 <body>
-    <!--     <div>
-        <a tal:condition="view.logged_in is None"
-            href="${request.application_url}/login">Log In</a>
-        <a tal:condition="view.logged_in is not None"
-            href="${request.application_url}/logout">Logout</a>
-    </div> -->
     <h2 class="text-center"><a href="${request.route_url('sanpham')}">Tất cả sản phẩm</a></h2>
     <div class="container">
 
@@ -23,8 +17,8 @@
                     <a href="${request.route_url('ban')}" class="btn btn-success" style="margin-bottom: 24px;" >
                         <i class="fa fa-plus"></i>Bàn
                     </a>
-                    <a href="" class="btn btn-success"  style="margin-bottom: 24px;">
-                        <i class="fa fa-plus"></i>Ghế
+                    <a href="${request.route_url('sofa')}" class="btn btn-success"  style="margin-bottom: 24px;">
+                        <i class="fa fa-plus"></i>Sofa
                     </a>
                     <a href="" class="btn btn-success"  style="margin-bottom: 24px;">
                         <i class="fa fa-plus"></i>Đèn
@@ -50,7 +44,7 @@
                         <td tal:condition="sanpham.id_sp != 'test'">
                             <a href="${request.route_url('updatesp', id_sp=sanpham.id_sp)}" class="btn btn-xs btn-warning">
                                 <i alt="Edit" class="fa fa-pencil"> Edit</i></a>
-                            <form class='delete' method="POST" action="${request.route_url('deletesp')}" style='display: inline;'>
+                            <form class='delete' method="POST" action="${request.route_url('sanpham')}" style='display: inline;'>
                                 <input type='hidden' name='id_sp' value=${sanpham.id_sp}>
                                 <button type='submit' class='btn btn-xs btn-danger' name='form.delete'>
                                         <i alt='Delete' class='fa fa-trash'>Delete</i>
