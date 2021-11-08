@@ -323,7 +323,7 @@ class ManageProduct:
             hdbh = DBSession.query(HoaDonBanHang).filter_by(tenhdbh=tenhdbh).one()
             id_hdbh = hdbh.id_hdbh
 
-            DBSession.add(ChiTietHDBH(id_hdbh=id_hdbh, id_sp='test', soluong=5, giasp=50000))
+            DBSession.add(ChiTietHDBH(id_hdbh=id_hdbh, id_sp='test', soluong=0, giasp=50000))
 
             headers = forget(request)
             url = request.route_url('create-hdbh', id_hdbh=hdbh.id_hdbh)
@@ -337,7 +337,7 @@ class ManageProduct:
             hdnh = DBSession.query(HoaDonNhapHang).filter_by(tenhdnh=tenhdnh).one()
             id_hdnh = hdnh.id_hdnh
 
-            DBSession.add(ChiTietHDNH(id_hdnh=id_hdnh, id_sp='test', soluong=5, giasp=50000))
+            DBSession.add(ChiTietHDNH(id_hdnh=id_hdnh, id_sp='test', soluong=0, giasp=50000))
 
             headers = forget(request)
             url = request.route_url('create-hdnh', id_hdnh=hdnh.id_hdnh)
@@ -392,10 +392,22 @@ class ManageProduct:
         # USERS.update(urs)
 
         totalProduct = {}
+        total = []
         e = {}
         for ct in cts:
             e[ct.id_sp] = ct.soluong * ct.giasp
+            x = ct.soluong * ct.giasp
+            total.append(x)
         totalProduct.update(e)
+
+
+        totalBill = 0
+
+
+        for i in total:
+            totalBill+=i
+
+        print(totalBill)
 
         if 'form.submit' in request.params:
             DBSession.query(ChiTietHDBH).filter_by(id_sp='test', id_hdbh=id_hdbh).delete()
@@ -423,7 +435,7 @@ class ManageProduct:
             # return HTTPFound(location=url,
             #              headers=headers)
 
-        return dict(cts=cts, idhdbh=idhdbh, ngaytaohd=ngaytaohd, totalProduct=totalProduct, ten=ten)
+        return dict(cts=cts, idhdbh=idhdbh, ngaytaohd=ngaytaohd, totalProduct=totalProduct, ten=ten, totalBill=totalBill)
 
 
     @view_config(route_name='create-hdnh', renderer='dh/hdnh.pt')
