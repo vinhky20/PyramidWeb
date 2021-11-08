@@ -323,7 +323,7 @@ class ManageProduct:
             hdbh = DBSession.query(HoaDonBanHang).filter_by(tenhdbh=tenhdbh).one()
             id_hdbh = hdbh.id_hdbh
 
-            DBSession.add(ChiTietHDBH(id_hdbh=id_hdbh, id_sp='test'))
+            DBSession.add(ChiTietHDBH(id_hdbh=id_hdbh, id_sp='test', soluong=5, giasp=50000))
 
             headers = forget(request)
             url = request.route_url('create-hdbh', id_hdbh=hdbh.id_hdbh)
@@ -337,7 +337,7 @@ class ManageProduct:
             hdnh = DBSession.query(HoaDonNhapHang).filter_by(tenhdnh=tenhdnh).one()
             id_hdnh = hdnh.id_hdnh
 
-            DBSession.add(ChiTietHDNH(id_hdnh=id_hdnh, id_sp='test'))
+            DBSession.add(ChiTietHDNH(id_hdnh=id_hdnh, id_sp='test', soluong=5, giasp=50000))
 
             headers = forget(request)
             url = request.route_url('create-hdnh', id_hdnh=hdnh.id_hdnh)
@@ -358,12 +358,24 @@ class ManageProduct:
             'id_hdbh': id_hdbh
         }
 
-        # tennv = request.authenticated_userid
-        # print(tennv)
+
+        NV = DBSession.query(HoaDonBanHang).filter_by(id_hdbh=id_hdbh).one()
+
+        idNV = NV.id_nv
+
+        tenNV = DBSession.query(NhanVien).filter_by(id_nv=idNV).one()
+
+        tennhanvien = tenNV.tennhanvien
+
+        ten = {
+            'tenNV': tennhanvien
+        }
 
         ngaytaohd = datetime.date.today()
 
         cts = DBSession.query(ChiTietHDBH).filter_by(id_hdbh=id_hdbh)
+
+
 
         if 'form.addToBill' in request.params:
             id_sp = request.params['masp']
@@ -371,6 +383,19 @@ class ManageProduct:
             giasp = request.params['giasp']
 
             DBSession.add(ChiTietHDBH(id_hdbh=id_hdbh, id_sp=id_sp, soluong=soluong, giasp=giasp))
+            DBSession.query(ChiTietHDBH).filter_by(id_sp='test', id_hdbh=id_hdbh).delete()
+
+        # urs = {}
+        # for x in nvs:
+        #     urs[x['username']] = x['password']
+        #     grp[x['username']] = ['group:editors']
+        # USERS.update(urs)
+
+        totalProduct = {}
+        e = {}
+        for ct in cts:
+            e[ct.id_sp] = ct.soluong * ct.giasp
+        totalProduct.update(e)
 
         if 'form.submit' in request.params:
             DBSession.query(ChiTietHDBH).filter_by(id_sp='test', id_hdbh=id_hdbh).delete()
@@ -398,7 +423,7 @@ class ManageProduct:
             # return HTTPFound(location=url,
             #              headers=headers)
 
-        return dict(cts=cts, idhdbh=idhdbh, ngaytaohd=ngaytaohd)
+        return dict(cts=cts, idhdbh=idhdbh, ngaytaohd=ngaytaohd, totalProduct=totalProduct, ten=ten)
 
 
     @view_config(route_name='create-hdnh', renderer='dh/hdnh.pt')

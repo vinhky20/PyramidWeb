@@ -18,7 +18,10 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <h1 class="text-uppercase">Invoice</h1>
-<!--                                 <div class="billed"><span class="font-weight-bold text-uppercase">Người tạo:</span><span class="ml-1">Jasper Kendrick</span></div> -->
+                                <div class="billed">
+                                    <span class="font-weight-bold text-uppercase">Người tạo:</span>
+                                    <span class="ml-1">${ten.tenNV}</span>
+                                </div>
                                 <div class="billed mt-2"><span class="font-weight-bold text-uppercase">Ngày tạo:</span>
                                     <span class="ml-1">
                                         ${ngaytaohd}
@@ -57,12 +60,13 @@
                                         <tr>
                                             <th>Sản Phẩm</th>
                                             <th>Số Lượng</th>
-                                            <th>Giá tiền</th>
+                                            <th>Đơn giá</th>
+                                            <th>Thành tiền</th>
                                             <!-- <th>Total</th> -->
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr tal:repeat="ct cts" >
+                                    <tbody  >
+                                        <tr tal:repeat="ct cts">
                                             <td tal:condition="ct.id_sp != 'test'">${ct.sanpham.tensanpham}</td>
                                             <td tal:condition="ct.id_sp != 'test'">
                                                 <div class="input-group">
@@ -72,6 +76,7 @@
                                                 </div>
                                             </td>
                                             <td tal:condition="ct.id_sp != 'test'">${ct.giasp} VNĐ/CÁI</td>
+                                            <td tal:condition="ct.id_sp != 'test'">${totalProduct[ct.id_sp]} VNĐ</td>                               
                                             <td tal:condition="ct.id_sp != 'test'">
                                                 <form method="POST" action="${request.route_url('create-hdbh', id_hdbh=idhdbh.id_hdbh)}">
                                                     <input type='hidden' name='id_sp' value=${ct.id_sp}>
