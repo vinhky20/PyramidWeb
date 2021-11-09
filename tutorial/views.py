@@ -6,6 +6,10 @@ from pyramid.httpexceptions import (
     HTTPForbidden,
 )
 
+from sqlalchemy import (
+    func
+)
+
 from pyramid.view import (
     view_config,
     view_defaults
@@ -279,8 +283,10 @@ class ManageProduct:
             end = request.params['to']
 
             sps = DBSession.query(ChiTietHDBH, HoaDonBanHang).join(HoaDonBanHang, HoaDonBanHang.id_hdbh==ChiTietHDBH.id_hdbh).filter(HoaDonBanHang.ngaytao.between(start, end))
+
+            test = DBSession.query(ChiTietHDBH, HoaDonBanHang, func.sum(ChiTietHDBH.soluong).label('total')).join(HoaDonBanHang, HoaDonBanHang.id_hdbh==ChiTietHDBH.id_hdbh).filter(HoaDonBanHang.ngaytao.between(start, end)).group_by(ChiTietHDBH.id_sp)
                 
-            return dict(sps=sps, start=start, end=end, tenbaobieu=tenbaobieu)
+            return dict(sps=sps, start=start, end=end, tenbaobieu=tenbaobieu, test=test)
 
         return {
             'status': 'Tạo báo biểu bán hàng'

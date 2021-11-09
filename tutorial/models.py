@@ -6,7 +6,8 @@ from sqlalchemy import (
     Text,
     ForeignKey,
     String,
-    Date
+    Date,
+    func
     )
 
 from sqlalchemy.ext.declarative import declarative_base
