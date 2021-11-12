@@ -290,21 +290,35 @@ class ManageProduct:
             
             nh = DBSession.query(ChiTietHDNH, HoaDonNhapHang, func.sum(ChiTietHDNH.soluong).label('totalNH')).join(HoaDonNhapHang, HoaDonNhapHang.id_hdnh==ChiTietHDNH.id_hdnh).filter(HoaDonNhapHang.ngaytao.between(start, end)).group_by(ChiTietHDNH.id_sp)
 
-            # inventory = {}
-            # e = []
-            # for a in bh:
-            #     for b in nh:
-            #         x = a.totalBH - b.totalNH
-            #         print(x)
+            A = {}
+            for i in bh:
+                obj = {
+                    i.ChiTietHDBH.sanpham.tensanpham: int(i.totalBH)
+                }
+                A.update(obj)
 
-            # for b in nh:
-            #     print(b.totalNH)
+            B = {}
+            for j in nh:
+                obj1 = {
+                    j.ChiTietHDNH.sanpham.tensanpham: int(j.totalNH)
+                }
+                B.update(obj1) 
 
-            # print(e)
-            # for i in bh:
-            #     print(i.totalBH)
 
-            return dict(start=start, end=end, tenbaobieu=tenbaobieu, bh=bh)
+            arr = []
+            for x in A:
+                for y in B:
+                    if x == y:
+                        obj2 = {
+                            'name': x,
+                            'inventory': int(B[x] - A[x])
+                        }
+
+                        arr.append(obj2)
+  
+
+               
+            return dict(start=start, end=end, tenbaobieu=tenbaobieu, bh=bh, arr=arr)
 
 
         return {

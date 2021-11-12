@@ -23,7 +23,10 @@
                         <td>${i.totalBH}</td>
                     </tr>
                 </table>
-
+            </div>
+            <div  tal:repeat="j arr">
+                <h4 class="text-center">${j.name} tồn kho: <b>${j.inventory}</b> sản phẩm</h4>
+                <h4 class="text-center" tal:condition="j.inventory == 0">Sản phẩm <b>${j.name}</b> đã bán hết</h4>
             </div>
         </section>
     </div>
