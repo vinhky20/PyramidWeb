@@ -7,12 +7,6 @@
 </head>
 
 <body>
-    <!--     <div>
-        <a tal:condition="view.logged_in is None"
-            href="${request.application_url}/login">Log In</a>
-        <a tal:condition="view.logged_in is not None"
-            href="${request.application_url}/logout">Logout</a>
-    </div> -->
     <h2 class="text-center"><a href="${request.route_url('sanpham')}">Tất cả sản phẩm</a></h2>
     <div class="container">
 
@@ -44,13 +38,13 @@
                         <th>Action</th>
                     </tr>
                     <tr tal:repeat="sanpham sanphams">
-                        <td>${sanpham.tensanpham}</td>
-                        <td>${sanpham.donvitinh}</td>
-                        <td>${sanpham.danhmuc.tendanhmuc}</td>
-                        <td>
+                        <td tal:condition="sanpham.id_sp != 'test'">${sanpham.tensanpham}</td>
+                        <td tal:condition="sanpham.id_sp != 'test'">${sanpham.donvitinh}</td>
+                        <td tal:condition="sanpham.id_sp != 'test'">${sanpham.danhmuc.tendanhmuc}</td>
+                        <td tal:condition="sanpham.id_sp != 'test'">
                             <a href="${request.route_url('updatesp', id_sp=sanpham.id_sp)}" class="btn btn-xs btn-warning">
                                 <i alt="Edit" class="fa fa-pencil"> Edit</i></a>
-                            <form class='delete' method="POST" action="${request.route_url('deletesp')}" style='display: inline;'>
+                            <form class='delete' method="POST" action="${request.route_url('sanpham')}" style='display: inline;'>
                                 <input type='hidden' name='id_sp' value=${sanpham.id_sp}>
                                 <button type='submit' class='btn btn-xs btn-danger' name='form.delete'>
                                         <i alt='Delete' class='fa fa-trash'>Delete</i>

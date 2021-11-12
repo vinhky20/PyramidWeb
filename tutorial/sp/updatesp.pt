@@ -37,7 +37,7 @@
                             <div class="form-group">
                                 <label for="danhmuc">Danh Mục</label>
                                 <select name="danhmuc" class="custom-select form-control">
-                                    <option selected>Chọn danh mục của sản phẩm</option>
+                                    <option selected value="${sanpham.danhmuc.tendanhmuc}">${sanpham.danhmuc.tendanhmuc}</option>
                                     <option value="sofa">Sofa</option>
                                     <option value="bàn">Bàn</option>
                                     <option value="tranh">Tranh</option>

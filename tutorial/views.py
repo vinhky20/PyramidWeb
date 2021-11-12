@@ -211,6 +211,8 @@ class ManageProduct:
     @view_config(route_name='addsanpham', renderer='sp/addsanpham.pt')
     def addsanpham(self):
         request = self.request
+        danhmucs = DBSession.query(DanhMuc)
+
         if 'form.add' in request.params:
             id_sp = request.params['masp']
             tensanpham = request.params['tensp']
@@ -222,9 +224,7 @@ class ManageProduct:
 
             DBSession.add(SanPham(id_sp=id_sp, tensanpham=tensanpham, donvitinh=dvt, id_dm=id_dm))
             
-        return {
-            'status': 'Thêm sản phẩm thành công!'
-        }
+        return dict(danhmucs=danhmucs)
 
     # @view_config(route_name='deletesp', renderer='sp/sanpham.pt')
     # def deletesp(self):
@@ -248,6 +248,7 @@ class ManageProduct:
         id_sp = str(self.request.matchdict['id_sp'])
         sanpham = DBSession.query(SanPham).filter_by(id_sp=id_sp).one()
 
+        
 
         if 'form.update' in request.params:
             tensanpham = request.params['tensp']
