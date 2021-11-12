@@ -91,13 +91,12 @@ class Home:
         
         changeToDict()
 
-        # print(USERS[userid])
-
         if 'form.submitted' in request.params:
             login = request.params['login']
             password = request.params['password']
-            hashed_pw = USERS.get(login)
-            if hashed_pw:
+            user = USERS.get(login)
+
+            if (user == password):
                 headers = remember(request, login)
                 return HTTPFound(location=came_from,
                                  headers=headers)
@@ -154,7 +153,12 @@ class Home:
             nhanvien.tennhanvien = fullname
             nhanvien.username = username
             nhanvien.password = password
-            transaction.commit();
+            transaction.commit()
+
+
+            # XOÁ USERNAME CŨ SAU KHI CẬP NHẬT THÔNG TIN TÀI KHOẢN
+            USERS.pop(un)
+
             
             headers = forget(request)
             url = request.route_url('home')
@@ -282,11 +286,26 @@ class ManageProduct:
             start = request.params['from']
             end = request.params['to']
 
-            sps = DBSession.query(ChiTietHDBH, HoaDonBanHang).join(HoaDonBanHang, HoaDonBanHang.id_hdbh==ChiTietHDBH.id_hdbh).filter(HoaDonBanHang.ngaytao.between(start, end))
+            bh = DBSession.query(ChiTietHDBH, HoaDonBanHang, func.sum(ChiTietHDBH.soluong).label('totalBH')).join(HoaDonBanHang, HoaDonBanHang.id_hdbh==ChiTietHDBH.id_hdbh).filter(HoaDonBanHang.ngaytao.between(start, end)).group_by(ChiTietHDBH.id_sp)
+            
+            nh = DBSession.query(ChiTietHDNH, HoaDonNhapHang, func.sum(ChiTietHDNH.soluong).label('totalNH')).join(HoaDonNhapHang, HoaDonNhapHang.id_hdnh==ChiTietHDNH.id_hdnh).filter(HoaDonNhapHang.ngaytao.between(start, end)).group_by(ChiTietHDNH.id_sp)
 
-            test = DBSession.query(ChiTietHDBH, HoaDonBanHang, func.sum(ChiTietHDBH.soluong).label('total')).join(HoaDonBanHang, HoaDonBanHang.id_hdbh==ChiTietHDBH.id_hdbh).filter(HoaDonBanHang.ngaytao.between(start, end)).group_by(ChiTietHDBH.id_sp)
-                
-            return dict(sps=sps, start=start, end=end, tenbaobieu=tenbaobieu, test=test)
+            # inventory = {}
+            # e = []
+            # for a in bh:
+            #     for b in nh:
+            #         x = a.totalBH - b.totalNH
+            #         print(x)
+
+            # for b in nh:
+            #     print(b.totalNH)
+
+            # print(e)
+            # for i in bh:
+            #     print(i.totalBH)
+
+            return dict(start=start, end=end, tenbaobieu=tenbaobieu, bh=bh)
+
 
         return {
             'status': 'Tạo báo biểu bán hàng'
@@ -318,9 +337,6 @@ class ManageProduct:
         tennv = request.authenticated_userid
 
         nv = DBSession.query(NhanVien).filter_by(username=tennv).one()
-
-        
-        print(tennv)
 
         if 'form.hdbh' in request.params:
             tenhdbh = request.params['tenhd']
@@ -364,7 +380,6 @@ class ManageProduct:
             'id_hdbh': id_hdbh
         }
 
-
         NV = DBSession.query(HoaDonBanHang).filter_by(id_hdbh=id_hdbh).one()
 
         idNV = NV.id_nv
@@ -381,8 +396,6 @@ class ManageProduct:
 
         cts = DBSession.query(ChiTietHDBH).filter_by(id_hdbh=id_hdbh)
 
-
-
         if 'form.addToBill' in request.params:
             id_sp = request.params['masp']
             soluong = request.params['soluong']
@@ -390,12 +403,6 @@ class ManageProduct:
 
             DBSession.add(ChiTietHDBH(id_hdbh=id_hdbh, id_sp=id_sp, soluong=soluong, giasp=giasp))
             DBSession.query(ChiTietHDBH).filter_by(id_sp='test', id_hdbh=id_hdbh).delete()
-
-        # urs = {}
-        # for x in nvs:
-        #     urs[x['username']] = x['password']
-        #     grp[x['username']] = ['group:editors']
-        # USERS.update(urs)
 
         totalProduct = {}
         total = []
@@ -434,6 +441,8 @@ class ManageProduct:
 
         if 'form.deleteSP' in request.params:
             id_sp = request.params['id_sp']
+            gia = request.params['gia']
+            totalBill = totalBill - int(gia)
             DBSession.query(ChiTietHDBH).filter_by(id_sp=id_sp, id_hdbh=id_hdbh).delete()
             
             # headers = forget(request)
@@ -492,24 +501,3 @@ class ManageProduct:
 
         return dict(cts=cts, idhdnh=idhdnh, ngaytaohd=ngaytaohd)
 
-    # @view_config(route_name='addProductToBill', renderer='dh/hdbh.pt')
-    # def addProductToBill(self):
-    #     request = self.request
-    #     id_hdbh = int(self.request.matchdict['id_hdbh'])
-
-    #     if 'form.addToBill' in request.params:
-    #         id_sp = request.params['masp']
-    #         soluong = request.params['soluong']
-    #         giasp = request.params['giasp']
-
-    #         DBSession.add(ChiTietHDBH(id_hdbh=id_hdbh, id_sp=id_sp, ngaytao=datetime.date.today(), soluong=soluong, giasp=giasp))
-
-    #         headers = forget(request)
-    #         url = request.route_url('create-hdbh')
-    #         return HTTPFound(location=url,
-    #                      headers=headers)
-
-        
-    #     return {
-    #         'status': 'Đã thêm sp vào hoá đơn'
-    #     }

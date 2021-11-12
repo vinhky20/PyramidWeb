@@ -76,6 +76,7 @@
                                             <td tal:condition="ct.id_sp != 'test'">
                                                 <form method="POST" action="${request.route_url('create-hdbh', id_hdbh=idhdbh.id_hdbh)}">
                                                     <input type='hidden' name='id_sp' value=${ct.id_sp}>
+                                                    <input type='hidden' name='gia' value=${totalProduct[ct.id_sp]}>
                                                     <button type="submit" class="btn btn-warning btn-sm" name="form.deleteSP">
                                                     Xoá sản phẩm
                                                     </button> 

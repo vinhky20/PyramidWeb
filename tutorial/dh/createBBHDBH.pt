@@ -18,9 +18,9 @@
                         <th>Tên Sản Phẩm</th>
                         <th>Số lượng</th>
                     </tr>
-                    <tr tal:repeat="i test">
+                    <tr tal:repeat="i bh">
                         <td>${i.ChiTietHDBH.sanpham.tensanpham}</td>
-                        <td>${i.total}</td>
+                        <td>${i.totalBH}</td>
                     </tr>
                 </table>
 
