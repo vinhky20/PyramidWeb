@@ -175,6 +175,43 @@ class Home:
 
         return dict(nhanvien=nhanvien)
 
+class ManageCategory:
+    def __init__(self, request):
+        self.request = request
+        self.logged_in = request.authenticated_userid
+
+    @view_config(route_name='danhmuc', renderer='dm/danhmuc.pt', permission='edit')
+    def showdanhmuc(self):
+        request = self.request
+        danhmucs = DBSession.query(DanhMuc)
+
+        if 'form.delete' in request.params:
+            id_dm = request.params['id_dm']
+
+            DBSession.query(DanhMuc).filter_by(id_dm=id_dm).delete()
+
+        if 'form.add' in request.params:
+            id_dm = request.params['id_dm']
+            tendanhmuc = request.params['tendanhmuc']
+
+            DBSession.add(DanhMuc(id_dm=id_dm, tendanhmuc=tendanhmuc))
+            
+        return dict(danhmucs=danhmucs)
+
+
+    @view_config(route_name='updatedm', renderer='dm/updatedm.pt')
+    def updateDM(self):
+        request = self.request
+        id_dm = str(self.request.matchdict['id_dm'])
+        danhmuc = DBSession.query(DanhMuc).filter_by(id_dm=id_dm).one()
+
+        if 'form.update' in request.params:
+            tendanhmuc = request.params['tendanhmuc']
+
+            danhmuc.tendanhmuc = tendanhmuc
+
+        return dict(danhmuc=danhmuc)
+
 class ManageProduct:
     def __init__(self, request):
         self.request = request
@@ -289,7 +326,7 @@ class ManageProduct:
 
             bh = DBSession.query(ChiTietHDBH, HoaDonBanHang, func.sum(ChiTietHDBH.soluong).label('totalBH')).join(HoaDonBanHang, HoaDonBanHang.id_hdbh==ChiTietHDBH.id_hdbh).filter(HoaDonBanHang.ngaytao.between(start, end)).group_by(ChiTietHDBH.id_sp)
             
-            nh = DBSession.query(ChiTietHDNH, HoaDonNhapHang, func.sum(ChiTietHDNH.soluong).label('totalNH')).join(HoaDonNhapHang, HoaDonNhapHang.id_hdnh==ChiTietHDNH.id_hdnh).filter(HoaDonNhapHang.ngaytao.between(start, end)).group_by(ChiTietHDNH.id_sp)
+            nh = DBSession.query(ChiTietHDNH, HoaDonNhapHang, func.sum(ChiTietHDNH.soluong).label('totalNH')).join(HoaDonNhapHang, HoaDonNhapHang.id_hdnh==ChiTietHDNH.id_hdnh).group_by(ChiTietHDNH.id_sp)
 
             A = {}
             for i in bh:
@@ -339,7 +376,11 @@ class ManageProduct:
 
             sps = DBSession.query(ChiTietHDNH, HoaDonNhapHang).join(HoaDonNhapHang, HoaDonNhapHang.id_hdnh==ChiTietHDNH.id_hdnh).filter(HoaDonNhapHang.ngaytao.between(start, end))
                 
-            return dict(sps=sps, start=start, end=end, tenbaobieu=tenbaobieu)
+            nhs = DBSession.query(ChiTietHDNH, HoaDonNhapHang, func.sum(ChiTietHDNH.soluong).label('totalNH')).join(HoaDonNhapHang, HoaDonNhapHang.id_hdnh==ChiTietHDNH.id_hdnh).group_by(ChiTietHDNH.id_sp)
+
+            return dict(sps=sps, start=start, end=end, tenbaobieu=tenbaobieu, nhs=nhs)
+
+
 
         return {
             'status': 'Tạo báo biểu nhập'
@@ -428,14 +469,10 @@ class ManageProduct:
             total.append(x)
         totalProduct.update(e)
 
-
         totalBill = 0
-
 
         for i in total:
             totalBill+=i
-
-        print(totalBill)
 
         if 'form.submit' in request.params:
             DBSession.query(ChiTietHDBH).filter_by(id_sp='test', id_hdbh=id_hdbh).delete()
@@ -477,6 +514,18 @@ class ManageProduct:
             'id_hdnh': id_hdnh
         }
 
+        NV = DBSession.query(HoaDonNhapHang).filter_by(id_hdnh=id_hdnh).one()
+
+        idNV = NV.id_nv
+
+        tenNV = DBSession.query(NhanVien).filter_by(id_nv=idNV).one()
+
+        tennhanvien = tenNV.tennhanvien
+
+        ten = {
+            'tenNV': tennhanvien
+        }
+
         ngaytaohd = datetime.date.today()
 
         cts = DBSession.query(ChiTietHDNH).filter_by(id_hdnh=id_hdnh)
@@ -487,6 +536,21 @@ class ManageProduct:
             giasp = request.params['giasp']
 
             DBSession.add(ChiTietHDNH(id_hdnh=id_hdnh, id_sp=id_sp, soluong=soluong, giasp=giasp))
+            DBSession.query(ChiTietHDNH).filter_by(id_sp='test', id_hdnh=id_hdnh).delete()
+
+        totalProduct = {}
+        total = []
+        e = {}
+        for ct in cts:
+            e[ct.id_sp] = ct.soluong * ct.giasp
+            x = ct.soluong * ct.giasp
+            total.append(x)
+        totalProduct.update(e)
+
+        totalBill = 0
+
+        for i in total:
+            totalBill+=i
 
         if 'form.submit' in request.params:
             transaction.commit()
@@ -507,12 +571,10 @@ class ManageProduct:
 
         if 'form.deleteSP' in request.params:
             id_sp = request.params['id_sp']
+            gia = request.params['gia']
+            totalBill = totalBill - int(gia)
             DBSession.query(ChiTietHDNH).filter_by(id_sp=id_sp, id_hdnh=id_hdnh).delete()
             
-            # headers = forget(request)
-            # url = request.route_url('create-hdnh', id_hdnh=id_hdnh)
-            # return HTTPFound(location=url,
-            #              headers=headers)
 
-        return dict(cts=cts, idhdnh=idhdnh, ngaytaohd=ngaytaohd)
+        return dict(cts=cts, idhdnh=idhdnh, ngaytaohd=ngaytaohd, totalProduct=totalProduct, ten=ten, totalBill=totalBill)
 

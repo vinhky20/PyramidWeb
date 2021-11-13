@@ -11,20 +11,21 @@
     <div class="container">
 
         <section id="inner" class="inner-section section">
-            <h4 class="text-center">Tất cả sản phẩm ${tenbaobieu.ten} từ ${start} đến ${end}</h4>
+            <h4 class="text-center">Sản phẩm ${tenbaobieu.ten} từ ${start} đến ${end}</h4>
             <div class="inner-wrapper row">
                 <table id="books" style="width:100%" class="table table-bordered table-responsive table-striped">
                     <tr>
-                        <th>Tên Sản Phẩm</th>
-                        <th>Số lượng</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Số lượng đã nhập</th>
                     </tr>
                     <tr tal:repeat="sp sps">
                         <td>${sp.ChiTietHDNH.sanpham.tensanpham}</td>
                         <td>${sp.ChiTietHDNH.soluong}</td>
                     </tr>
-
                 </table>
-
+            </div>
+            <div  tal:repeat="nh nhs">
+                <h5 class="text-center">Sản phẩm <b>${nh.ChiTietHDNH.sanpham.tensanpham}</b> đã nhập tổng cộng <b>${nh.totalNH}</b> sản phẩm</h5>
             </div>
         </section>
     </div>

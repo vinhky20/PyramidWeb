@@ -11,12 +11,12 @@
     <div class="container">
 
         <section id="inner" class="inner-section section">
-            <h4 class="text-center">Tất cả sản phẩm ${tenbaobieu.ten} từ ${start} đến ${end}</h4>
+            <h4 class="text-center">Sản phẩm ${tenbaobieu.ten} từ ${start} đến ${end}</h4>
             <div class="inner-wrapper row">
                 <table id="books" style="width:100%" class="table table-bordered table-responsive table-striped">
                     <tr>
-                        <th>Tên Sản Phẩm</th>
-                        <th>Số lượng</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Số lượng đã bán</th>
                     </tr>
                     <tr tal:repeat="i bh">
                         <td>${i.ChiTietHDBH.sanpham.tensanpham}</td>

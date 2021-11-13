@@ -46,6 +46,7 @@
                                     <option value="sofa">Sofa</option>
                                     <option value="bàn">Bàn</option>
                                     <option value="tranh">Tranh</option>
+                                    <option value="gương">Gương</option>
                                 </select>
                                 <!-- <input class="form-control" maxlen="255" type="text" name="danhmuc" /> -->
                             </div>

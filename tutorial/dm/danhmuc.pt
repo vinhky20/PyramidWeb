@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Quản lý danh mục sản phẩm</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+</head>
+
+<body>
+    <h2 class="text-center"><a href="${request.route_url('home')}">Trở về trang chủ</a></h2>
+    <div class="container">
+
+        <section id="inner" class="inner-section section">
+            <h2 class="text-center">Danh Mục Sản Phẩm</h2>
+            <div class="inner-wrapper row">
+                <div class="col-md-12">
+                    <form method="POST" action="${request.route_url('danhmuc')}" class="col-md-6 col-md-offset-3">
+                        <div class="form-group">
+                            <label for="id_dm">Mã Danh Mục</label>
+                            <input class="form-control" maxlen="255" type="text" name="id_dm" />
+                        </div>
+                        <div class="form-group">
+                            <label for="tendanhmuc">Tên Danh Mục</label>
+                            <input class="form-control" maxlen="255" type="text" name="tendanhmuc" />
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" style="width: 100%" class="btn btn-primary" name="form.add">Thêm Danh Mục</button>
+                        </div>
+                        </form>
+                </div>
+                <table id="books" style="width:100%" class="table table-bordered table-responsive table-striped">
+                    <tr>
+                        <th>Mã danh mục</th>
+                        <th>Tên danh mục</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr tal:repeat="danhmuc danhmucs">
+                        <td>${danhmuc.id_dm}</td>
+                        <td>${danhmuc.tendanhmuc}</td>
+                        <td>
+                            <a href="${request.route_url('updatedm', id_dm=danhmuc.id_dm)}" class="btn btn-xs btn-warning">
+                                <i alt="Edit" class="fa fa-pencil"> Edit</i></a>
+                            <form class='delete' method="POST" action="${request.route_url('danhmuc')}" style='display: inline;'>
+                                <input type='hidden' name='id_dm' value=${danhmuc.id_dm}>
+                                <button type='submit' class='btn btn-xs btn-danger' name='form.delete'>
+                                        <i alt='Delete' class='fa fa-trash'>Delete</i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </section>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+</body>
+
+</html>

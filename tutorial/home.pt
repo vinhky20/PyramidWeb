@@ -35,6 +35,7 @@
         <a tal:condition="view.logged_in is None" class="btn btn-info navbar-btn" href="${request.route_url('register')}">Register</a>
         <div class="list-group">
             <a href="${request.route_url('sanpham')}" class="list-group-item list-group-item-success text-center" style="line-height: 64px; font-size: 24px">QUẢN LÝ SẢN PHẨM</a>
+            <a href="${request.route_url('danhmuc')}" class="list-group-item list-group-item-success text-center" style="line-height: 64px; font-size: 24px">QUẢN LÝ DANH MỤC SẢN PHẨM</a>
             <a href="${request.route_url('manageAcc')}" class="list-group-item list-group-item-info text-center" style="line-height: 64px; font-size: 24px">QUẢN LÝ TÀI KHOẢN</a>
             <a href="${request.route_url('create-bill')}" class="list-group-item list-group-item-warning text-center" style="line-height: 64px; font-size: 24px">TẠO HOÁ ĐƠN NHẬP/XUẤT</a>
             <a href="${request.route_url('createreport')}" class="list-group-item list-group-item-danger text-center" style="line-height: 64px; font-size: 24px">TẠO BÁO BIỂU</a>

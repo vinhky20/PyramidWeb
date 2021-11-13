@@ -31,13 +31,19 @@ def main(global_config, **settings):
     config.add_route('register', '/register')
     config.add_route('logout', '/logout')
     config.add_route('manageAcc', '/manageAcc')
+    
     # Class Product 
     config.add_route('sanpham', '/sanpham')
     config.add_route('ban', 'ban')
     config.add_route('sofa', 'sofa')
     config.add_route('addsanpham', '/addsanpham')
-    # config.add_route('deletesp', '/deletesp')
     config.add_route('updatesp', '/updatesp/{id_sp}')
+
+    # Class Category
+    config.add_route('danhmuc', '/danhmuc')
+    config.add_route('adddanhmuc', '/adddanhmuc')
+    config.add_route('updatedm', '/updatedm/{id_dm}')
+
     # config.add_route('login', '/login')
 
     config.add_route('createreport', '/createreport')

@@ -27,13 +27,6 @@
                                         ${ngaytaohd}
                                     </span>
                                 </div>
-<!--                                 <div class="billed"><span class="font-weight-bold text-uppercase">Mã hoá đơn:</span>
-                                    <span class="ml-1">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" name="idbill">
-                                        </div>
-                                    </span>
-                                </div> -->
                             </div>
                             <div class="col-md-6 text-right mt-3 mb-5">
                                 <h4 class="text-danger mb-0">Nội Thất Sweet Home</h4>
