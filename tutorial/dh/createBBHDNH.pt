@@ -7,25 +7,29 @@
 </head>
 
 <body>
-    <h2 class="text-center"><a href="${request.route_url('home')}">Trở về trang chủ</a></h2>
+    
     <div class="container">
-
+        <h3 class="text-center"><a href="${request.route_url('home')}">Trở về trang chủ</a></h3>
+        <hr>
         <section id="inner" class="inner-section section">
-            <h4 class="text-center">Sản phẩm ${tenbaobieu.ten} từ ${start} đến ${end}</h4>
+            <h4 class="text-center">Các sản phẩm ${tenbaobieu.ten} từ <b>${start}</b> đến <b>${end}</b></h4>
             <div class="inner-wrapper row">
                 <table id="books" style="width:100%" class="table table-bordered table-responsive table-striped">
-                    <tr>
-                        <th>Tên sản phẩm</th>
-                        <th>Số lượng đã nhập</th>
+                    <tr style="background-color: #337ab7; color: white">
+                        <th class="text-center">Mã sản phẩm</th>
+                        <th class="text-center">Tên sản phẩm</th>
+                        <th class="text-center">Số lượng đã nhập</th>
                     </tr>
                     <tr tal:repeat="sp sps">
-                        <td>${sp.ChiTietHDNH.sanpham.tensanpham}</td>
-                        <td>${sp.ChiTietHDNH.soluong}</td>
+                        <td class="text-center">${sp.ChiTietHDNH.id_sp}</td>
+                        <td class="text-center">${sp.ChiTietHDNH.sanpham.tensanpham}</td>
+                        <td class="text-center">${sp.ChiTietHDNH.soluong} sản phẩm</td>
                     </tr>
                 </table>
             </div>
+            <hr>
             <div  tal:repeat="nh nhs">
-                <h5 class="text-center">Sản phẩm <b>${nh.ChiTietHDNH.sanpham.tensanpham}</b> đã nhập tổng cộng <b>${nh.totalNH}</b> sản phẩm</h5>
+                <h5 class="text-center"><b>${nh.ChiTietHDNH.sanpham.tensanpham}</b> đã nhập tổng cộng <b>${nh.totalNH}</b> sản phẩm</h5>
             </div>
         </section>
     </div>

@@ -217,6 +217,23 @@ class ManageProduct:
         self.request = request
         self.logged_in = request.authenticated_userid
 
+    @view_config(route_name='search', renderer='sp/search.pt', permission='edit')
+    def search(self):
+        request = self.request
+
+        if 'form.search' in request.params:
+            kw = request.params['kw']
+
+            search = "%{}%".format(kw)
+
+            sanphams = DBSession.query(SanPham).filter(SanPham.tensanpham.like(search)).all()
+
+            return dict(sanphams=sanphams)
+
+        return {
+            'name': 'Tìm kiếm sản phẩm'
+        }
+
     @view_config(route_name='sanpham', renderer='sp/sanpham.pt', permission='edit')
     def showsanpham(self):
         request = self.request

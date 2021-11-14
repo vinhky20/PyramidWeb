@@ -11,7 +11,7 @@
     <div class="container">
 
         <section id="inner" class="inner-section section">
-            <h2 class="text-center">Sản phẩm Sofa</h2>
+            <h3 class="text-center">Sản phẩm Sofa</h3>
             <div class="inner-wrapper row">
                 <div class="d-flex justify-content-center">
                     <a href="${request.route_url('ban')}" class="btn btn-success" style="margin-bottom: 24px;" >
@@ -31,17 +31,19 @@
                     </a>
                 </div>
                 <table id="books" style="width:100%" class="table table-bordered table-responsive table-striped">
-                    <tr>
-                        <th>Tên Sản Phẩm</th>
-                        <th>Đơn Vị Tính</th>
-                        <th>Danh Mục</th>
-                        <th>Action</th>
+                    <tr style="background-color: #337ab7; color: white">
+                        <th class="text-center">Mã Sản Phẩm</th>
+                        <th class="text-center">Tên Sản Phẩm</th>
+                        <th class="text-center">Đơn Vị Tính</th>
+                        <th class="text-center">Danh Mục</th>
+                        <th class="text-center">Action</th>
                     </tr>
                     <tr tal:repeat="sanpham sanphams">
-                        <td tal:condition="sanpham.id_sp != 'test'">${sanpham.tensanpham}</td>
-                        <td tal:condition="sanpham.id_sp != 'test'">${sanpham.donvitinh}</td>
-                        <td tal:condition="sanpham.id_sp != 'test'">${sanpham.danhmuc.tendanhmuc}</td>
-                        <td tal:condition="sanpham.id_sp != 'test'">
+                        <td  class="text-center" tal:condition="sanpham.id_sp != 'test'" class="text-center">${sanpham.id_sp}</td>
+                        <td  class="text-center" tal:condition="sanpham.id_sp != 'test'">${sanpham.tensanpham}</td>
+                        <td  class="text-center" tal:condition="sanpham.id_sp != 'test'">${sanpham.donvitinh}</td>
+                        <td  class="text-center" tal:condition="sanpham.id_sp != 'test'">${sanpham.danhmuc.tendanhmuc}</td>
+                        <td  class="text-center" tal:condition="sanpham.id_sp != 'test'">
                             <a href="${request.route_url('updatesp', id_sp=sanpham.id_sp)}" class="btn btn-xs btn-warning">
                                 <i alt="Edit" class="fa fa-pencil"> Edit</i></a>
                             <form class='delete' method="POST" action="${request.route_url('sanpham')}" style='display: inline;'>
@@ -53,7 +55,7 @@
                         </td>
                     </tr>
                     <tr style="border: none;">
-                        <td colspan="4" class="text-center">
+                        <td colspan="5" class="text-center">
                             <a href="${request.route_url('addsanpham')}" class="btn btn-primary">
                                 <i class="fa fa-plus"></i>+ Thêm sản phẩm
                             </a>

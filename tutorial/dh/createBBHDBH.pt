@@ -7,26 +7,29 @@
 </head>
 
 <body>
-    <h2 class="text-center"><a href="${request.route_url('home')}">Trở về trang chủ</a></h2>
     <div class="container">
-
+        <h3 class="text-center"><a href="${request.route_url('home')}">Trở về trang chủ</a></h3>
+        <hr>
         <section id="inner" class="inner-section section">
-            <h4 class="text-center">Sản phẩm ${tenbaobieu.ten} từ ${start} đến ${end}</h4>
+            <h4 class="text-center">Các sản phẩm ${tenbaobieu.ten} từ <b>${start}</b> đến <b>${end}</b></h4>
             <div class="inner-wrapper row">
                 <table id="books" style="width:100%" class="table table-bordered table-responsive table-striped">
-                    <tr>
-                        <th>Tên sản phẩm</th>
-                        <th>Số lượng đã bán</th>
+                    <tr style="background-color: #337ab7; color: white">
+                        <th class="text-center">Mã sản phẩm</th>
+                        <th class="text-center">Tên sản phẩm</th>
+                        <th class="text-center">Số lượng đã bán</th>
                     </tr>
                     <tr tal:repeat="i bh">
-                        <td>${i.ChiTietHDBH.sanpham.tensanpham}</td>
-                        <td>${i.totalBH}</td>
+                        <td class="text-center">${i.ChiTietHDBH.id_sp}</td>
+                        <td class="text-center">${i.ChiTietHDBH.sanpham.tensanpham}</td>
+                        <td class="text-center">${i.totalBH} sản phẩm</td>
                     </tr>
                 </table>
             </div>
+            <hr>
             <div  tal:repeat="j arr">
-                <h4 class="text-center">${j.name} tồn kho: <b>${j.inventory}</b> sản phẩm</h4>
-                <h4 class="text-center" tal:condition="j.inventory == 0">Sản phẩm <b>${j.name}</b> đã bán hết</h4>
+                <h5 class="text-center"><b>${j.name}</b> tồn kho: <b>${j.inventory}</b> sản phẩm</h5>
+                <h5 class="text-center" tal:condition="j.inventory == 0">Sản phẩm <b>${j.name}</b> đã bán hết</h5>
             </div>
         </section>
     </div>

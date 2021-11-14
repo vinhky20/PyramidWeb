@@ -81,7 +81,7 @@
                                             <td></td>
                                             <td></td>
                                             <td>Tổng tiền</td>
-                                            <td>${totalBill}</td>
+                                            <td>${totalBill} VNĐ</td>
                                         </tr>
                                     </tbody>
                                 </table>

@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Sản phẩm bàn</title>
+    <title>Quản lý sản phẩm</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 </head>
 
@@ -11,7 +11,7 @@
     <div class="container">
 
         <section id="inner" class="inner-section section">
-            <h3 class="text-center">Sản phẩm bàn</h3>
+            <h3 class="text-center">Kết quả tìm kiếm</h3>
             <div class="inner-wrapper row">
                 <div class="d-flex justify-content-center">
                     <a href="${request.route_url('ban')}" class="btn btn-success" style="margin-bottom: 24px;" >
@@ -29,6 +29,12 @@
                     <a href="" class="btn btn-success"  style="margin-bottom: 24px;">
                         <i class="fa fa-plus"></i>Gương
                     </a>
+                    <form class="navbar-form navbar-right" role="search" method="post" action="${request.route_url('search')}">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm" name="kw">
+                        </div>
+                        <button type="submit" class="btn btn-default" name="form.search">Search</button>
+                    </form>
                 </div>
                 <table id="books" style="width:100%" class="table table-bordered table-responsive table-striped">
                     <tr style="background-color: #337ab7; color: white">
@@ -39,11 +45,11 @@
                         <th class="text-center">Action</th>
                     </tr>
                     <tr tal:repeat="sanpham sanphams">
-                        <td tal:condition="sanpham.id_sp != 'test'" class="text-center">${sanpham.id_sp}</td>
-                        <td tal:condition="sanpham.id_sp != 'test'" class="text-center">${sanpham.tensanpham}</td>
-                        <td tal:condition="sanpham.id_sp != 'test'" class="text-center">${sanpham.donvitinh}</td>
-                        <td tal:condition="sanpham.id_sp != 'test'" class="text-center">${sanpham.danhmuc.tendanhmuc}</td>
-                        <td tal:condition="sanpham.id_sp != 'test'" class="text-center">
+                        <td class="text-center">${sanpham.id_sp}</td>
+                        <td class="text-center">${sanpham.tensanpham}</td>
+                        <td class="text-center">${sanpham.donvitinh}</td>
+                        <td class="text-center">${sanpham.danhmuc.tendanhmuc}</td>
+                        <td class="text-center">
                             <a href="${request.route_url('updatesp', id_sp=sanpham.id_sp)}" class="btn btn-xs btn-warning">
                                 <i alt="Edit" class="fa fa-pencil"> Edit</i></a>
                             <form class='delete' method="POST" action="${request.route_url('sanpham')}" style='display: inline;'>
@@ -52,13 +58,6 @@
                                         <i alt='Delete' class='fa fa-trash'>Delete</i>
                                 </button>
                             </form>
-                        </td>
-                    </tr>
-                    <tr style="border: none;">
-                        <td colspan="5" class="text-center">
-                            <a href="${request.route_url('addsanpham')}" class="btn btn-primary">
-                                <i class="fa fa-plus"></i>+ Thêm sản phẩm
-                            </a>
                         </td>
                     </tr>
 
