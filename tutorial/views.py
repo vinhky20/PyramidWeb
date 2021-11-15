@@ -391,7 +391,7 @@ class ManageProduct:
             start = request.params['from']
             end = request.params['to']
 
-            sps = DBSession.query(ChiTietHDNH, HoaDonNhapHang).join(HoaDonNhapHang, HoaDonNhapHang.id_hdnh==ChiTietHDNH.id_hdnh).filter(HoaDonNhapHang.ngaytao.between(start, end))
+            sps = DBSession.query(ChiTietHDNH, HoaDonNhapHang, func.sum(ChiTietHDNH.soluong).label('totalNH')).join(HoaDonNhapHang, HoaDonNhapHang.id_hdnh==ChiTietHDNH.id_hdnh).filter(HoaDonNhapHang.ngaytao.between(start, end)).group_by(ChiTietHDNH.id_sp)
                 
             nhs = DBSession.query(ChiTietHDNH, HoaDonNhapHang, func.sum(ChiTietHDNH.soluong).label('totalNH')).join(HoaDonNhapHang, HoaDonNhapHang.id_hdnh==ChiTietHDNH.id_hdnh).group_by(ChiTietHDNH.id_sp)
 
@@ -467,6 +467,8 @@ class ManageProduct:
 
         ngaytaohd = datetime.date.today()
 
+        tenhd = DBSession.query(HoaDonBanHang).filter_by(id_hdbh=id_hdbh).one()
+
         cts = DBSession.query(ChiTietHDBH).filter_by(id_hdbh=id_hdbh)
 
         if 'form.addToBill' in request.params:
@@ -494,8 +496,9 @@ class ManageProduct:
         if 'form.submit' in request.params:
             DBSession.query(ChiTietHDBH).filter_by(id_sp='test', id_hdbh=id_hdbh).delete()
             transaction.commit()
+
             headers = forget(request)
-            url = request.route_url('create-bill')
+            url = request.route_url('home')
             return HTTPFound(location=url,
                          headers=headers)
 
@@ -504,7 +507,7 @@ class ManageProduct:
             DBSession.query(HoaDonBanHang).filter_by(id_hdbh=id_hdbh).delete()
             
             headers = forget(request)
-            url = request.route_url('create-bill')
+            url = request.route_url('home')
             return HTTPFound(location=url,
                          headers=headers)
 
@@ -514,12 +517,8 @@ class ManageProduct:
             totalBill = totalBill - int(gia)
             DBSession.query(ChiTietHDBH).filter_by(id_sp=id_sp, id_hdbh=id_hdbh).delete()
             
-            # headers = forget(request)
-            # url = request.route_url('create-hdbh', id_hdbh=id_hdbh)
-            # return HTTPFound(location=url,
-            #              headers=headers)
 
-        return dict(cts=cts, idhdbh=idhdbh, ngaytaohd=ngaytaohd, totalProduct=totalProduct, ten=ten, totalBill=totalBill)
+        return dict(cts=cts, idhdbh=idhdbh, ngaytaohd=ngaytaohd, totalProduct=totalProduct, ten=ten, totalBill=totalBill, tenhd=tenhd)
 
 
     @view_config(route_name='create-hdnh', renderer='dh/hdnh.pt')
@@ -547,6 +546,8 @@ class ManageProduct:
 
         cts = DBSession.query(ChiTietHDNH).filter_by(id_hdnh=id_hdnh)
 
+        tenhd = DBSession.query(HoaDonNhapHang).filter_by(id_hdnh=id_hdnh).one()
+
         if 'form.addToBill' in request.params:
             id_sp = request.params['masp']
             soluong = request.params['soluong']
@@ -573,7 +574,7 @@ class ManageProduct:
             transaction.commit()
             DBSession.query(ChiTietHDNH).filter_by(id_sp='test', id_hdnh=id_hdnh).delete()
             headers = forget(request)
-            url = request.route_url('create-bill')
+            url = request.route_url('home')
             return HTTPFound(location=url,
                          headers=headers)
 
@@ -582,7 +583,7 @@ class ManageProduct:
             DBSession.query(HoaDonNhapHang).filter_by(id_hdnh=id_hdnh).delete()
 
             headers = forget(request)
-            url = request.route_url('create-bill')
+            url = request.route_url('home')
             return HTTPFound(location=url,
                          headers=headers)
 
@@ -593,5 +594,5 @@ class ManageProduct:
             DBSession.query(ChiTietHDNH).filter_by(id_sp=id_sp, id_hdnh=id_hdnh).delete()
             
 
-        return dict(cts=cts, idhdnh=idhdnh, ngaytaohd=ngaytaohd, totalProduct=totalProduct, ten=ten, totalBill=totalBill)
+        return dict(cts=cts, idhdnh=idhdnh, ngaytaohd=ngaytaohd, totalProduct=totalProduct, ten=ten, totalBill=totalBill, tenhd=tenhd)
 

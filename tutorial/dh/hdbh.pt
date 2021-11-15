@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hoá Đơn Bán Hàng</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js">
 </head>
@@ -30,6 +31,10 @@
                             </div>
                             <div class="col-md-6 text-right mt-3 mb-5">
                                 <h4 class="text-danger mb-0">Nội Thất Sweet Home</h4>
+                                <div class="billed mt-2">
+                                    <span class="font-weight-bold">Tên hoá đơn:</span>
+                                    <span class="ml-1">${tenhd.tenhdbh}</span>
+                                </div>
                             </div>
                             <form class="form-inline" method="POST" action="${request.route_url('create-hdbh', id_hdbh=idhdbh.id_hdbh)}">
                                 <div class="form-group mx-sm-3 mb-2">
@@ -51,22 +56,22 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>Sản Phẩm</th>
-                                            <th>Số Lượng</th>
-                                            <th>Đơn giá</th>
-                                            <th>Thành tiền</th>
-                                            <th>Action</th>
+                                            <th class="text-center">Sản Phẩm</th>
+                                            <th class="text-center">Số Lượng</th>
+                                            <th class="text-center">Đơn giá</th>
+                                            <th class="text-center">Thành tiền</th>
+                                            <th class="text-center">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody  >
                                         <tr tal:repeat="ct cts">
-                                            <td tal:condition="ct.id_sp != 'test'">${ct.sanpham.tensanpham}</td>
-                                            <td tal:condition="ct.id_sp != 'test'">
+                                            <td tal:condition="ct.id_sp != 'test'" class="text-center">${ct.sanpham.tensanpham}</td>
+                                            <td tal:condition="ct.id_sp != 'test'" class="text-center">
                                                 ${ct.soluong}
                                             </td>
-                                            <td tal:condition="ct.id_sp != 'test'">${ct.giasp} VNĐ/SP</td>
-                                            <td tal:condition="ct.id_sp != 'test'">${totalProduct[ct.id_sp]} VNĐ</td>                               
-                                            <td tal:condition="ct.id_sp != 'test'">
+                                            <td tal:condition="ct.id_sp != 'test'" class="text-center">${ct.giasp} VNĐ/SP</td>
+                                            <td tal:condition="ct.id_sp != 'test'" class="text-center">${totalProduct[ct.id_sp]} VNĐ</td>                               
+                                            <td tal:condition="ct.id_sp != 'test'" class="text-center">
                                                 <form method="POST" action="${request.route_url('create-hdbh', id_hdbh=idhdbh.id_hdbh)}">
                                                     <input type='hidden' name='id_sp' value=${ct.id_sp}>
                                                     <input type='hidden' name='gia' value=${totalProduct[ct.id_sp]}>

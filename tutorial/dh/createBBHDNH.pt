@@ -23,7 +23,7 @@
                     <tr tal:repeat="sp sps">
                         <td class="text-center">${sp.ChiTietHDNH.id_sp}</td>
                         <td class="text-center">${sp.ChiTietHDNH.sanpham.tensanpham}</td>
-                        <td class="text-center">${sp.ChiTietHDNH.soluong} sản phẩm</td>
+                        <td class="text-center">${sp.totalNH} sản phẩm</td>
                     </tr>
                 </table>
             </div>
