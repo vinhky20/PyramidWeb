@@ -17,11 +17,13 @@
                     <tr style="background-color: #337ab7; color: white">
                         <th class="text-center">Mã sản phẩm</th>
                         <th class="text-center">Tên sản phẩm</th>
+                        <th class="text-center">Danh mục</th>
                         <th class="text-center">Số lượng đã bán</th>
                     </tr>
                     <tr tal:repeat="i bh">
                         <td class="text-center">${i.ChiTietHDBH.id_sp}</td>
                         <td class="text-center">${i.ChiTietHDBH.sanpham.tensanpham}</td>
+                        <td class="text-center">${i.ChiTietHDBH.sanpham.danhmuc.tendanhmuc}</td>
                         <td class="text-center">${i.totalBH} sản phẩm</td>
                     </tr>
                 </table>

@@ -18,11 +18,13 @@
                     <tr style="background-color: #337ab7; color: white">
                         <th class="text-center">Mã sản phẩm</th>
                         <th class="text-center">Tên sản phẩm</th>
+                        <th class="text-center">Danh mục</th>
                         <th class="text-center">Số lượng đã nhập</th>
                     </tr>
                     <tr tal:repeat="sp sps">
                         <td class="text-center">${sp.ChiTietHDNH.id_sp}</td>
                         <td class="text-center">${sp.ChiTietHDNH.sanpham.tensanpham}</td>
+                        <td class="text-center">${sp.ChiTietHDNH.sanpham.danhmuc.tendanhmuc}</td>
                         <td class="text-center">${sp.totalNH} sản phẩm</td>
                     </tr>
                 </table>
