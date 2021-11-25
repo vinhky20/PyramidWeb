@@ -7,7 +7,14 @@
 </head>
 
 <body>
-    <h2 class="text-center"><a href="${request.route_url('sanpham')}">Tất cả sản phẩm</a></h2>
+    <ul class="nav nav-tabs nav-justified" style="background-color: #C5E0D8">
+        <li role="presentation"><a href="${request.route_url('home')}" style="color: black"><b>HOME</b></a></li>
+        <li role="presentation"><a href="${request.route_url('sanpham')}" style="color: black"><b>QUẢN LÝ SẢN PHẨM</b></a></li>
+        <li role="presentation"><a href="${request.route_url('danhmuc')}" style="color: black"><b>QUẢN LÝ DANH MỤC</b></a></li>
+        <li role="presentation"><a href="${request.route_url('manageAcc')}" style="color: black"><b>QUẢN LÝ TÀI KHOẢN</b></a></li>
+        <li role="presentation"><a href="${request.route_url('create-bill')}" style="color: black"><b>TẠO HOÁ ĐƠN</b></a></li>
+        <li role="presentation"><a href="${request.route_url('createreport')}" style="color: black"><b>TẠO BÁO BIỂU</b></a></li>
+    </ul>
     <div class="container">
 
         <section id="inner" class="inner-section section">
