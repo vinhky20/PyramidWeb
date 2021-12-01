@@ -2,25 +2,36 @@
 <html lang="en">
 
 <head>
-    <title>Quản lý sản phẩm</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <title>Tìm kiếm sản phẩm</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
 </head>
 
 <body>
-    <ul class="nav nav-tabs nav-justified" style="background-color: #C5E0D8">
-        <li role="presentation"><a href="${request.route_url('home')}" style="color: black"><b>HOME</b></a></li>
-        <li role="presentation"><a href="${request.route_url('sanpham')}" style="color: black"><b>QUẢN LÝ SẢN PHẨM</b></a></li>
-        <li role="presentation"><a href="${request.route_url('danhmuc')}" style="color: black"><b>QUẢN LÝ DANH MỤC</b></a></li>
-        <li role="presentation"><a href="${request.route_url('manageAcc')}" style="color: black"><b>QUẢN LÝ TÀI KHOẢN</b></a></li>
-        <li role="presentation"><a href="${request.route_url('create-bill')}" style="color: black"><b>TẠO HOÁ ĐƠN</b></a></li>
-        <li role="presentation"><a href="${request.route_url('createreport')}" style="color: black"><b>TẠO BÁO BIỂU</b></a></li>
-    </ul>
+    <div style="background-color: #d6d8db; color: black;">
+        <ul class="nav nav-pills nav-fill">
+            <li class="nav-item">
+                <a class="nav-link" href="${request.route_url('home')}" style="color: black">HOME</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="${request.route_url('sanpham')}">QUẢN LÝ SẢN PHẨM</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="${request.route_url('danhmuc')}" style="color: black">QUẢN LÝ DANH MỤC</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="${request.route_url('manageAcc')}" style="color: black">QUẢN LÝ TÀI KHOẢN</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="${request.route_url('create-bill')}" style="color: black">TẠO HOÁ ĐƠN</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="${request.route_url('createreport')}" style="color: black">TẠO BÁO BIỂU</a>
+            </li>
+        </ul>
+    </div>
     <div class="container">
-
-        <section id="inner" class="inner-section section">
-            <h3 class="text-center">Kết quả tìm kiếm</h3>
-            <div class="inner-wrapper row">
-                <div class="d-flex justify-content-center">
+        <h3 class="text-center mt-4">Kết quả tìm kiếm</h3>
+                <div class="float-left">
                     <a href="${request.route_url('ban')}" class="btn btn-success" style="margin-bottom: 24px;" >
                         <i class="fa fa-plus"></i>Bàn
                     </a>
@@ -36,14 +47,8 @@
                     <a href="" class="btn btn-success"  style="margin-bottom: 24px;">
                         <i class="fa fa-plus"></i>Gương
                     </a>
-                    <form class="navbar-form navbar-right" role="search" method="post" action="${request.route_url('search')}">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm" name="kw">
-                        </div>
-                        <button type="submit" class="btn btn-default" name="form.search">Search</button>
-                    </form>
                 </div>
-                <table id="books" style="width:100%" class="table table-bordered table-responsive table-striped">
+                <table id="books" style="width:100%" class="table table-bordered table-striped">
                     <tr style="background-color: #337ab7; color: white">
                         <th class="text-center">Mã Sản Phẩm</th>
                         <th class="text-center">Tên Sản Phẩm</th>
@@ -67,16 +72,19 @@
                             </form>
                         </td>
                     </tr>
+                    <tr>
+                        <td colspan="5" class="text-center">
+                            <a href="${request.route_url('addsanpham')}" class="btn btn-primary">
+                                <i class="fa fa-plus"></i>+ Thêm sản phẩm
+                            </a>
+                        </td>
+                    </tr>
 
                 </table>
-
-            </div>
-        </section>
     </div>
 
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
 </body>
 
 </html>

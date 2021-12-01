@@ -5,36 +5,41 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
 </head>
 
 <body>
-    <ul class="nav nav-tabs nav-justified" style="background-color: #C5E0D8">
-        <li role="presentation"><a href="${request.route_url('home')}" style="color: black"><b>HOME</b></a></li>
-        <li role="presentation"><a href="${request.route_url('sanpham')}" style="color: black"><b>QUẢN LÝ SẢN PHẨM</b></a></li>
-        <li role="presentation"><a href="${request.route_url('danhmuc')}" style="color: black"><b>QUẢN LÝ DANH MỤC</b></a></li>
-        <li role="presentation"><a href="${request.route_url('manageAcc')}" style="color: black"><b>QUẢN LÝ TÀI KHOẢN</b></a></li>
-        <li role="presentation" class="active"><a href="#" style="color: black"><b>TẠO HOÁ ĐƠN</b></a></li>
-        <li role="presentation"><a href="${request.route_url('createreport')}" style="color: black"><b>TẠO BÁO BIỂU</b></a></li>
-    </ul>
-        <section id="inner" class="inner-section section ">
+    <div style="background-color: #d6d8db; color: black;">
+        <ul class="nav nav-pills nav-fill">
+            <li class="nav-item">
+                <a class="nav-link" href="${request.route_url('home')}" style="color: black">HOME</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="${request.route_url('sanpham')}" style="color: black">QUẢN LÝ SẢN PHẨM</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="${request.route_url('danhmuc')}" style="color: black">QUẢN LÝ DANH MỤC</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="${request.route_url('manageAcc')}" style="color: black">QUẢN LÝ TÀI KHOẢN</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link  active" href="#">TẠO HOÁ ĐƠN</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="${request.route_url('createreport')}" style="color: black">TẠO BÁO BIỂU</a>
+            </li>
+        </ul>
+    </div>
             <div class="container">
 
-                <!-- SECTION HEADING -->
-                <h2 class="section-heading text-center wow fadeIn" data-wow-duration="1s">Tạo hoá đơn bán/nhập hàng</h2>
-                <div class="row">
-                    <div class="col-md-6 col-md-offset-3 text-center">
-                        <a class="wow fadeIn" href="/">Home</a>
-                    </div>
-                </div>
-                <div class="inner-wrapper row">
+                <h2 class="text-center mt-4">Tạo hoá đơn bán/nhập hàng</h2>
 
-                    <div class="col-md-12">
-
-                        <form method="POST" action="${request.route_url('create-bill')}" class="col-md-6 col-md-offset-3">
+                    <div>
+                        <form method="POST" action="${request.route_url('create-bill')}">
                             <div class="form-group">
-                                <label for="tenhd">Tên hoá đơn</label>
-                                <input class="form-control" maxlen="255" type="text" name="tenhd" value="" />
+                                <label for="tenhd" class="text-center">Tên hoá đơn</label>
+                                <input class="form-control" maxlen="255" type="text" name="tenhd" value="" placeholder="Nhập tên hoá đơn" />
                             </div> 
                             <div class="form-group">
                                 <button type="submit" style="width: 100%" class="btn btn-primary" name="form.hdbh">Tạo hoá đơn bán hàng</button>
@@ -44,15 +49,12 @@
                             </div>
                         </form>
                     </div>
-                </div>
             </div>
-        </section>
 
 
 
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
 </body>
 
 </html>
