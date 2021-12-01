@@ -12,21 +12,21 @@
         <hr>
         <h5 class="text-center">Các sản phẩm ${tenbaobieu.ten} từ <b>${start}</b> đến <b>${end}</b></h5>
         <table id="books" style="width:100%" class="table table-bordered table-striped">
-                    <tr style="background-color: #337ab7; color: white">
-                        <th class="text-center">Mã sản phẩm</th>
-                        <th class="text-center">Tên sản phẩm</th>
-                        <th class="text-center">Danh mục</th>
-                        <th class="text-center">Số lượng đã bán</th>
-                    </tr>
-                    <tr tal:repeat="i bh">
-                        <td class="text-center">${i.ChiTietHDBH.id_sp}</td>
-                        <td class="text-center">${i.ChiTietHDBH.sanpham.tensanpham}</td>
-                        <td class="text-center">${i.ChiTietHDBH.sanpham.danhmuc.tendanhmuc}</td>
-                        <td class="text-center">${i.totalBH} sản phẩm</td>
-                    </tr>
+            <tr style="background-color: #337ab7; color: white">
+                <th class="text-center">Mã sản phẩm</th>
+                <th class="text-center">Tên sản phẩm</th>
+                <th class="text-center">Danh mục</th>
+                <th class="text-center">Số lượng đã bán</th>
+            </tr>
+            <tr tal:repeat="i bh">
+                <td class="text-center">${i.ChiTietHDBH.id_sp}</td>
+                <td class="text-center">${i.ChiTietHDBH.sanpham.tensanpham}</td>
+                <td class="text-center">${i.ChiTietHDBH.sanpham.danhmuc.tendanhmuc}</td>
+                <td class="text-center">${i.totalBH} sản phẩm</td>
+            </tr>
         </table>
         <hr>
-        <div  tal:repeat="j arr">
+        <div tal:repeat="j arr">
             <h6 class="text-center"><b>${j.name}</b> tồn kho: <b>${j.inventory}</b> sản phẩm</h6>
             <h6 class="text-center" tal:condition="j.inventory == 0">Sản phẩm <b>${j.name}</b> đã bán hết</h6>
         </div>

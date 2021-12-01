@@ -64,7 +64,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr tal:repeat="ct cts" >
+                                        <tr tal:repeat="ct cts">
                                             <td class="text-center" tal:condition="ct.id_sp != 'test'">${ct.sanpham.tensanpham}</td>
                                             <td class="text-center" tal:condition="ct.id_sp != 'test'">
                                                 ${ct.soluong}
@@ -78,7 +78,7 @@
                                                     <input type='hidden' name='gia' value=${totalProduct[ct.id_sp]}>
                                                     <button type="submit" class="btn btn-warning btn-sm" name="form.deleteSP">
                                                     Xoá sản phẩm
-                                                    </button> 
+                                                    </button>
                                                 </form>
                                             </td>
                                         </tr>

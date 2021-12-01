@@ -63,21 +63,21 @@
                                             <th class="text-center">Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody  >
+                                    <tbody>
                                         <tr tal:repeat="ct cts">
                                             <td tal:condition="ct.id_sp != 'test'" class="text-center">${ct.sanpham.tensanpham}</td>
                                             <td tal:condition="ct.id_sp != 'test'" class="text-center">
                                                 ${ct.soluong}
                                             </td>
                                             <td tal:condition="ct.id_sp != 'test'" class="text-center">${ct.giasp} VNĐ/SP</td>
-                                            <td tal:condition="ct.id_sp != 'test'" class="text-center">${totalProduct[ct.id_sp]} VNĐ</td>                               
+                                            <td tal:condition="ct.id_sp != 'test'" class="text-center">${totalProduct[ct.id_sp]} VNĐ</td>
                                             <td tal:condition="ct.id_sp != 'test'" class="text-center">
                                                 <form method="POST" action="${request.route_url('create-hdbh', id_hdbh=idhdbh.id_hdbh)}">
                                                     <input type='hidden' name='id_sp' value=${ct.id_sp}>
                                                     <input type='hidden' name='gia' value=${totalProduct[ct.id_sp]}>
                                                     <button type="submit" class="btn btn-warning btn-sm" name="form.deleteSP">
                                                     Xoá sản phẩm
-                                                    </button> 
+                                                    </button>
                                                 </form>
                                             </td>
                                         </tr>

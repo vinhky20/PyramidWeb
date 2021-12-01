@@ -31,35 +31,35 @@
     </div>
     <div class="container">
 
-                <h3 class="text-center mt-4" data-wow-duration="1s">Tạo báo biểu</h3>
+        <h3 class="text-center mt-4" data-wow-duration="1s">Tạo báo biểu</h3>
 
-                        <form method="POST" action="${request.route_url('createBBHDBH')}">
-                            <div class="form-group">
-                                <label for="from">Từ</label>
-                                <input class="form-control" type="date" name="from"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="to">Đến</label>
-                                <input class="form-control" type="date" name="to"/>
-                            </div> 
-                            <div class="form-group">
-                                <button type="submit" style="width: 100%" class="btn btn-success" name="form.export">Tạo báo biểu bán hàng</button>
-                                
-                            </div>
-                        </form>
-                        <form method="POST" action="${request.route_url('createBBHDNH')}">
-                            <div class="form-group">
-                                <label for="from">Từ</label>
-                                <input class="form-control" type="date" name="from"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="to">Đến</label>
-                                <input class="form-control" type="date" name="to"/>
-                            </div> ->
-                            <div class="form-group">
-                                <button type="submit" style="width: 100%" class="btn btn-success" name="form.import">Tạo báo biểu nhập hàng</button>
-                            </div>
-                        </form>
+        <form method="POST" action="${request.route_url('createBBHDBH')}">
+            <div class="form-group">
+                <label for="from">Từ</label>
+                <input class="form-control" type="date" name="from" />
+            </div>
+            <div class="form-group">
+                <label for="to">Đến</label>
+                <input class="form-control" type="date" name="to" />
+            </div>
+            <div class="form-group">
+                <button type="submit" style="width: 100%" class="btn btn-success" name="form.export">Tạo báo biểu bán hàng</button>
+
+            </div>
+        </form>
+        <form method="POST" action="${request.route_url('createBBHDNH')}">
+            <div class="form-group">
+                <label for="from">Từ</label>
+                <input class="form-control" type="date" name="from" />
+            </div>
+            <div class="form-group">
+                <label for="to">Đến</label>
+                <input class="form-control" type="date" name="to" />
+            </div> ->
+            <div class="form-group">
+                <button type="submit" style="width: 100%" class="btn btn-success" name="form.import">Tạo báo biểu nhập hàng</button>
+            </div>
+        </form>
 
     </div>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

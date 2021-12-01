@@ -7,29 +7,29 @@
 </head>
 
 <body>
-    
+
     <div class="container">
         <h4 class="text-center mt-4"><a href="${request.route_url('home')}">Trở về trang chủ</a></h4>
         <hr>
         <h5 class="text-center">Các sản phẩm ${tenbaobieu.ten} từ <b>${start}</b> đến <b>${end}</b></h5>
-                <table id="books" style="width:100%" class="table table-bordered table-striped">
-                    <tr style="background-color: #337ab7; color: white">
-                        <th class="text-center">Mã sản phẩm</th>
-                        <th class="text-center">Tên sản phẩm</th>
-                        <th class="text-center">Danh mục</th>
-                        <th class="text-center">Số lượng đã nhập</th>
-                    </tr>
-                    <tr tal:repeat="sp sps">
-                        <td class="text-center">${sp.ChiTietHDNH.id_sp}</td>
-                        <td class="text-center">${sp.ChiTietHDNH.sanpham.tensanpham}</td>
-                        <td class="text-center">${sp.ChiTietHDNH.sanpham.danhmuc.tendanhmuc}</td>
-                        <td class="text-center">${sp.totalNH} sản phẩm</td>
-                    </tr>
-                </table>
-            <hr>
-            <div  tal:repeat="nh nhs">
-                <h6 class="text-center"><b>${nh.ChiTietHDNH.sanpham.tensanpham}</b> đã nhập tổng cộng <b>${nh.totalNH}</b> sản phẩm</h6>
-            </div>
+        <table id="books" style="width:100%" class="table table-bordered table-striped">
+            <tr style="background-color: #337ab7; color: white">
+                <th class="text-center">Mã sản phẩm</th>
+                <th class="text-center">Tên sản phẩm</th>
+                <th class="text-center">Danh mục</th>
+                <th class="text-center">Số lượng đã nhập</th>
+            </tr>
+            <tr tal:repeat="sp sps">
+                <td class="text-center">${sp.ChiTietHDNH.id_sp}</td>
+                <td class="text-center">${sp.ChiTietHDNH.sanpham.tensanpham}</td>
+                <td class="text-center">${sp.ChiTietHDNH.sanpham.danhmuc.tendanhmuc}</td>
+                <td class="text-center">${sp.totalNH} sản phẩm</td>
+            </tr>
+        </table>
+        <hr>
+        <div tal:repeat="nh nhs">
+            <h6 class="text-center"><b>${nh.ChiTietHDNH.sanpham.tensanpham}</b> đã nhập tổng cộng <b>${nh.totalNH}</b> sản phẩm</h6>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

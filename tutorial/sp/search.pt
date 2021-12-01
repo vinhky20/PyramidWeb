@@ -31,56 +31,56 @@
     </div>
     <div class="container">
         <h3 class="text-center mt-4">Kết quả tìm kiếm</h3>
-                <div class="float-left">
-                    <a href="${request.route_url('ban')}" class="btn btn-success" style="margin-bottom: 24px;" >
-                        <i class="fa fa-plus"></i>Bàn
-                    </a>
-                    <a href="${request.route_url('sofa')}" class="btn btn-success"  style="margin-bottom: 24px;">
-                        <i class="fa fa-plus"></i>Sofa
-                    </a>
-                    <a href="" class="btn btn-success"  style="margin-bottom: 24px;">
-                        <i class="fa fa-plus"></i>Đèn
-                    </a>
-                    <a href="" class="btn btn-success"  style="margin-bottom: 24px;">
-                        <i class="fa fa-plus"></i>Giường
-                    </a>
-                    <a href="" class="btn btn-success"  style="margin-bottom: 24px;">
-                        <i class="fa fa-plus"></i>Gương
-                    </a>
-                </div>
-                <table id="books" style="width:100%" class="table table-bordered table-striped">
-                    <tr style="background-color: #337ab7; color: white">
-                        <th class="text-center">Mã Sản Phẩm</th>
-                        <th class="text-center">Tên Sản Phẩm</th>
-                        <th class="text-center">Đơn Vị Tính</th>
-                        <th class="text-center">Danh Mục</th>
-                        <th class="text-center">Action</th>
-                    </tr>
-                    <tr tal:repeat="sanpham sanphams">
-                        <td class="text-center">${sanpham.id_sp}</td>
-                        <td class="text-center">${sanpham.tensanpham}</td>
-                        <td class="text-center">${sanpham.donvitinh}</td>
-                        <td class="text-center">${sanpham.danhmuc.tendanhmuc}</td>
-                        <td class="text-center">
-                            <a href="${request.route_url('updatesp', id_sp=sanpham.id_sp)}" class="btn btn-xs btn-warning">
-                                <i alt="Edit" class="fa fa-pencil"> Edit</i></a>
-                            <form class='delete' method="POST" action="${request.route_url('sanpham')}" style='display: inline;'>
-                                <input type='hidden' name='id_sp' value=${sanpham.id_sp}>
-                                <button type='submit' class='btn btn-xs btn-danger' name='form.delete'>
+        <div class="float-left">
+            <a href="${request.route_url('ban')}" class="btn btn-success" style="margin-bottom: 24px;">
+                <i class="fa fa-plus"></i>Bàn
+            </a>
+            <a href="${request.route_url('sofa')}" class="btn btn-success" style="margin-bottom: 24px;">
+                <i class="fa fa-plus"></i>Sofa
+            </a>
+            <a href="" class="btn btn-success" style="margin-bottom: 24px;">
+                <i class="fa fa-plus"></i>Đèn
+            </a>
+            <a href="" class="btn btn-success" style="margin-bottom: 24px;">
+                <i class="fa fa-plus"></i>Giường
+            </a>
+            <a href="" class="btn btn-success" style="margin-bottom: 24px;">
+                <i class="fa fa-plus"></i>Gương
+            </a>
+        </div>
+        <table id="books" style="width:100%" class="table table-bordered table-striped">
+            <tr style="background-color: #337ab7; color: white">
+                <th class="text-center">Mã Sản Phẩm</th>
+                <th class="text-center">Tên Sản Phẩm</th>
+                <th class="text-center">Đơn Vị Tính</th>
+                <th class="text-center">Danh Mục</th>
+                <th class="text-center">Action</th>
+            </tr>
+            <tr tal:repeat="sanpham sanphams">
+                <td class="text-center">${sanpham.id_sp}</td>
+                <td class="text-center">${sanpham.tensanpham}</td>
+                <td class="text-center">${sanpham.donvitinh}</td>
+                <td class="text-center">${sanpham.danhmuc.tendanhmuc}</td>
+                <td class="text-center">
+                    <a href="${request.route_url('updatesp', id_sp=sanpham.id_sp)}" class="btn btn-xs btn-warning">
+                        <i alt="Edit" class="fa fa-pencil"> Edit</i></a>
+                    <form class='delete' method="POST" action="${request.route_url('sanpham')}" style='display: inline;'>
+                        <input type='hidden' name='id_sp' value=${sanpham.id_sp}>
+                        <button type='submit' class='btn btn-xs btn-danger' name='form.delete'>
                                         <i alt='Delete' class='fa fa-trash'>Delete</i>
                                 </button>
-                            </form>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="5" class="text-center">
-                            <a href="${request.route_url('addsanpham')}" class="btn btn-primary">
-                                <i class="fa fa-plus"></i>+ Thêm sản phẩm
-                            </a>
-                        </td>
-                    </tr>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5" class="text-center">
+                    <a href="${request.route_url('addsanpham')}" class="btn btn-primary">
+                        <i class="fa fa-plus"></i>+ Thêm sản phẩm
+                    </a>
+                </td>
+            </tr>
 
-                </table>
+        </table>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
