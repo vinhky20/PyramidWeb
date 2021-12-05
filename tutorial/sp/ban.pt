@@ -31,7 +31,7 @@
     </div>
 
     <div class="container">
-        <h3 class="text-center mt-4">Sản phẩm bàn</h3>
+        <h3 class="text-center mt-4">Sản phẩm Bàn</h3>
         <div class="float-left">
             <a href="${request.route_url('ban')}" class="btn btn-success" style="margin-bottom: 24px;">
                 <i class="fa fa-plus"></i>Bàn
@@ -39,13 +39,10 @@
             <a href="${request.route_url('sofa')}" class="btn btn-success" style="margin-bottom: 24px;">
                 <i class="fa fa-plus"></i>Sofa
             </a>
-            <a href="" class="btn btn-success" style="margin-bottom: 24px;">
-                <i class="fa fa-plus"></i>Đèn
+            <a href="${request.route_url('tranh')}" class="btn btn-success" style="margin-bottom: 24px;">
+                <i class="fa fa-plus"></i>Tranh
             </a>
-            <a href="" class="btn btn-success" style="margin-bottom: 24px;">
-                <i class="fa fa-plus"></i>Giường
-            </a>
-            <a href="" class="btn btn-success" style="margin-bottom: 24px;">
+            <a href="${request.route_url('guong')}" class="btn btn-success" style="margin-bottom: 24px;">
                 <i class="fa fa-plus"></i>Gương
             </a>
         </div>

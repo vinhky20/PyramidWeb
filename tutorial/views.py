@@ -47,16 +47,6 @@ class Home:
     def home(self):
                 
         return {'name': 'Nội Thất Sweet Home'}
-
-    # @property
-    # def counter(self):
-    #     session = self.request.session
-    #     if 'counter' in session:
-    #         session['counter'] += 1
-    #     else:
-    #         session['counter'] = 1
-
-    #     return session['counter']
             
 
     @view_config(route_name='login', renderer='login.pt')
@@ -260,6 +250,20 @@ class ManageProduct:
         #     print(sanpham.__dict__)
         return dict(sanphams=sanphams)
 
+    @view_config(route_name='tranh', renderer='sp/tranh.pt')
+    def showtranh(self):
+        sanphams = DBSession.query(SanPham).filter_by(id_dm=3)
+        # for sanpham in sanphams:
+        #     print(sanpham.__dict__)
+        return dict(sanphams=sanphams)
+
+    @view_config(route_name='guong', renderer='sp/guong.pt')
+    def showguong(self):
+        sanphams = DBSession.query(SanPham).filter_by(id_dm=4)
+        # for sanpham in sanphams:
+        #     print(sanpham.__dict__)
+        return dict(sanphams=sanphams)
+
 
 
     @view_config(route_name='addsanpham', renderer='sp/addsanpham.pt')
@@ -280,21 +284,6 @@ class ManageProduct:
             
         return dict(danhmucs=danhmucs)
 
-    # @view_config(route_name='deletesp', renderer='sp/sanpham.pt')
-    # def deletesp(self):
-    #     request = self.request
-    #     if 'form.delete' in request.params:
-    #         id_sp = request.params['id_sp']
-
-    #         DBSession.query(SanPham).filter_by(id_sp=id_sp).delete()
-            
-    #         headers = forget(request)
-    #         url = request.route_url('sanpham')
-    #         return HTTPFound(location=url,
-    #                      headers=headers)
-    #     return {
-    #         'status': 'Xoá sản phẩm thành công!'
-    #     }
 
     @view_config(route_name='updatesp', renderer='sp/updatesp.pt')
     def updatesp(self):
@@ -313,12 +302,7 @@ class ManageProduct:
             sanpham.tensanpham = tensanpham
             sanpham.donvitinh = dvt
             sanpham.id_dm = dm.id_dm
-            # transaction.commit();
-            
-            # headers = forget(request)
-            # url = request.route_url('sanpham')
-            # return HTTPFound(location=url,
-            #              headers=headers)
+
 
         return dict(sanpham=sanpham)
         
