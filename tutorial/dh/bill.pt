@@ -36,9 +36,7 @@
         </ul>
     </div>
     <div class="container">
-
         <h2 class="text-center mt-4">Tạo hoá đơn bán/nhập hàng</h2>
-
         <div>
             <form method="POST" action="${request.route_url('create-bill')}">
                 <div class="form-group">
@@ -52,6 +50,65 @@
                     <button type="submit" style="width: 100%" class="btn btn-primary" name="form.hdnh">Tạo hoá đơn nhập hàng</button>
                 </div>
             </form>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-lg-6">
+                <h4 class="text-center">HOÁ ĐƠN BÁN HÀNG</h4>
+                <table class="table table-bordered table-striped">
+                    <tr style="background-color: #337ab7; color: white">
+                        <th class="text-center">Mã Hoá Đơn</th>
+                        <th class="text-center">Tên Hoá Đơn</th>
+                        <th class="text-center">Ngày tạo</th>
+                        <th class="text-center">Nhân viên</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                    <tr tal:repeat="bh bhs">
+                        <td class="text-center">${bh.id_hdbh}</td>
+                        <td class="text-center">${bh.tenhdbh}</td>
+                        <td class="text-center">${bh.ngaytao}</td>
+                        <td class="text-center">${bh.nhanvien.tennhanvien}</td>
+                        <td class="text-center">
+                            <a href="${request.route_url('view-detail-hdbh', id_hdbh=bh.id_hdbh)}" class="btn btn-xs btn-success">
+                                <i alt="View" class="fa fa-pencil">Xem</i></a>
+                            <form class='delete' method="POST" action="" style='display: inline;'>
+                                <input type='hidden' name='id' value=${bh.id_hdbh}>
+                                <button type='submit' class='btn btn-xs btn-danger' name='form.delete.hdbh'>
+                                        <i alt='Delete' class='fa fa-trash'>Xoá</i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-lg-6">
+                <h4 class="text-center">HOÁ ĐƠN NHẬP HÀNG</h4>
+                <table class="table table-bordered table-striped">
+                    <tr style="background-color: #337ab7; color: white">
+                        <th class="text-center">Mã Hoá Đơn</th>
+                        <th class="text-center">Tên Hoá Đơn</th>
+                        <th class="text-center">Ngày tạo</th>
+                        <th class="text-center">Nhân viên</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                    <tr tal:repeat="nh nhs">
+                        <td class="text-center">${nh.id_hdnh}</td>
+                        <td class="text-center">${nh.tenhdnh}</td>
+                        <td class="text-center">${nh.ngaytao}</td>
+                        <td class="text-center">${nh.nhanvien.tennhanvien}</td>
+                        <td class="text-center">
+                            <a href="${request.route_url('view-detail-hdnh', id_hdnh=nh.id_hdnh)}" class="btn btn-xs btn-success">
+                                <i alt="View" class="fa fa-pencil">Xem</i></a>
+                            <form class='delete' method="POST" action="" style='display: inline;'>
+                                <input type='hidden' name='id' value=${nh.id_hdnh}>
+                                <button type='submit' class='btn btn-xs btn-danger' name='form.delete.hdnh'>
+                                        <i alt='Delete' class='fa fa-trash'>Xoá</i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
 

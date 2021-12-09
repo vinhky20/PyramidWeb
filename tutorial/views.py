@@ -423,9 +423,97 @@ class ManageProduct:
             return HTTPFound(location=url,
                          headers=headers)
 
-        return {
-            'name': 'Vinh Ky'
+        if 'form.delete.hdbh' in request.params:
+            idhdbh = request.params['id']
+            DBSession.query(ChiTietHDBH).filter_by(id_hdbh=idhdbh).delete()
+            DBSession.query(HoaDonBanHang).filter_by(id_hdbh=idhdbh).delete()
+
+        if 'form.delete.hdnh' in request.params:
+            idhdnh = request.params['id']
+            DBSession.query(ChiTietHDNH).filter_by(id_hdnh=idhdnh).delete()
+            DBSession.query(HoaDonNhapHang).filter_by(id_hdnh=idhdnh).delete()
+
+
+        bhs = DBSession.query(HoaDonBanHang)
+        nhs = DBSession.query(HoaDonNhapHang)
+
+        return dict(bhs=bhs, nhs=nhs)
+
+    @view_config(route_name='view-detail-hdbh', renderer='dh/view-detail-hdbh.pt')
+    def viewDetailHDBH(self):
+        request = self.request
+        id_hdbh = int(self.request.matchdict['id_hdbh'])
+
+        idhdbh = {
+            'id_hdbh': id_hdbh
         }
+
+        cts = DBSession.query(ChiTietHDBH).filter_by(id_hdbh=id_hdbh)
+
+        hdbh = DBSession.query(HoaDonBanHang).filter_by(id_hdbh=id_hdbh).one()
+
+        totalProduct = {}
+        total = []
+        e = {}
+        for ct in cts:
+            e[ct.id_sp] = ct.soluong * ct.giasp
+            x = ct.soluong * ct.giasp
+            total.append(x)
+        totalProduct.update(e)
+
+        totalBill = 0
+
+        for i in total:
+            totalBill+=i
+
+        if 'form.delete' in request.params:
+            DBSession.query(ChiTietHDBH).filter_by(id_hdbh=id_hdbh).delete()
+            DBSession.query(HoaDonBanHang).filter_by(id_hdbh=id_hdbh).delete()
+            
+            headers = forget(request)
+            url = request.route_url('create-bill')
+            return HTTPFound(location=url,
+                         headers=headers)
+
+        return dict(cts=cts, hdbh=hdbh, totalProduct=totalProduct, totalBill=totalBill, idhdbh=idhdbh)
+
+    @view_config(route_name='view-detail-hdnh', renderer='dh/view-detail-hdnh.pt')
+    def viewDetailHDNH(self):
+        request = self.request
+        id_hdnh = int(self.request.matchdict['id_hdnh'])
+
+        idhdnh = {
+            'id_hdnh': id_hdnh
+        }
+
+        cts = DBSession.query(ChiTietHDNH).filter_by(id_hdnh=id_hdnh)
+
+        hdnh = DBSession.query(HoaDonNhapHang).filter_by(id_hdnh=id_hdnh).one()
+
+        totalProduct = {}
+        total = []
+        e = {}
+        for ct in cts:
+            e[ct.id_sp] = ct.soluong * ct.giasp
+            x = ct.soluong * ct.giasp
+            total.append(x)
+        totalProduct.update(e)
+
+        totalBill = 0
+
+        for i in total:
+            totalBill+=i
+
+        if 'form.delete' in request.params:
+            DBSession.query(ChiTietHDNH).filter_by(id_hdnh=id_hdnh).delete()
+            DBSession.query(HoaDonNhapHang).filter_by(id_hdnh=id_hdnh).delete()
+            
+            headers = forget(request)
+            url = request.route_url('create-bill')
+            return HTTPFound(location=url,
+                         headers=headers)
+
+        return dict(cts=cts, hdnh=hdnh, totalProduct=totalProduct, totalBill=totalBill, idhdnh=idhdnh)
 
 
     @view_config(route_name='create-hdbh', renderer='dh/hdbh.pt')
@@ -482,7 +570,7 @@ class ManageProduct:
             transaction.commit()
 
             headers = forget(request)
-            url = request.route_url('home')
+            url = request.route_url('create-bill')
             return HTTPFound(location=url,
                          headers=headers)
 
@@ -491,7 +579,7 @@ class ManageProduct:
             DBSession.query(HoaDonBanHang).filter_by(id_hdbh=id_hdbh).delete()
             
             headers = forget(request)
-            url = request.route_url('home')
+            url = request.route_url('create-bill')
             return HTTPFound(location=url,
                          headers=headers)
 
@@ -558,7 +646,7 @@ class ManageProduct:
             transaction.commit()
             DBSession.query(ChiTietHDNH).filter_by(id_sp='test', id_hdnh=id_hdnh).delete()
             headers = forget(request)
-            url = request.route_url('home')
+            url = request.route_url('create-bill')
             return HTTPFound(location=url,
                          headers=headers)
 
@@ -567,7 +655,7 @@ class ManageProduct:
             DBSession.query(HoaDonNhapHang).filter_by(id_hdnh=id_hdnh).delete()
 
             headers = forget(request)
-            url = request.route_url('home')
+            url = request.route_url('create-bill')
             return HTTPFound(location=url,
                          headers=headers)
 

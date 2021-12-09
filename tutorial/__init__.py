@@ -52,7 +52,11 @@ def main(global_config, **settings):
     config.add_route('createreport', '/createreport')
     config.add_route('createBBHDBH', '/createBBHDBH')
     config.add_route('createBBHDNH', '/createBBHDNH')
+
     config.add_route('create-bill', '/bill')
+    config.add_route('view-detail-hdbh', '/view-detail-hdbh/{id_hdbh}')
+    config.add_route('view-detail-hdnh', '/view-detail-hdnh/{id_hdnh}')
+
     config.add_route('create-hdbh', '/hdbh/{id_hdbh}')
     config.add_route('create-hdnh', '/hdnh/{id_hdnh}')
 
