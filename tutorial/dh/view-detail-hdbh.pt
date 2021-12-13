@@ -62,8 +62,7 @@
                                         <tr class="mt-6">
                                             <td></td>
                                             <td></td>
-                                            <td></td>
-                                            <td class="text-center">TỔNG: <b>${totalBill}</b> VNĐ</td>
+                                            <td colspan="2" class="text-center">TỔNG: <b>${totalBill}</b> VNĐ</td>
                                         </tr>
                                     </tbody>
                                 </table>
