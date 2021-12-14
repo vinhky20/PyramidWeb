@@ -12,7 +12,7 @@
 </style>
 <body>
     <div class="container">
-        <h4 class="text-center mt-4"><a href="${request.route_url('home')}">Trở về trang chủ</a></h4>
+        <h4 class="text-center mt-4"><a href="${request.route_url('createreport')}">Trở về trang trước</a></h4>
         <hr>
         <h5 class="text-center">Các sản phẩm ${tenbaobieu.ten} từ <b>${start}</b> đến <b>${end}</b></h5>
         <table id="books" style="width:100%" class="table table-bordered table-striped">

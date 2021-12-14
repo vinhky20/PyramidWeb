@@ -328,9 +328,11 @@ class ManageProduct:
             bh = DBSession.query(ChiTietHDBH, HoaDonBanHang, func.sum(ChiTietHDBH.soluong).label('totalBH')).join(HoaDonBanHang, HoaDonBanHang.id_hdbh==ChiTietHDBH.id_hdbh).filter(HoaDonBanHang.ngaytao.between(start, end)).group_by(ChiTietHDBH.id_sp)
             
             nh = DBSession.query(ChiTietHDNH, HoaDonNhapHang, func.sum(ChiTietHDNH.soluong).label('totalNH')).join(HoaDonNhapHang, HoaDonNhapHang.id_hdnh==ChiTietHDNH.id_hdnh).group_by(ChiTietHDNH.id_sp)
+            BH = DBSession.query(ChiTietHDBH, HoaDonBanHang, func.sum(ChiTietHDBH.soluong).label('totalBH')).join(HoaDonBanHang, HoaDonBanHang.id_hdbh==ChiTietHDBH.id_hdbh).group_by(ChiTietHDBH.id_sp)
+
 
             A = {}
-            for i in bh:
+            for i in BH:
                 obj = {
                     i.ChiTietHDBH.sanpham.tensanpham: int(i.totalBH)
                 }
