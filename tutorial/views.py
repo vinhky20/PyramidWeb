@@ -189,7 +189,7 @@ class ManageCategory:
         return dict(danhmucs=danhmucs)
 
 
-    @view_config(route_name='updatedm', renderer='dm/updatedm.pt')
+    @view_config(route_name='updatedm', renderer='dm/updatedm.pt', permission='edit')
     def updateDM(self):
         request = self.request
         id_dm = str(self.request.matchdict['id_dm'])
@@ -242,7 +242,7 @@ class ManageProduct:
             
         return dict(sanphams=sanphams, danhmucs=danhmucs)
 
-    @view_config(route_name='sanphamtheodanhmuc', renderer='sp/sanphamtheodanhmuc.pt')
+    @view_config(route_name='sanphamtheodanhmuc', renderer='sp/sanphamtheodanhmuc.pt', permission='edit')
     def sanphamtheodm(self):
         request = self.request
         danhmucs = DBSession.query(DanhMuc)
@@ -257,7 +257,7 @@ class ManageProduct:
         return dict(sanphams=sanphams, danhmucs=danhmucs, dm=dm)
 
 
-    @view_config(route_name='addsanpham', renderer='sp/addsanpham.pt')
+    @view_config(route_name='addsanpham', renderer='sp/addsanpham.pt', permission='edit')
     def addsanpham(self):
         request = self.request
         danhmucs = DBSession.query(DanhMuc)
@@ -279,7 +279,7 @@ class ManageProduct:
         return dict(danhmucs=danhmucs)
 
 
-    @view_config(route_name='updatesp', renderer='sp/updatesp.pt')
+    @view_config(route_name='updatesp', renderer='sp/updatesp.pt', permission='edit')
     def updatesp(self):
         request = self.request
         id_sp = str(self.request.matchdict['id_sp'])
@@ -427,7 +427,7 @@ class ManageProduct:
 
         return dict(bhs=bhs, nhs=nhs)
 
-    @view_config(route_name='create-hdbh', renderer='dh/hdbh.pt')
+    @view_config(route_name='create-hdbh', renderer='dh/hdbh.pt', permission='edit')
     def createHDBH(self):
         request = self.request
         id_hdbh = int(self.request.matchdict['id_hdbh'])
@@ -498,7 +498,7 @@ class ManageProduct:
         return dict(cts=cts, idhdbh=idhdbh, ngaytaohd=ngaytaohd, totalProduct=totalProduct, ten=ten, totalBill=totalBill, tenhd=tenhd)
 
 
-    @view_config(route_name='create-hdnh', renderer='dh/hdnh.pt')
+    @view_config(route_name='create-hdnh', renderer='dh/hdnh.pt', permission='edit')
     def createHDNH(self):
         request = self.request
         id_hdnh = int(self.request.matchdict['id_hdnh'])
