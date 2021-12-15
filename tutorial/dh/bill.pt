@@ -69,14 +69,15 @@
                         <td class="text-center">${bh.ngaytao}</td>
                         <td class="text-center">${bh.nhanvien.tennhanvien}</td>
                         <td class="text-center">
-                            <a href="${request.route_url('view-detail-hdbh', id_hdbh=bh.id_hdbh)}" class="btn btn-xs btn-success">
-                                <i alt="View" class="fa fa-pencil">Xem</i></a>
+                            <a href="${request.route_url('create-hdbh', id_hdbh=bh.id_hdbh)}" class="btn btn-xs btn-success">
+                                <i alt="View" class="fa fa-pencil"></i>Sửa</a>
                             <form class='delete' method="POST" action="" style='display: inline;'>
                                 <input type='hidden' name='id' value=${bh.id_hdbh}>
                                 <button type='submit' class='btn btn-xs btn-danger' name='form.delete.hdbh'>
                                         <i alt='Delete' class='fa fa-trash'>Xoá</i>
                                 </button>
                             </form>
+
                         </td>
                     </tr>
                 </table>
@@ -97,14 +98,15 @@
                         <td class="text-center">${nh.ngaytao}</td>
                         <td class="text-center">${nh.nhanvien.tennhanvien}</td>
                         <td class="text-center">
-                            <a href="${request.route_url('view-detail-hdnh', id_hdnh=nh.id_hdnh)}" class="btn btn-xs btn-success">
-                                <i alt="View" class="fa fa-pencil">Xem</i></a>
+                            <a href="${request.route_url('create-hdnh', id_hdnh=nh.id_hdnh)}" class="btn btn-xs btn-success">
+                                <i alt="View" class="fa fa-pencil"></i>Sửa</a>
                             <form class='delete' method="POST" action="" style='display: inline;'>
                                 <input type='hidden' name='id' value=${nh.id_hdnh}>
                                 <button type='submit' class='btn btn-xs btn-danger' name='form.delete.hdnh'>
                                         <i alt='Delete' class='fa fa-trash'>Xoá</i>
                                 </button>
                             </form>
+
                         </td>
                     </tr>
                 </table>
