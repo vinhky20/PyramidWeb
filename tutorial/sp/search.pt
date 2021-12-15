@@ -35,20 +35,22 @@
     </div>
     <div class="container">
         <h3 class="text-center mt-4">Kết quả tìm kiếm</h3>
-        <div class="float-left">
-            <a href="${request.route_url('ban')}" class="btn btn-success" style="margin-bottom: 24px;">
-                <i class="fa fa-plus"></i>Bàn
-            </a>
-            <a href="${request.route_url('sofa')}" class="btn btn-success" style="margin-bottom: 24px;">
-                <i class="fa fa-plus"></i>Sofa
-            </a>
-            <a href="${request.route_url('tranh')}" class="btn btn-success" style="margin-bottom: 24px;">
-                <i class="fa fa-plus"></i>Tranh
-            </a>
-            <a href="${request.route_url('guong')}" class="btn btn-success" style="margin-bottom: 24px;">
-                <i class="fa fa-plus"></i>Gương
+        <div class="float-left" tal:repeat="danhmuc danhmucs">
+            <a href="${request.route_url('sanphamtheodanhmuc', id_dm=danhmuc.id_dm)}" class="btn btn-success" style="margin: 0 12px 12px 0;">
+                <i class="fa fa-plus"></i>${danhmuc.tendanhmuc}
             </a>
         </div>
+
+        <div class="float-right">
+            <form class="form-inline" role="search" method="post" action="${request.route_url('search')}">
+                <button type="submit" class="btn btn-success form-control mr-2" name="form.search">Search</button>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm" name="kw">
+                </div>
+
+            </form>
+        </div>
+        
         <table id="books" style="width:100%" class="table table-bordered table-striped">
             <tr style="background-color: #337ab7; color: white">
                 <th class="text-center">Mã Sản Phẩm</th>

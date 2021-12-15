@@ -34,11 +34,8 @@ def main(global_config, **settings):
     
     # Class Product 
     config.add_route('sanpham', '/sanpham')
+    config.add_route('sanphamtheodanhmuc', '/sanphamtheodanhmuc/{id_dm}')
     config.add_route('search', '/search')
-    config.add_route('ban', 'ban')
-    config.add_route('sofa', 'sofa')
-    config.add_route('tranh', 'tranh')
-    config.add_route('guong', 'guong')
     config.add_route('addsanpham', '/addsanpham')
     config.add_route('updatesp', '/updatesp/{id_sp}')
 

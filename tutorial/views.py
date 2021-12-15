@@ -211,14 +211,18 @@ class ManageProduct:
     def search(self):
         request = self.request
 
+        
+
         if 'form.search' in request.params:
             kw = request.params['kw']
 
             search = "%{}%".format(kw)
 
+            danhmucs = DBSession.query(DanhMuc)
+
             sanphams = DBSession.query(SanPham).filter(SanPham.tensanpham.like(search)).all()
 
-            return dict(sanphams=sanphams)
+            return dict(sanphams=sanphams, danhmucs=danhmucs)
 
         return {
             'name': 'Tìm kiếm sản phẩm'
@@ -229,41 +233,28 @@ class ManageProduct:
         request = self.request
         sanphams = DBSession.query(SanPham)
 
+        danhmucs = DBSession.query(DanhMuc)
+
         if 'form.delete' in request.params:
             id_sp = request.params['id_sp']
 
             DBSession.query(SanPham).filter_by(id_sp=id_sp).delete()
             
-        return dict(sanphams=sanphams)
+        return dict(sanphams=sanphams, danhmucs=danhmucs)
 
-    @view_config(route_name='ban', renderer='sp/ban.pt')
-    def showban(self):
-        sanphams = DBSession.query(SanPham).filter_by(id_dm=2)
-        # for sanpham in sanphams:
-        #     print(sanpham.__dict__)
-        return dict(sanphams=sanphams)
+    @view_config(route_name='sanphamtheodanhmuc', renderer='sp/sanphamtheodanhmuc.pt')
+    def sanphamtheodm(self):
+        request = self.request
+        danhmucs = DBSession.query(DanhMuc)
 
-    @view_config(route_name='sofa', renderer='sp/sofa.pt')
-    def showsofa(self):
-        sanphams = DBSession.query(SanPham).filter_by(id_dm=1)
-        # for sanpham in sanphams:
-        #     print(sanpham.__dict__)
-        return dict(sanphams=sanphams)
+        id_dm = self.request.matchdict['id_dm']
 
-    @view_config(route_name='tranh', renderer='sp/tranh.pt')
-    def showtranh(self):
-        sanphams = DBSession.query(SanPham).filter_by(id_dm=3)
-        # for sanpham in sanphams:
-        #     print(sanpham.__dict__)
-        return dict(sanphams=sanphams)
+        sanphams = DBSession.query(SanPham).filter_by(id_dm=id_dm)
 
-    @view_config(route_name='guong', renderer='sp/guong.pt')
-    def showguong(self):
-        sanphams = DBSession.query(SanPham).filter_by(id_dm=4)
-        # for sanpham in sanphams:
-        #     print(sanpham.__dict__)
-        return dict(sanphams=sanphams)
+        dm = DBSession.query(DanhMuc).filter_by(id_dm=id_dm).one()
 
+            
+        return dict(sanphams=sanphams, danhmucs=danhmucs, dm=dm)
 
 
     @view_config(route_name='addsanpham', renderer='sp/addsanpham.pt')
@@ -281,6 +272,9 @@ class ManageProduct:
             id_dm = dm.id_dm
 
             DBSession.add(SanPham(id_sp=id_sp, tensanpham=tensanpham, donvitinh=dvt, id_dm=id_dm))
+
+            url = request.route_url('sanpham')
+            return HTTPFound(location=url)
             
         return dict(danhmucs=danhmucs)
 
@@ -484,15 +478,15 @@ class ManageProduct:
 
         if 'form.submit' in request.params:
             DBSession.query(ChiTietHDBH).filter_by(id_sp='test', id_hdbh=id_hdbh).delete()
+            url = request.route_url('create-bill')
+            return HTTPFound(location=url)
 
         if 'form.delete' in request.params:
             DBSession.query(ChiTietHDBH).filter_by(id_hdbh=id_hdbh).delete()
             DBSession.query(HoaDonBanHang).filter_by(id_hdbh=id_hdbh).delete()
             
-            headers = forget(request)
             url = request.route_url('create-bill')
-            return HTTPFound(location=url,
-                         headers=headers)
+            return HTTPFound(location=url)
 
         if 'form.deleteSP' in request.params:
             id_sp = request.params['id_sp']
@@ -556,14 +550,15 @@ class ManageProduct:
         if 'form.submit' in request.params:
             DBSession.query(ChiTietHDNH).filter_by(id_sp='test', id_hdnh=id_hdnh).delete()
 
+            url = request.route_url('create-bill')
+            return HTTPFound(location=url)
+
         if 'form.delete' in request.params:
             DBSession.query(ChiTietHDNH).filter_by(id_hdnh=id_hdnh).delete()
             DBSession.query(HoaDonNhapHang).filter_by(id_hdnh=id_hdnh).delete()
 
-            headers = forget(request)
             url = request.route_url('create-bill')
-            return HTTPFound(location=url,
-                         headers=headers)
+            return HTTPFound(location=url)
 
         if 'form.deleteSP' in request.params:
             id_sp = request.params['id_sp']
