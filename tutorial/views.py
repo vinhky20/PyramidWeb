@@ -284,8 +284,7 @@ class ManageProduct:
         request = self.request
         id_sp = str(self.request.matchdict['id_sp'])
         sanpham = DBSession.query(SanPham).filter_by(id_sp=id_sp).one()
-
-        
+        danhmucs = DBSession.query(DanhMuc)
 
         if 'form.update' in request.params:
             tensanpham = request.params['tensp']
@@ -298,7 +297,7 @@ class ManageProduct:
             sanpham.id_dm = dm.id_dm
 
 
-        return dict(sanpham=sanpham)
+        return dict(sanpham=sanpham, danhmucs=danhmucs)
         
     @view_config(route_name='createreport', renderer='dh/createreport.pt', permission='edit')
     def createreport(self):

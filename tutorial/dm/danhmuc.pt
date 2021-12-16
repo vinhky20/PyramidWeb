@@ -34,7 +34,7 @@
         </ul>
     </div>
     <div class="container">
-        <h4 class="text-center mt-4">Danh Mục Sản Phẩm</h4>
+        <h3 class="text-center mt-4">Danh Mục Sản Phẩm</h3>
         <div>
             <form method="POST" action="${request.route_url('danhmuc')}">
                 <div class="form-group">
