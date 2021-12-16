@@ -23,10 +23,10 @@
                 <th class="text-center">Số lượng đã bán</th>
             </tr>
             <tr tal:repeat="i bh">
-                <td class="text-center">${i.ChiTietHDBH.id_sp}</td>
-                <td class="text-center">${i.ChiTietHDBH.sanpham.tensanpham}</td>
-                <td class="text-center">${i.ChiTietHDBH.sanpham.danhmuc.tendanhmuc}</td>
-                <td class="text-center">${i.totalBH} sản phẩm</td>
+                <td class="text-center" tal:condition="i.ChiTietHDBH.id_sp != 'test'">${i.ChiTietHDBH.id_sp}</td>
+                <td class="text-center" tal:condition="i.ChiTietHDBH.id_sp != 'test'">${i.ChiTietHDBH.sanpham.tensanpham}</td>
+                <td class="text-center" tal:condition="i.ChiTietHDBH.id_sp != 'test'">${i.ChiTietHDBH.sanpham.danhmuc.tendanhmuc}</td>
+                <td class="text-center" tal:condition="i.ChiTietHDBH.id_sp != 'test'">${i.totalBH} sản phẩm</td>
             </tr>
         </table>
         <hr>

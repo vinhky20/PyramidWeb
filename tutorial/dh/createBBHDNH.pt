@@ -24,15 +24,15 @@
                 <th class="text-center">Số lượng đã nhập</th>
             </tr>
             <tr tal:repeat="sp sps">
-                <td class="text-center">${sp.ChiTietHDNH.id_sp}</td>
-                <td class="text-center">${sp.ChiTietHDNH.sanpham.tensanpham}</td>
-                <td class="text-center">${sp.ChiTietHDNH.sanpham.danhmuc.tendanhmuc}</td>
-                <td class="text-center">${sp.totalNH} sản phẩm</td>
+                <td class="text-center" tal:condition="sp.ChiTietHDNH.id_sp != 'test'">${sp.ChiTietHDNH.id_sp}</td>
+                <td class="text-center" tal:condition="sp.ChiTietHDNH.id_sp != 'test'">${sp.ChiTietHDNH.sanpham.tensanpham}</td>
+                <td class="text-center" tal:condition="sp.ChiTietHDNH.id_sp != 'test'">${sp.ChiTietHDNH.sanpham.danhmuc.tendanhmuc}</td>
+                <td class="text-center" tal:condition="sp.ChiTietHDNH.id_sp != 'test'">${sp.totalNH} sản phẩm</td>
             </tr>
         </table>
         <hr>
         <div tal:repeat="nh nhs">
-            <h6 class="text-center"><b>${nh.ChiTietHDNH.sanpham.tensanpham}</b> đã nhập tổng cộng <b>${nh.totalNH}</b> sản phẩm</h6>
+            <h6 class="text-center" tal:condition="nh.ChiTietHDNH.id_sp != 'test'"><b>${nh.ChiTietHDNH.sanpham.tensanpham}</b> đã nhập tổng cộng <b>${nh.totalNH}</b> sản phẩm</h6>
         </div>
     </div>
 
