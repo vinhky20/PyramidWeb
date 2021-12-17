@@ -66,11 +66,11 @@
                 <td class="text-center">${sanpham.danhmuc.tendanhmuc}</td>
                 <td class="text-center">
                     <a href="${request.route_url('updatesp', id_sp=sanpham.id_sp)}" class="btn btn-xs btn-warning">
-                        <i alt="Edit" class="fa fa-pencil"> Edit</i></a>
+                        <i alt="Edit" class="fa fa-pencil">Sửa</i></a>
                     <form class='delete' method="POST" action="${request.route_url('sanpham')}" style='display: inline;'>
                         <input type='hidden' name='id_sp' value=${sanpham.id_sp}>
                         <button type='submit' class='btn btn-xs btn-danger' name='form.delete'>
-                                        <i alt='Delete' class='fa fa-trash'>Delete</i>
+                                        <i alt='Delete' class='fa fa-trash'>Xoá</i>
                                 </button>
                     </form>
                 </td>

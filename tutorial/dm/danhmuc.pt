@@ -61,11 +61,11 @@
                 <td class="text-center">${danhmuc.tendanhmuc}</td>
                 <td class="text-center">
                     <a href="${request.route_url('updatedm', id_dm=danhmuc.id_dm)}" class="btn btn-xs btn-warning">
-                        <i alt="Edit" class="fa fa-pencil"> Edit</i></a>
+                        <i alt="Edit" class="fa fa-pencil">Sửa</i></a>
                     <form class='delete' method="POST" action="${request.route_url('danhmuc')}" style='display: inline;'>
                         <input type='hidden' name='id_dm' value=${danhmuc.id_dm}>
                         <button type='submit' class='btn btn-xs btn-danger' name='form.delete'>
-                                        <i alt='Delete' class='fa fa-trash'>Delete</i>
+                                        <i alt='Delete' class='fa fa-trash'>Xoá</i>
                                 </button>
                     </form>
                 </td>

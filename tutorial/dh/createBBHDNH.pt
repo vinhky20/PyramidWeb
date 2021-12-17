@@ -30,9 +30,24 @@
                 <td class="text-center" tal:condition="sp.ChiTietHDNH.id_sp != 'test'">${sp.totalNH} sản phẩm</td>
             </tr>
         </table>
+        <br>
         <hr>
-        <div tal:repeat="nh nhs">
-            <h6 class="text-center" tal:condition="nh.ChiTietHDNH.id_sp != 'test'"><b>${nh.ChiTietHDNH.sanpham.tensanpham}</b> đã nhập tổng cộng <b>${nh.totalNH}</b> sản phẩm</h6>
+        <h5 class="text-center">Tổng số lượng sản phẩm đã nhập từ đầu đến hiện tại</h5>
+        <div class="row">
+            <div class="col-lg-4"></div>
+            <div class="col-lg-4">
+                <table id="books" style="width:100%" class="table table-bordered table-striped">
+                    <tr style="background-color: #337ab7; color: white">
+                        <th class="text-center">Tên sản phẩm</th>
+                        <th class="text-center">Nhập tổng cộng</th>
+                    </tr>
+                    <tr tal:repeat="nh nhs">
+                        <td class="text-center" tal:condition="nh.ChiTietHDNH.id_sp != 'test'">${nh.ChiTietHDNH.sanpham.tensanpham}</td>
+                        <td class="text-center" tal:condition="nh.ChiTietHDNH.id_sp != 'test'">${nh.totalNH} sản phẩm</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-lg-4"></div>
         </div>
     </div>
 
