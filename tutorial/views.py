@@ -307,7 +307,7 @@ class ManageProduct:
             'status': 'Tạo báo biểu'
         }
 
-    @view_config(route_name='createBBHDBH', renderer='dh/createBBHDBH.pt')
+    @view_config(route_name='createBBHDBH', renderer='dh/createBBHDBH.pt', permission='edit')
     def createBBHDBH(self):
         request = self.request
 
@@ -359,7 +359,7 @@ class ManageProduct:
             'status': 'Tạo báo biểu bán hàng'
         }
 
-    @view_config(route_name='createBBHDNH', renderer='dh/createBBHDNH.pt')
+    @view_config(route_name='createBBHDNH', renderer='dh/createBBHDNH.pt', permission='edit')
     def createBBHDNH(self):
         request = self.request
 
