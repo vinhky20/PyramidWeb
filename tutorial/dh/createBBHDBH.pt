@@ -41,8 +41,8 @@
                         <th class="text-center">Tồn kho</th>
                     </tr>
                     <tr tal:repeat="j arr">
-                        <td class="text-center">${j.name}</td>
-                        <td class="text-center">${j.inventory} sản phẩm</td>
+                        <td class="text-center" tal:condition="j.name != 'test'">${j.name}</td>
+                        <td class="text-center" tal:condition="j.name != 'test'">${j.inventory} sản phẩm</td>
                     </tr>
                 </table>
             </div>

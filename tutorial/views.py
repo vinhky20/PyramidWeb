@@ -178,7 +178,24 @@ class ManageCategory:
         if 'form.delete' in request.params:
             id_dm = request.params['id_dm']
 
+            sanphams = DBSession.query(SanPham).filter_by(id_dm=id_dm)
+
+            sps=[]
+
+            for sanpham in sanphams:
+                sp = sanpham.__dict__
+                sps.append(sp['id_sp'])
+
+            
+            for sp in sps:
+                DBSession.query(ChiTietHDBH).filter_by(id_sp=sp).delete()
+                DBSession.query(ChiTietHDNH).filter_by(id_sp=sp).delete()
+
+                DBSession.query(SanPham).filter_by(id_sp=sp).delete()
+
+                
             DBSession.query(DanhMuc).filter_by(id_dm=id_dm).delete()
+
 
         if 'form.add' in request.params:
             id_dm = request.params['id_dm']
@@ -237,6 +254,9 @@ class ManageProduct:
 
         if 'form.delete' in request.params:
             id_sp = request.params['id_sp']
+
+            DBSession.query(ChiTietHDBH).filter_by(id_sp=id_sp).delete()
+            DBSession.query(ChiTietHDNH).filter_by(id_sp=id_sp).delete()
 
             DBSession.query(SanPham).filter_by(id_sp=id_sp).delete()
             
