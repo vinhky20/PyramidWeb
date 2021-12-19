@@ -587,4 +587,3 @@ class ManageProduct:
             
 
         return dict(cts=cts, idhdnh=idhdnh, ngaytaohd=ngaytaohd, totalProduct=totalProduct, ten=ten, totalBill=totalBill, tenhd=tenhd)
-
