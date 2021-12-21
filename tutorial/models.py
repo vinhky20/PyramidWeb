@@ -26,7 +26,7 @@ Base = declarative_base()
 
 class DanhMuc(Base):
     __tablename__ = 'danhmuc'
-    id_dm = Column(Integer, primary_key=True)
+    id_dm = Column(String(10), primary_key=True)
     tendanhmuc = Column(String(250), nullable=False)
 
 class SanPham(Base):
@@ -34,7 +34,7 @@ class SanPham(Base):
     id_sp = Column(String(10), primary_key=True)
     tensanpham = Column(String(250), nullable=False)
     donvitinh = Column(String(250), nullable=False)
-    id_dm = Column(Integer, ForeignKey('danhmuc.id_dm'))
+    id_dm = Column(String(10), ForeignKey('danhmuc.id_dm'))
     danhmuc = relationship(DanhMuc)
 
 class NhanVien(Base):
